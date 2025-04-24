@@ -1,0 +1,30 @@
+2799. To solve the problem of counting complete subarrays—where a subarray is complete if it contains all distinct elements present in the entire array—we apply a sliding window strategy combined with frequency counting.
+
+Total Distinct Elements:
+First, determine the total number of unique elements in the input array. Any complete subarray must contain exactly this set of distinct elements.
+
+Fixed Start with Expanding End:
+For each possible starting index of a subarray, incrementally expand the end of the subarray until it contains all distinct elements. This uses a frequency array to keep track of which elements are currently in the window and how many distinct elements are covered so far.
+
+Count Subarrays:
+Once a subarray starting at index i reaches completeness by ending at index j - 1, then every subarray starting from i and ending at any position from j - 1 to n - 1 is also complete. This is because adding more elements cannot remove already included distinct elements. The count of such subarrays is simply n - (j - 1).
+
+This approach ensures that we consider all possible complete subarrays without rechecking overlapping segments repeatedly. The use of a frequency array provides constant-time updates for each element.
+
+Time complexity is O(n²) in the worst case, which is acceptable for moderate-sized arrays.
+
+
+
+492. To construct a rectangle of a given area such that:
+
+L * W = area
+
+L ≥ W
+
+The difference |L - W| is as small as possible,
+
+we aim for dimensions that are as close to a square as possible.
+
+We start from the square root of the area because the closest pair of factors (with minimum difference) will be around this point. We then iterate downwards to find the largest width (W) that perfectly divides the area. Once found, we calculate the length as L = area / W.
+
+This ensures we get a valid pair where L ≥ W and the rectangle is closest to a square, minimizing the difference between the sides.
