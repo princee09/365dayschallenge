@@ -1,0 +1,94 @@
+2845. 
+Imagine you have a row of boxes (the array nums), each box has a number. You want to count all the continuous groups of boxes (subarrays) where, if you look at only the “special” boxes—those whose number leaves a remainder of exactly k when divided by modulo—then the count of those special boxes also leaves the same remainder k when you divide that count by modulo again.
+
+Marking special boxes
+
+Go through each box.
+
+If the number in the box gives remainder k when divided by modulo, put a “1” sticker on it. Otherwise, put a “0” sticker.
+
+Running total of stickers
+
+Now walk along the row, keeping a running total of these stickers—but every time you add, you immediately take that total modulo modulo (so it never grows too big). Let’s call that running total current_mod.
+
+Why prefix counts help
+
+To know how many special boxes are in any group between positions start and end, you could subtract the running total at start−1 from the running total at end.
+
+We want that difference, when taken modulo modulo, to equal k.
+
+Counting with a little book (hash-map)
+
+Keep a little book that, for each possible running total value (from 0 up to modulo−1), notes how many times you’ve seen it so far.
+
+At each new position i, you have a current_mod. To form a valid group ending at i, you ask:
+
+“How many earlier positions had running total equal to (current_mod − k) mod modulo?”
+
+Look up that count in your book and add it to your answer.
+
+Then write down (increment) the count for your current_mod in the book—so future positions can use it.
+
+Why it’s fast
+
+You only pass through the row once (no nested loops).
+
+Each step you do just a couple of simple operations and a quick lookup in your book.
+
+Complexity
+
+Time Complexity: O(n), where n is the length of the array. You make one pass through the array, doing constant-time work per element.
+
+Space Complexity: O(n) in the worst case, because the “little book” (hash-map) might store up to n different running-total values.
+
+
+--------------------------
+
+
+
+131.
+
+
+Imagine you have a word (string) and you want to cut it into pieces so that each piece reads the same forwards and backwards (a palindrome). You need to find all the ways to do these cuts.
+
+Spotting palindromes quickly
+
+First, we look at every possible piece of the word and mark whether it is a palindrome.
+
+We build a small grid (table) where cell (i, j) is true if the letters from position i to j form a palindrome.
+
+We fill this table by starting from the end of the word and moving backward, because a piece is a palindrome if its two end letters match and the inside piece is also a palindrome (or is very short).
+
+Trying all cuts with backtracking
+
+Now we walk from the start of the word, and at each position we try cutting a piece that we already know is a palindrome (from our table).
+
+Whenever we cut a palindrome piece, we “choose” it and then repeat the process on the remainder of the word.
+
+If we reach the end, we’ve made a complete set of cuts that all are palindromes, so we record that solution.
+
+Then we “undo” the last cut (backtrack) and try a different cut.
+
+Why this is fast enough
+
+Checking every possible piece ahead of time takes O(n²) steps for a word of length n.
+
+Then the backtracking only explores cuts that can form palindromes, rather than blindly cutting everywhere.
+
+Although there can be many ways (in the worst case exponentially many), we do no wasted work checking non-palindrome pieces.
+
+Complexity
+
+Time Complexity:
+
+O(n²) to build the palindrome table.
+
+Backtracking can generate up to O(2ⁿ) different partitions in the worst case (e.g. the word “aaaa…”), and building each partition costs up to O(n).
+
+So worst-case time is O(n² + n·2ⁿ), which matches the fact that the answer itself can be exponentially large.
+
+Space Complexity:
+
+O(n²) for the palindrome table.
+
+O(n) for the current cuts and recursion stack, plus the space to store all the answers.
