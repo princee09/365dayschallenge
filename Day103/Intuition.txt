@@ -1,0 +1,56 @@
+79. Word Search
+
+
+
+Imagine you have a small grid of letters—like a mini crossword puzzle—and you want to see if you can “trace out” a given word by moving up, down, left or right. You cannot jump, skip letters, or reuse the same square twice.
+
+Here’s a simple way to think about it in everyday terms:
+
+1. **Looking for the first letter**  
+   Suppose the word is “DOG.” First you scan the grid and find every “D.” Those are your possible starting points.
+
+2. **Trying to walk the word**  
+   From each “D,” you try to walk to a neighboring square that has the next letter “O.” If you find an “O” next door, you step there—marking the “D” as already used so you won’t step on it again.  
+
+3. **Keeping track and back-tracking**  
+   From that “O,” you look for a neighboring “G.” If you find the “G,” you succeeded! If you hit a dead end—say there’s no “G” next to your “O,” or all the neighbors are already used—you step back to the “O” and try any other unused neighbor. If none work, you step back again to the “D” and maybe try a different “O.”  
+
+4. **Why it finishes quickly**  
+   - You first check: “Do I even have enough of each letter?” If the grid only has one “G” but the word needs two “G”s, you can stop immediately.  
+   - As soon as your little walk can’t match the next letter, you give up that path and try another. You never wander aimlessly—you only follow paths that continue to match the word.
+
+So in essence it’s like trying out every possible “route” through the letter-grid that spells the word, but you cut off any route as soon as the letters don’t match. This “try and back-track” strategy is called **backtracking**, and the little early check on letter counts is just a quick way to rule out impossible words before you even start walking.
+
+
+
+
+
+--------------------------------
+
+
+21. Merge Two Sorted Lists
+
+
+
+Think of two people—Alice and Bob—each holding a sorted row of numbered cards face-up on a table. You want to create one combined sorted row by taking cards one at a time from the front of their rows.
+
+1. **If one runs out, you’re done**  
+   - If Alice has no cards left, just take all of Bob’s remaining cards in order.  
+   - If Bob has no cards left, take all of Alice’s remaining cards.  
+
+2. **Otherwise, compare the top cards**  
+   - Look at Alice’s front card and Bob’s front card. Whichever card is smaller, pick that one next for your combined row.  
+   - Suppose Alice’s card is smaller. You place that card down, and now Alice’s row has one fewer card. You still have Bob’s same front card to compare next.  
+
+3. **Repeat automatically**  
+   - You then repeat the process with the new front cards—again compare and pick the smaller.  
+
+This “compare-and-take” step happens again and again until both rows are empty.  
+
+- **Why recursion?** It’s like saying: “To merge these two rows, pick the smaller front card, then merge the rest of the rows in exactly the same way.” You don’t need an explicit loop—each “merge the rest” call just does the same job on slightly smaller rows.  
+
+**Every step is simple**:  
+- Check if one row is empty (stop condition).  
+- Otherwise, compare two cards, take the smaller, and let the same process handle the rest.  
+
+That’s it—no complicated juggling, just “compare, take, repeat” until there’s nothing left.
