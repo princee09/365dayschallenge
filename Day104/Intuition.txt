@@ -1,0 +1,55 @@
+3392.
+
+
+Think of your list of numbers as a row of houses, and you want to look at every group of three houses in a row. For each group of three, you check this:
+
+“If I add the number on the first house and the number on the third house, do I get exactly half of the number on the middle house?”
+
+You slide a “window” of size three along the row: houses (1,2,3), then (2,3,4), then (3,4,5), and so on.
+
+For each window, you add the numbers on the two ends, double that sum, and see if it equals the number in the middle house.
+
+If it matches, you count that group as valid.
+
+Because you only ever look at three houses at a time and move one step forward each time, you finish in one quick pass through the row.
+
+Work done: You check each middle house once.
+
+Memory used: You only keep track of your count and the current three houses.
+
+
+
+390.
+
+
+
+
+
+Imagine you have the numbers 1 through n laid out in a line. You repeatedly remove every second number, first going left-to-right, then right-to-left, then left-to-right again, and so on—until only one number is left.
+
+Rather than simulating the entire list (which would be very slow for large n), we keep track of just three things:
+
+head: the current first number that remains
+
+step: the gap between numbers that remain after each round
+
+remaining: how many numbers are still in play
+
+Here’s how these change each pass:
+
+Removing left→right:
+
+You always remove the very first number, so the head jumps forward by one “step.”
+
+Removing right→left:
+
+If there are an odd number of items, the rightmost removal shifts which numbers survive on the left, so the head also moves forward by one “step.”
+
+If there are an even number of items, the head stays where it is.
+
+After each pass, half the numbers are gone, so remaining halves, and the distance between survivors doubles, so step doubles.
+
+Then flip direction and repeat.
+
+Because each pass cuts the count in half, you only need about log₂(n) passes. You never build or shrink a big list—just update three variables—so it’s both very fast (O(log n) steps) and uses almost no extra memory.
+
