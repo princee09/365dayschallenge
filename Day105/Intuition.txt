@@ -1,0 +1,101 @@
+231.
+
+
+
+Think of powers of two in binary:
+
+1 (2^0) is 1 in binary
+
+2 (2^1) is 10 in binary
+
+4 (2^2) is 100 in binary
+
+8 (2^3) is 1000 in binary
+
+…and so on.
+
+You’ll notice a pattern: a power of two always has exactly one “1” and the rest are “0”s in its binary form.
+
+Key trick:
+If you take any positive number n that is a power of two, and you subtract 1 from it, here’s what happens in binary:
+
+n = 1000…0 (one 1, then zeros)
+
+n - 1 = 0111…1 (the leading 1 becomes 0, and all the zeros after become 1s)
+
+Now, if you do a bitwise AND between these two:
+
+yaml
+Copy
+Edit
+   1000…0   (that’s n)
+ & 0111…1   (that’s n - 1)
+ = 0000…0
+You get zero—because they have no “1” bits in the same position.
+
+How we use this in code
+
+Check positive: First, make sure n is greater than zero. (0 or negative numbers can’t be powers of two here.)
+
+Bit trick: Compute (n & (n - 1)).
+
+If the result is 0, it means n had exactly one “1” bit, so it was a power of two.
+
+Otherwise, it had more than one “1” bit, so it wasn’t.
+
+Step-by-step
+
+Suppose n = 16. Binary: 10000
+
+n - 1 = 15, binary 01111
+
+10000 & 01111 = 00000 → zero → true
+
+Suppose n = 12. Binary: 1100
+
+n - 1 = 11, binary 1011
+
+1100 & 1011 = 1000 → not zero → false
+
+Summary
+
+Powers of two have exactly one “1” in binary.
+
+n & (n - 1) clears the lowest “1” bit.
+
+If that operation gives zero (and n was positive), you started with exactly one “1”—so n is a power of two.
+
+
+
+
+
+
+
+
+29.
+
+
+
+Imagine you want to see how many times you can subtract one number (divisor) from another (dividend) until nothing (or less than one divisor) remains. That “how many times” is the quotient.
+
+Handle the extreme case
+
+If you have the smallest possible 32-bit integer (–2³¹) and divide by –1, the honest answer +2³¹ doesn’t fit in 32-bit. So we immediately return the maximum allowed, 2³¹–1.
+
+Work with bigger buckets
+
+To avoid problems when flipping a very large negative number positive, we first move both numbers into a bigger bucket (64-bit) before taking their absolute values.
+
+Speed up by doubling
+
+Instead of subtracting the divisor one by one, we look for the largest “chunk” (power-of-two multiple) we can subtract at once.
+
+Think: “Can I subtract 8×divisor? If yes, subtract it and add 8 to my count. If not, try 4×, then 2×, then 1×.”
+
+We do this by shifting bits (which is just a fast way to multiply or divide by two).
+
+Apply sign
+
+Keep track whether the final answer should be positive or negative based on the original signs.
+
+By doing big chunks first, we finish in about 32 quick steps instead of millions of single subtractions.
