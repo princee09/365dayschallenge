@@ -13,8 +13,7 @@ Leave it out of my selection
 
 With three balls, you make three yes/no decisions. Since each decision has 2 possibilities, the total number of ways you can decide is
 
-Copy
-Edit
+
 2 × 2 × 2 = 8  
 These 8 possibilities are exactly all the subsets.
 
@@ -31,8 +30,6 @@ In	In	In	[Red, Blue, Green]
 2. Systematic listing by “binary counting”
 To make a computer list these without missing any or repeating, we can use the idea of counting in binary (base-2). For three items, we count from 0 up to 7 (which is 2³–1). Write each number in 3-digit binary:
 
-Copy
-Edit
 0 → 000  
 1 → 001  
 2 → 010  
@@ -56,8 +53,7 @@ For each code you check n digits (in our example, 3), decide which balls to incl
 
 Total work is roughly “number of subsets” × “work per subset,” i.e.
 
-Copy
-Edit
+
 2ⁿ × n
 Which is exactly what you must do if you want to list every subset—there’s no faster way, since there really are 2ⁿ of them!
 
