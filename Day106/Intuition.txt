@@ -1,0 +1,77 @@
+79. 
+
+
+
+Imagine you have a small box of unique items—say, three different colored balls: red, blue, and green. You want to see every possible selection you could make from that box, including the possibility of taking none, one, two, or all three balls. Those selections are called subsets of your original set of balls.
+
+1. Every ball has two choices: “in” or “out”
+For each ball, you decide:
+
+Include it in my selection, or
+
+Leave it out of my selection
+
+With three balls, you make three yes/no decisions. Since each decision has 2 possibilities, the total number of ways you can decide is
+
+Copy
+Edit
+2 × 2 × 2 = 8  
+These 8 possibilities are exactly all the subsets.
+
+
+Decision for Red	Decision for Blue	Decision for Green	Subset you get
+Out	Out	Out	[] (empty set)
+In	Out	Out	[Red]
+Out	In	Out	[Blue]
+In	In	Out	[Red, Blue]
+Out	Out	In	[Green]
+In	Out	In	[Red, Green]
+Out	In	In	[Blue, Green]
+In	In	In	[Red, Blue, Green]
+2. Systematic listing by “binary counting”
+To make a computer list these without missing any or repeating, we can use the idea of counting in binary (base-2). For three items, we count from 0 up to 7 (which is 2³–1). Write each number in 3-digit binary:
+
+Copy
+Edit
+0 → 000  
+1 → 001  
+2 → 010  
+3 → 011  
+4 → 100  
+5 → 101  
+6 → 110  
+7 → 111  
+Each digit in that binary code corresponds to one ball:
+
+0 means “leave it out,”
+
+1 means “include it.”
+
+So “101” means include Red (1), leave out Blue (0), include Green (1) → [Red, Green]. As you count from 000 up to 111, you automatically generate every combination.
+
+3. Why this is efficient
+You only need one loop from 0 to 2ⁿ–1 (for n items).
+
+For each code you check n digits (in our example, 3), decide which balls to include, and record that subset.
+
+Total work is roughly “number of subsets” × “work per subset,” i.e.
+
+Copy
+Edit
+2ⁿ × n
+Which is exactly what you must do if you want to list every subset—there’s no faster way, since there really are 2ⁿ of them!
+
+4. Key takeaway
+Each element has two choices: in or out.
+
+Every combination of those choices is a subset.
+
+By counting in binary from 0 to 2ⁿ–1, you systematically cover all combinations without repeats or omissions.
+
+
+
+
+
+
+
+
