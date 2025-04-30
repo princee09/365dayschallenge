@@ -1,0 +1,135 @@
+1295
+
+
+
+Imagine you have a list of numbers. Your task is to count how many of these numbers have an even number of digits. Let’s break this down step by step, even if you’re not a techie!
+
+What’s a "digit"?
+A digit is a single number (0-9). For example:
+
+12 has 2 digits (1 and 2).
+
+7896 has 4 digits (7, 8, 9, 6).
+
+7 has 1 digit.
+
+An even number of digits means the total digits are 2, 4, 6, etc.
+
+How to Check Even Digits?
+Here’s the trick:
+
+Turn the number into a string (like writing it down).
+
+Example: 12 becomes "12", 7896 becomes "7896".
+
+Count the characters in the string.
+
+The length of the string tells you how many digits the number has.
+
+Check if that length is even.
+
+Example Walkthrough
+Let’s say the list is [12, 345, 2, 6, 7896]:
+
+12 → "12" → Length = 2 → Even ✅
+
+345 → "345" → Length = 3 → Odd ❌
+
+2 → "2" → Length = 1 → Odd ❌
+
+6 → "6" → Length = 1 → Odd ❌
+
+7896 → "7896" → Length = 4 → Even ✅
+
+Total even-digit numbers: 2 (12 and 7896).
+
+Why Does This Work?
+When you write a number as a string, every digit becomes a character.
+
+Counting characters is like counting digits by hand, but faster!
+
+If the count is even, the number qualifies.
+
+Alternative (Without Strings)
+If you prefer math:
+
+Divide the number by 10 repeatedly until it’s less than 1.
+
+Count how many times you divided.
+
+If the count is even, the number qualifies.
+
+But the string method is simpler to understand and code!
+
+Key Idea
+Convert numbers to strings → Check string length → Count even lengths.
+
+
+
+
+67.
+
+
+
+
+
+
+Adding two binary strings is like adding two numbers by hand, but simpler because you only deal with 0s and 1s. Here’s how it works:
+
+Binary Addition Basics
+In binary:
+
+0 + 0 = 0
+
+0 + 1 = 1
+
+1 + 1 = 10 (this is 2 in decimal, so you write 0 and carry 1).
+
+1 + 1 + 1 = 11 (3 in decimal: write 1 and carry 1).
+
+The key is to handle the carry when the sum of bits exceeds 1.
+
+Step-by-Step Process
+Start from the rightmost bit (like how you add numbers from the right).
+
+Add the two bits and any carry from the previous step.
+
+Example: If adding 1 + 1, the sum is 2. You write 0 and carry 1.
+
+Repeat for all bits until both strings are processed.
+
+If there’s a carry left, add it to the result.
+
+Example Walkthrough
+Let’s add a = "11" (3 in decimal) and b = "1" (1 in decimal):
+
+Rightmost bits: 1 + 1 = 2 → Write 0, carry 1.
+
+Next bits: 1 + 0 + carry (1) = 2 → Write 0, carry 1.
+
+No bits left, but carry 1 → Write 1.
+
+Combine all bits: 100 (4 in decimal).
+
+Handling Different-Length Strings
+If one string is longer (e.g., a = "1010", b = "1011"):
+
+Pad the shorter string with "invisible" leading zeros.
+
+Add bits as usual, treating missing bits as 0.
+
+Why Reverse the Result?
+When you add bits from right to left, the result is built in reverse order.
+
+For example, adding "11" and "1" gives 001 during the process, which is reversed to 100 for the final answer.
+
+Key Idea
+Add bits one by one, track the carry, and reverse the result at the end.
+This mimics manual binary addition and ensures correctness for any input lengths.
+
+Why This Works
+Simplicity: Directly mirrors how humans add numbers.
+
+Efficiency: Processes each bit exactly once, making it fast even for large inputs.
+
+Handles Edge Cases: Automatically deals with carries, different string lengths, and leading zeros.
