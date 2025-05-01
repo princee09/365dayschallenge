@@ -1,0 +1,16 @@
+83.
+
+
+
+
+This function removes repeated values (duplicates) from a sorted singly-linked list (a chain where each item points to the next). First, if the list is empty or has only one item, there’s nothing to do—just return it as is. Next, we create a pointer called `temp` to remember the start of the list, because we’ll be moving the main “head” pointer forward as we go. Then we run a loop that looks at each pair of consecutive nodes: if their values are the same, we skip over the second one by relinking around it; if the values differ, we advance the head pointer. In this way we systematically drop every extra copy, one by one. At the end we return `temp`, which still points to the original first node but now leads into a cleaned list with no adjacent duplicates. This scans the list just once (O(n) time) and uses only a couple of pointers (O(1) space), yet any reader—technical background or not—can picture it as “skip over identical neighbors so only unique items remain.”
+
+
+
+
+209.
+
+
+
+
+Imagine you have an array of positive numbers laid out in a row and a magic sum-goal stamped on a card (the “target”). You slide a stretchy window (think of two fingers) over the numbers: start both fingers at the beginning, and as you move your right finger forward you pick up numbers and add them to your running total. The moment your total reaches or exceeds the target, you stop pushing the right finger and try to pull in the left finger—this shrinks the window from the left, dropping numbers out of your total. Each time you manage to stay at or above the target while pulling in the left finger, you check if this window is the shortest you’ve seen so far. If it is, you remember its length. Once you can’t shrink any further without falling below the target, you go back to pushing the right finger again. You repeat this expand-then-shrink process until your right finger reaches the end of the list. By the time you finish, you’ve discovered the length of the smallest contiguous block whose sum is at least the target (or zero if no such block exists). This clever “sliding window” method examines each number at most twice—once when your right finger adds it, once when your left finger removes it—so it runs in linear time and uses only a handful of extra variables.
