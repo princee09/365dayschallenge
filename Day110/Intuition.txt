@@ -1,0 +1,61 @@
+19..
+
+
+
+
+Thought for a couple of seconds
+
+
+Think of the linked list as a racetrack and two pointers as two runners, Fast and Slow:
+
+1. **The Dummy “Starting Gate”**
+   Before the race even begins, we place an extra “dummy” node just before the real head of the list. This dummy acts like a universal starting gate so that even if we need to remove the very first real node, our method still works without special‑casing it.
+
+2. **Fast Gets a Head‑Start**
+   We line up both Fast and Slow at the dummy. Then we let Fast run ahead by n + 1 steps. Why n + 1? Because we want Slow to end up exactly one node before the one we must remove. That extra one‑step cushion makes the math line up neatly.
+
+3. **Neck‑and‑Neck to the Finish**
+   Now Fast is ahead, and Slow is still at the dummy. We move both pointers forward together, one node at a time. Fast keeps its lead of n + 1 nodes. When Fast finally reaches the end of the list (nullptr), Slow is sitting just before the target node (the nth from the end).
+
+4. **Removing the Target**
+   Slow’s next pointer is the unwanted node. To remove it, we simply bypass it:
+
+
+   slow->next = slow->next->next;
+
+
+   That unlinks the target from the chain. If you’re managing memory manually (in C++), you’d then delete the removed node to avoid a leak.
+
+5. **Why It’s O(1) Space and One Pass**
+
+   * We only ever used two pointers and one dummy—constant extra space.
+   * We advanced through the list only once with Fast (and in lock‑step with Slow), so it’s a single O(sz) pass.
+
+By imagining the two pointers as racers and the dummy as an extra starting block, the procedure becomes intuitive: give Fast the head‑start, run together to the finish, then let Slow do the removal.
+
+
+
+
+
+
+
+
+
+
+
+69..
+
+
+
+
+Imagine you need to find the largest integer whose square does not exceed x, but you’re not allowed to just take a built‑in square‑root function. Instead, picture the range of possible answers from 0 up to x. You can efficiently zero in on the correct integer by using binary search:
+
+Start with two pointers, left = 0 and right = x.
+
+Check the midpoint, mid = (left + right)/2.
+
+If mid² is less than or equal to x, then mid is a valid candidate for ⌊√x⌋—but there might be a larger integer that still works, so move left up to mid+1.
+
+If mid² is greater than x, mid is too big, so move right down to mid−1.
+
+By repeatedly halving the interval [left, right], you quickly converge on the largest mid whose square fits under x. The variable ans remembers the last valid mid. When left passes right, ans holds ⌊√x⌋. This runs in O(log x) time and uses only constant extra space.
