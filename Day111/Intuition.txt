@@ -1,0 +1,54 @@
+1128.
+
+
+
+
+
+
+
+Imagine you have a large pile of two‑number playing tiles (dominoes), and you want to count how many matching pairs there are—where one tile can be flipped end‑for‑end to look exactly like another. Instead of comparing every tile with every other tile one by one (which would take forever if you have thousands), you use a simple bookkeeping trick. You create a small grid of boxes labeled by the two numbers 1 through 9—so there’s a box for “1‑and‑1,” a box for “1‑and‑2,” and so on up to “9‑and‑9.” Whenever you pick up a tile, you first “normalize” it by always writing the smaller number first (so a “2‑and‑1” tile gets treated as “1‑and‑2”). Then you look in the corresponding box and see how many identical normalized tiles you’ve already seen—let’s say that number is 5. That means this new tile matches those 5 earlier ones, so you can immediately count 5 new matching pairs. Finally, you add this tile to the box (so the count in that box goes up by one). By the time you’ve processed all the tiles, your running total tells you exactly how many pairs match, and you never had to do any slow, repeated comparisons—just a quick lookup and update in a tiny 10×10 grid.
+
+
+
+
+
+
+
+92.
+
+
+
+
+
+
+
+Think of a single‑file line of people waiting—each person holds hands with the next, forming a chain. You want to reverse the order of everyone from position `left` to position `right` without breaking the rest of the line. Here’s the step‑by‑step in plain English:
+
+1. **Setup a “helper” at the front**
+   Imagine adding an extra invisible person (“dummy”) just before the first real person. This makes it easier when the reversal starts at the very front of the line.
+
+2. **Find the spot just before the reversal**
+   Walk from the dummy up to the person immediately before position `left`. Call that person **Prev**. Everything before Prev stays exactly as is.
+
+3. **Mark the start of the sub‑line**
+   The person at position `left` is the first in the group you’ll reverse; call them **Curr**. The people from Curr up to position `right` form the “sub‑line” you want to flip.
+
+4. **“Pull out” each next person and insert at front of sub‑line**
+   To reverse, do this simple move exactly `right – left` times:
+
+   * Let **Temp** be the person immediately after Curr.
+   * Detach Temp from its spot by having Curr skip past Temp.
+   * Insert Temp right after Prev—i.e., at the front of the sub‑line you’re building.
+
+   Visually, you’re always taking the next person in the original order and moving them to the front of the chunk you’re reversing. After you repeat this, the chunk’s order flips.
+
+5. **Reconnect and finish**
+   Because you never touched anyone outside the chunk except at the boundaries, the rest of the line (before Prev and after Curr’s final position) stays intact. The dummy’s next pointer now leads to the new head of the line.
+
+---
+
+**Why it works so neatly**
+
+* You only walk the line a constant number of times: once to reach Prev, then `right–left` small re‑attachments.
+* You never need extra memory or to swap values—just rewire the “hand‑holds” (the `next` pointers).
+* Edge cases like reversing from the very first person or reversing just one person (where nothing changes) automatically work, thanks to the dummy and the “do nothing” check when `left == right`.
