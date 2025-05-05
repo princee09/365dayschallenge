@@ -1,0 +1,77 @@
+24..
+
+
+
+Thought for a second
+
+
+Imagine your linked list as a row of boxes, each box holding a number and an arrow pointing to the next box. To “swap every two adjacent nodes,” we want each neighboring pair of boxes to trade places by re‑directing their arrows, not by swapping the numbers inside.
+
+First, picture one extra “dummy” box at the very front. It doesn’t hold a real number; it simply points to the first real box. This dummy makes it easy to handle swaps at the start of the list without special cases.
+
+Next, place your “prev” finger on the dummy box. This finger always sits immediately before the next pair you’ll swap. Look at the two boxes ahead of your finger—call them “first” and “second.” Also note the box right after these two; call that the “rest.”
+
+To swap the pair:
+
+* Point the “second” box’s arrow to the “first” box.
+* Then point the “first” box’s arrow to the “rest.”
+* Finally, re‑hook your finger’s arrow so it now points to the “second” box (the new front of this mini‑pair).
+
+At this point those two boxes have reversed their order. Now move your finger forward two boxes (so it lands on the box that was originally “first”), and repeat the process on the next two boxes.
+
+You keep doing this—remember what comes after, flip the two arrows, hook the front pointer—until you reach the end or a single leftover box. Because you never change the values inside the boxes, only the arrows, you satisfy the requirement of only moving nodes.
+
+This method is efficient: you traverse the list just once, and use only a handful of extra pointers (the dummy box and a few finger pointers). Each arrow is rewired exactly one time, so the total work grows in direct proportion to the number of boxes.
+
+
+
+
+
+1019.
+
+
+
+
+
+
+Thought for a couple of seconds
+
+
+Imagine your linked list as a row of numbered cards laid out left to right, each card pointing to the next one. For each card, you want to know: “What’s the first card to my right that has a bigger number than mine?” If there isn’t any bigger card further down the line, you’ll say “0.”
+
+---
+
+First, let’s see the simplest—but slow—way to do this in your head. You stand at card 1, look at every card to its right until you find a bigger number (or reach the end). Then you move to card 2, and again scan all the way to the right, and so on. If you have 10 cards, you might look at nearly 9 cards for the first, 8 for the next, etc. That’s a lot of repeated scanning: it can feel like reading the whole line over and over. For 10,000 cards, you could end up doing tens of millions of comparisons.
+
+---
+
+Can we be smarter? Yes—by remembering which cards are still “waiting” to see someone taller. Imagine you keep a small stack of markers on the cards that haven’t yet found a bigger neighbor. You’ll walk from left to right only once, carrying these markers along.
+
+1. **Start with an empty waiting stack.**
+2. **Look at the next card** in line. Call its number X.
+3. **Compare X to the cards on your waiting stack** (the ones still looking for a bigger neighbor).
+
+   * If X is bigger than the card at the top of your stack, then X is the answer for that waiting card. You remove that card from the stack and record “next greater = X.”
+   * Keep doing this as long as X is bigger than the top‑of‑stack card.
+4. **Push the current card onto the stack**, because now it too must wait to find its own bigger neighbor further right.
+5. **Move on** to the next card in the list.
+
+---
+
+Why does this work in just one pass? Because each card enters the stack exactly once (when you first see it) and leaves the stack at most once (when you find its next greater). You never go back and re‑scan long ranges for every card—each comparison happens only when a new card arrives to check against those still waiting.
+
+---
+
+Let’s walk through a tiny example: \[2, 7, 4, 3, 5].
+
+* You start at 2. Stack is empty, so 2 goes onto the stack.
+* Next card is 7. Compare 7 to the top of the stack (2). Since 7 > 2, you know 7 is the “next greater” for 2. Pop 2 off and record answer\[2] = 7. Now the stack is empty, so push 7.
+* Next is 4. Compare 4 to stack‑top (7). 4 is smaller, so it can’t answer 7’s question. Push 4—now both 7 and 4 are waiting.
+* Next is 3. Compare 3 to top (4). 3 is smaller, so push 3. Now waiting: 7, 4, 3.
+* Next is 5. Compare 5 to top (3). 5 > 3, so answer\[3] = 5; pop 3. Now top is 4: 5 > 4, so answer\[4] = 5; pop 4. Next top is 7, but 5 < 7, so stop. Push 5.
+
+At the end, the only card still waiting is 7—and it never saw anyone bigger, so its answer stays 0.
+
+---
+
+In everyday terms: you’re scanning once down the line, and each time someone taller shows up, you settle all the shorter people who’ve been waiting for a taller neighbor. No one waits longer than they must, and you never re‑scan the whole line for each person. That efficiency—each card checked on entry and on exit exactly once—is why this method runs in linear time, even though it might feel like everybody’s comparing heights.
