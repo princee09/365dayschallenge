@@ -1,0 +1,24 @@
+1920...
+
+
+
+
+The key insight is that because every element in `nums` lies between 0 and n−1, you can “pack” both the original value and the new mapped value into the same integer by computing
+
+$$
+\text{nums}[i] = \text{old} + (\text{new}\bmod n)\times n,
+$$
+
+where “old” is the original `nums[i]` and “new” is `nums[nums[i]]`.  The low‑order part (`mod n`) still yields the original value, while integer‑dividing by n extracts the new value.  In the first pass you encode both values in each slot; in the second pass you simply divide each entry by n to “unpack” and leave only the desired new values.  This lets you perform the transformation in‑place with only O(1) extra space, since you never allocate another size‑n array— you just temporarily overload each element with two numbers and then recover the one you want.
+
+
+
+204....
+
+
+
+
+
+
+
+The trick is simple: once you’ve handled the prime 2, every even number ≥4 can never be prime, so you only need to sieve odd candidates. By storing only odd integers $2k+1$ in a boolean array of size $\lfloor n/2\rfloor$, you cut your memory roughly in half and skip marking even multiples entirely. You initialize your count at 1 to account for 2, then for each odd $i$ from 3 up to $\sqrt n$ you check if it’s still marked prime (via index $i>>1$); if so, you mark its odd multiples starting at $i^2$ in steps of $2i$. Finally you scan the half‑sieve, converting each remaining true at index k back to the odd number $2k+1$ and adding to your count. This “odd‑only half‑sieve” delivers the same $O(n\log\log n)$ performance as the classic Sieve of Eratosthenes but uses only half the space and does about half the work.
