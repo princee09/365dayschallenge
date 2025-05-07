@@ -1,0 +1,40 @@
+3341..
+
+
+
+
+Imagine you’re in a big hotel made of rooms arranged in a grid. You start in the top‑left room at time zero, and you want to reach the bottom‑right room as fast as possible. Each room has a little clock on its door telling you the earliest time you’re allowed to step into that room. Even if you arrive early, you must wait in the hallway until that clock shows its green light. Walking through any door to a neighboring room always takes exactly one second.
+
+To plan your journey, you keep track—room by room—of the very earliest moment you could stand inside each one. At first, you know you’re in the starting room at time 0. Then you look at its four neighbors (up, down, left, right). For each neighbor, you calculate:
+
+* “If I reach the neighbor’s door at time t, but its green‑light time is T, I must wait until max(t, T), then spend one more second walking in.”
+* So the arrival time there is max(currentTime, neighborOpenTime) + 1.
+
+You always choose next to explore the room that you can reach the soonest—just like always picking the shortest waiting line at an airport. Each time you settle on a room, you update its neighbors’ best possible arrival times using that same “wait‑then‑walk” rule.
+
+You keep doing this—always moving to or “settling” the room with the smallest known arrival time—until you finally settle the bottom‑right room. At that moment you know, “Aha! The fastest I can ever get here is exactly T seconds.” And you stop.
+
+In everyday terms:
+
+1. Imagine you have a map of rooms, each door displays the earliest minute it will open.
+2. You start at room (0,0) at minute 0.
+3. To decide which door to go through next, you always pick the door that will let you in the soonest (waiting if it isn’t open yet, then stepping through takes one minute).
+4. You repeat until you arrive at your destination.
+
+This strategy guarantees you find the absolute quickest path, because you never ignore a faster option in favor of a slower one.
+
+
+
+
+
+
+
+125...
+
+
+
+
+
+
+Imagine you have a long sentence written on a ribbon and you want to check if it reads the same backward as forward—ignoring any spaces, commas or capital letters. You take two bookmarks: one at the start of the ribbon and one at the end. You move each bookmark inward, skipping over any characters that aren’t letters or numbers (so you ignore punctuation and spaces). Whenever both bookmarks land on actual letters or digits, you convert them to lowercase and compare: if they match, you slide both bookmarks one step closer and keep going; if they don’t match, you know right away the ribbon isn’t a palindrome. If the two bookmarks meet or cross without ever finding a mismatch, then you’ve proven the cleaned‑up text is identical forward and backward, so it is a palindrome.
+
