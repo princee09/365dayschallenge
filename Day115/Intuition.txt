@@ -1,0 +1,40 @@
+930..
+
+
+
+
+Imagine you have a row of coins that are either heads (1) or tails (0), and you want to count how many ways you can pick a consecutive group of coins so that the total number of heads in that group is exactly your target number (the “goal”).
+
+Here’s an everyday way to see what the code does:
+
+* You walk down the row of coins one by one, keeping track of how many heads you have seen so far in total. Call that running total your “sum.”
+* Along the way, you also keep a little notebook where you record: “I have seen a running total of 0 heads once,” “I have seen a running total of 1 head twice,” and so on. In other words, you count how many times each running-total number has happened.
+* Now, when you reach a new coin and update your running total, you ask: “If I want this stretch of coins to have exactly, say, 3 heads, how many times in the past did I have a running total that is exactly 3 fewer heads than I have now?” Because if earlier I had (current total minus goal) heads, then the coins between that earlier point and here must have added up to exactly the goal.
+* You look up in your notebook how many times that smaller total occurred, and you add that to your answer. Then you record your new running total in the notebook and move on.
+
+By the time you reach the end, you will have counted every possible consecutive group that sums to your desired number of heads—without ever checking each group one by one! You only ever update your running total, do one quick notebook lookup, and update the notebook. That makes the whole process fast, even if the row is very long.
+
+
+
+
+
+
+
+
+424..
+
+
+
+
+
+
+Imagine your string `s` as a row of colored beads, each bead labeled with a letter. You have up to k magic paint drops that let you repaint any bead into whatever color (letter) you like. You want the longest stretch of beads that can all end up the same color after using at most k repaintings.
+
+Here’s the everyday way to see what the code does in one smooth pass:
+
+* You lay down an elastic band (the “window”) around a starting segment of beads. As you slide the right end of the band bead by bead, you keep a little tally for how many beads of each color are currently under the band. You also remember which single color is most common inside the band (that count is `maxFreq`).
+* At any moment, the length of the band minus `maxFreq` tells you how many beads you would have to repaint to make every bead under the band that most‑common color.
+* If that repaint‑count exceeds your budget k, you slide the left end of the band forward one bead (shrinking the band) and adjust your tallies—because now you no longer care about that left‑most bead.
+* Whenever the band is valid (i.e. needing ≤ k repaints), you compare its length to the best length you’ve seen so far and update your record if it’s longer.
+
+By the time you’ve moved the right end across all beads, you’ve effectively tried every possible stretch—without ever restarting or checking from scratch. You only ever grow or shrink that one band, updating simple counts, so you find the longest repaint‑friendly run in linear time.
