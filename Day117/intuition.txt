@@ -1,0 +1,23 @@
+When you need to pick exactly k cards from either end of a row, it’s equivalent to deciding which block of cards in the middle you will leave behind. If there are n cards total, and you take k of them, then n–k cards remain.
+
+* **Total points available** = sum of all n cards.
+* **Points you actually get** = (total points) – (points you leave behind).
+
+So to make your score as large as possible, you want the points you leave behind to be as small as possible.
+
+1. **Think “leave a block”**
+
+   * Instead of laboring over all the ways to pick from front or back, imagine you simply choose a single contiguous block of size n–k in the middle and discard it.
+   * Everything outside that block (the front and back ends) are exactly the k cards you would have picked.
+
+2. **Find the worst block**
+
+   * To maximize your take, you minimize the sum of that discarded block.
+   * We slide a window of length n–k across the array, keeping track of which window has the smallest sum.
+
+3. **Compute your score**
+
+   * Subtract that minimum‑sum window from the total sum.
+   * What remains is the maximum possible points you could collect by smartly taking k cards from the ends.
+
+This turns the problem into a simple one‑pass scan: compute total sum once, then in O(n) time find the smallest‑sum block of length n–k, and subtract.
