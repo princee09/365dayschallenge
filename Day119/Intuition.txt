@@ -1,0 +1,9 @@
+Imagine you have a little bag full of digit-cards (0–9), some of them maybe duplicated, and you want to build every possible three-digit even number without leading zeros. Here’s the simple idea in everyday terms:
+
+1. **Count your cards**: First, note down how many of each digit you have.
+2. **Pick the hundreds place**: You can’t start with 0, so choose any digit 1–9 that you actually have. Take one of those cards out of the bag.
+3. **Pick the tens place**: From the remaining cards (including 0 now), pick any digit. Again, remove that card from the bag.
+4. **Pick the units place—but only even**: Now choose one of your even digits (0, 2, 4, 6, or 8) from what’s left. If you have it, you form a valid number!
+5. **Put cards back**: After recording the number, you “return” the tens and hundreds cards so you can reuse them in other combinations.
+
+Because you systematically try every valid hundreds digit first, then every possible tens digit, then every even unit digit, you generate each number exactly once—and in ascending order automatically. That way, you cover all unique three-digit even numbers you can make from your bag of cards, without extra work sorting or filtering later.
