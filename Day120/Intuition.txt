@@ -1,0 +1,45 @@
+Think of the whole process as a “recipe” for how each letter in your string grows over time. We want to know only how long the final string becomes after doing the same “growing” step $t$ times—without actually building the huge string itself.
+
+---
+
+**1. Every letter has its own growth plan**
+
+* Picture 26 little counters, one for each letter from ‘a’ through ‘z’.
+* At the start (zero steps done), each letter is just itself, so each counter is set to 1 (length 1).
+
+---
+
+**2. One step of growing: what happens to each letter?**
+
+* For ‘a’ through ‘y’: each just turns into the **next** letter.
+
+  * If you were counting how long an ‘a’ will be after this one step, it will become a ‘b’. And you already know how long a ‘b’ was before (that was your counter for ‘b’).
+* For ‘z’: it turns into two letters, “ab”.
+
+  * So the new length of a ‘z’ equals the old length-of-‘a’ plus the old length-of-‘b’.
+
+Keep in mind you’re not writing out any strings—just updating those 26 counters based on the rules above.
+
+---
+
+**3. Repeat that step $t$ times**
+
+* Every time you repeat, you look at your current counters and build a new set of 26 counters.
+* After the first step, your counters tell you, for example, “an ‘a’ will now be as long as whatever a ‘b’ was before, and so on.”
+* After the second step, you use those new counters again—and so on, until you’ve done it $t$ times.
+
+---
+
+**4. Finally, add up your letters**
+
+* Once you’ve done $t$ steps of updating counters, each counter says, “If you start with this letter and do $t$ steps, here’s how long it will be.”
+* Now look at your original string. For each original character, grab its counter and add it into a grand total.
+* That grand total is the length of the final, magically grown string—computed without ever building the string itself.
+
+---
+
+**Why this works**
+
+* You avoid exponential explosion in size by never actually constructing the long strings.
+* Instead, you keep just 26 simple numbers that tell you “how big each letter would get.”
+* It runs very fast (only about $26 \times t$ steps plus a single pass over your input), and uses almost no extra memory. Perfect for even very large $t$ or long starting strings!
