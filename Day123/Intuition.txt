@@ -1,0 +1,34 @@
+**347. Top K Frequent Elements**
+
+1. **Count how often each number shows up**
+
+   * Imagine you have a big bag of numbered balls. First, you sort them by color (number) and count how many balls of each color you have.
+2. **Group numbers by their counts**
+
+   * Now, you make piles labeled “1 ball,” “2 balls,” “3 balls,” etc., and you put each color into the pile that matches its count.
+3. **Pick the top k piles starting from the biggest**
+
+   * Starting from the pile with the largest label (the numbers that appeared most), you grab colors until you have k of them.
+
+This way you scan the bag only once to count, then you use simple “buckets” to organize, and finally grab k results — all in roughly linear time.
+
+---
+
+**355. Design Twitter**
+
+
+1. **Keep track of who follows whom**
+
+   * Picture each person carrying a little address book listing everyone they follow (and themselves, by default).
+2. **Stamp each tweet with a “time ticket”**
+
+   * Every time someone tweets, they get a sequential ticket number so we know which came first.
+3. **Store each user’s tweets in their own list**
+
+   * Think of each user having a personal scrapbook where they add new photo-like tweets at the end.
+4. **To build your news feed, do a k-way “merge” of lists**
+
+   * You look at your own scrapbook and each friend’s scrapbook, peek at the most recent entry in each, and put them into a simple “priority line” ordered by ticket number (newest first).
+   * Then you pull out the top 10 from that line, and whenever you remove one, you peek at the next older entry from that same scrapbook and add it back into the line.
+
+This merging trick is like lining up the latest pages of several photo-albums in order of most recent, without having to re-sort everything from scratch each time.
