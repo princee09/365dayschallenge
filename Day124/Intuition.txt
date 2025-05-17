@@ -1,0 +1,37 @@
+**455. Assign Cookies**
+
+Imagine you have a bunch of kids, each with their own “hunger level” for cookies—some kids need a big cookie to be happy, others will settle for a small one. Now you also have a pile of cookies of various sizes. You want to make as many kids happy as possible, but you can only give each kid *at most one* cookie, and you can’t break cookies into smaller pieces.
+
+
+1. **Line up the kids by how hungry they are**, from the least hungry (needs the smallest cookie) to the hungriest (needs the biggest one).
+2. **Sort your cookies by size**, from small to large.
+3. Now, start with the least hungry kid. Try to give them the smallest cookie that’s big enough to satisfy them.
+
+   * If your smallest remaining cookie is too small, toss it aside (it won’t make *any* kid happier than you’ve already lined up).
+   * If it’s big enough, give it to the kid, and you’ve made one kid happy.
+4. Move on to the next kid in line, and repeat: always try your smallest available cookie first, because using bigger cookies on kids who don’t need them would be wasteful.
+
+By doing this “smallest-hungry-first, smallest-cookie-first” dance, you ensure that you never waste a big cookie on a kid who would have been happy with a smaller one. This greedy choice—always satisfy the next easiest-to-please child with the smallest cookie that works—guarantees you make as many kids happy as possible.
+
+---
+
+**860. Lemonade Change**
+
+You’re running a lemonade stand, and every glass costs \$5. Customers come one by one and pay with a \$5, \$10, or \$20 bill. Your job is to give them back the correct change using the bills you’ve collected so far, so that each customer effectively pays \$5.
+
+
+1. **Track what you have in your cash box**—specifically, how many \$5 bills and how many \$10 bills you’re holding. (You never need to track \$20 bills, because you’ll never use a \$20 to give change.)
+2. When someone hands you a **\$5 bill**, no change is needed. You just add that \$5 to your cash box.
+3. When someone gives you a **\$10 bill**, they owe \$5 in change. You must give them one of your \$5 bills.
+
+   * If you don’t have any \$5 bills, you can’t make change—so you fail.
+   * Otherwise, you remove one \$5 from your box and add their \$10.
+4. When someone hands you a **\$20 bill**, they owe \$15. You have two ways to make \$15:
+
+   * **Best choice:** one \$10 bill and one \$5 bill. This uses up high-value bills first, leaving you more small \$5 bills for future change.
+   * **Fallback:** three \$5 bills, if you don’t have a \$10.
+   * If you have neither combination, you can’t make change—so you fail.
+
+Why prefer the \$10+ \$5 combo? Because keeping extra \$5 bills gives you more flexibility later. If you had only given three \$5 bills whenever someone paid with \$20, you might run out of \$5 bills too quickly and then be stuck unable to change a \$10-bill customer.
+
+By always using the “best” change option first and otherwise using the fallback, you maximize your chances of making every customer happy. If you make it through the whole line without running out of the right bills, you’ve succeeded!
