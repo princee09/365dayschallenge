@@ -1,0 +1,90 @@
+**435. Non-overlapping Intervals**
+
+Imagine you’re a TV enthusiast with a DVR, and you’ve scheduled recordings for a whole bunch of shows. Each show has a start time and an end time. The problem is, if two shows overlap, your DVR can’t record both at once—you’d miss the ending of one or the beginning of the other. You want to cancel as few recordings as possible so that none of the recorded shows overlap.
+
+1. **List all your shows by finish time:**
+
+   * Write down each show on a sticky note with its end time really big and its start time smaller.
+   * Now sort those sticky notes so the show that ends the earliest is at the top of the pile, then the next-quickest ending show, and so on.
+
+2. **Pick shows one at a time, always choosing the next one that finishes earliest:**
+
+   * Take the top sticky note (the earliest-finishing show)—you’ll definitely record this one.
+   * Now look at the next sticky note. Does its start time happen **before** the end time of the show you already picked?
+
+     * If **no**, they don’t overlap, so you can keep this one too.
+     * If **yes**, they clash—your DVR can’t do both. So you decide to **skip** (remove) the new one.
+
+3. **Why this works best:**
+
+   * By always keeping the show that wraps up quickest, you open up the longest possible “free window” for whatever comes next. You never regret picking an early-finishing show, because it never blocks a bigger one that you could have recorded later without conflict.
+   * Skipping the newer show (instead of the one you already picked) always minimizes the number of cancellations, because you only skip when absolutely forced by an overlap.
+
+In the end, the shows you **didn’t** skip are all non-overlapping, and the total number you canceled is as small as it can possibly be.
+
+---
+
+**135. Candy**
+
+
+Picture a playground line of kids waiting for a treat. Each child has a “score” (think of it as how well they did in a game). You must hand out candies under two simple rules:
+
+1. **Everybody gets at least one candy.**
+2. **If a child’s score is higher than one of their neighbors, that child must get more candies than that neighbor.**
+
+Your mission: Give out candies so that both rules are satisfied, but hand out the **fewest** total candies.
+
+---
+
+### Step-by-step intuition in depth
+
+1. **Start by giving everyone one candy**
+
+   * Why? Because of Rule #1 (“at least one candy”). This is our baseline.
+
+2. **First pass (left to right)—make friends of left neighbors happy**
+
+   * Walk down the line from the leftmost child to the rightmost.
+   * Compare each child to the child just before them (their left neighbor):
+
+     * **If their score is higher**, they must have more candies than that left neighbor.
+
+       * So bump their candies to `(left neighbor’s candies) + 1`.
+     * **Otherwise**, leave them at however many candies they already have (which might just be 1).
+
+   *Why do this?*
+   At each step, you ensure that every time you see an “uphill” in score (a child doing better than the one on their left), they get appropriately “more” candies to reflect that. After this pass, **all left-wise comparisons** obey the rule.
+
+3. **Second pass (right to left)—make friends of right neighbors happy**
+
+   * Now the tricky part: A child might already have enough candies compared to their left neighbor, but maybe not enough compared to their right neighbor if that right neighbor did better.
+   * So you walk back from the rightmost child to the leftmost. For each child:
+
+     * Look at their right neighbor.
+     * **If this child’s score is higher than their right neighbor’s**, then this child should have more candies than that right neighbor.
+     * But they might already have more (from the first pass). So you take the **maximum** of:
+
+       1. Their current candy count (from the first pass), and
+       2. `(right neighbor’s candies) + 1`.
+     * Update their candy count to that maximum.
+
+   *Why do both passes?*
+
+   * The **first pass** guarantees every child is happy compared to the left neighbor.
+   * The **second pass** guarantees every child is happy compared to the right neighbor—without undoing what you fixed in the first pass.
+   * By doing both, you satisfy **both** neighbor-comparison rules all along the line.
+
+4. **Sum up all the candies**
+
+   * After both sweeps, each child’s candy count is the minimum needed to respect both neighbors.
+   * Adding them up gives the smallest possible total.
+
+---
+
+### Why this is optimum
+
+* You only give extra candies when a child clearly “deserves” them by doing better than a neighbor.
+* You never arbitrarily inflate someone’s candy count more than required, because you always take the minimum extra needed at each step.
+* Two passes ensure you catch every “rise” in scores—both left-to-right and right-to-left—so no rule is violated.
+* This approach runs in a simple linear time (you just walk the line twice), making it practical even for thousands of kids.
+
