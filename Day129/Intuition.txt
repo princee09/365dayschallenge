@@ -1,0 +1,12 @@
+Imagine you are walking through a garden where each plant is connected to two other plants — one on the left and one on the right. Your job is to write down the name (or number) of each plant in a special order:
+first visit all the plants on the left, then write down the current plant, and then visit the plants on the right.
+This is called inorder traversal.
+
+Now, how do you do this if you don’t want to go in circles or forget where you came from?
+
+We use a basket (a stack) to keep track of the plants (nodes) we've seen but haven't written down yet.
+You keep walking left and putting each plant in the basket until you can't go left anymore.
+Once you hit the end, you pick the last plant from the basket, write it down, and now go right.
+Repeat this process until you've visited all the plants.
+
+This way, we’re making sure to visit everything in the left → center → right order, without getting lost!
