@@ -1,0 +1,12 @@
+145
+
+
+In this problem, we need to visit all the nodes of a binary tree in a specific order: first the left child, then the right child, and finally the parent node. This is called postorder traversal. While this is easy to do using recursion, the challenge is to do it without recursion. To solve this, we use a trick. We perform a modified version of preorder traversal, but instead of going root-left-right, we go root-right-left. We collect the values in this order and then simply reverse the list at the end. This gives us the correct postorder traversal. The reason this works is because reversing root-right-left gives us left-right-root, which is the order we need.
+
+
+
+102
+
+
+
+In this problem, we need to collect the values from a binary tree level by level, from top to bottom and left to right. This is known as level order traversal. To solve this, we use a queue. We start by putting the root node into the queue. Then, we process each level one by one. For each node we take out of the queue, we record its value and put its children into the queue. We do this until the queue is empty. At each step, we group the values of nodes that are on the same level into a separate list. This way, we build a list of lists, where each inner list contains the values of one level of the tree.
