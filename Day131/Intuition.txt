@@ -1,0 +1,99 @@
+
+
+**1. Leetcode 104: Maximum Depth of Binary Tree**
+
+**Problem:**
+You are given a tree (like a family tree). Each person (called a node) can have two children: one on the left and one on the right. You start at the very top (the root), and you want to find how far the longest path goes down to reach a leaf (a node with no children). The length of this path is called the maximum depth.
+
+
+Imagine you're exploring a tree where each branch splits into two smaller branches, and you want to know how tall the tree is—from the top to the farthest leaf. You climb down the left and right side of every branch, keeping track of how deep you’ve gone. In the end, you pick the path that took you deepest.
+
+**How the Code Works:**
+
+
+int maxDepth(TreeNode* root) {
+    if (root == nullptr) return 0;
+
+    int leftDepth = maxDepth(root->left);
+    int rightDepth = maxDepth(root->right);
+
+    return 1 + max(leftDepth, rightDepth);
+}
+
+
+* If the tree is empty (nothing at the top), the depth is 0.
+* Otherwise, we check how deep the left side of the tree goes and how deep the right side goes.
+* We take the larger (deeper) of the two and add 1 to include the current node we're standing on.
+* This repeats for every person (node) in the tree.
+
+---
+
+**2. Leetcode 110: Balanced Binary Tree**
+
+**Problem:**
+Again, you're given a tree. But this time, you need to figure out if the tree is balanced. A tree is balanced if, at every level, the left and right branches of every node are almost equal in height (they can differ by no more than 1).
+
+
+Think of a mobile hanging from the ceiling—one of those toys with strings and weights. If you hang too many toys on one side, the mobile tilts. A balanced tree is like a perfectly balanced mobile. You go from the bottom up, checking whether every branch is fairly even. The moment you see a branch that’s too heavy on one side, you know the whole tree is unbalanced.
+
+**How the Code Works:**
+
+int checkHeight(TreeNode* root) {
+    if (!root) return 0;
+
+    int left = checkHeight(root->left);
+    if (left == -1) return -1;
+
+    int right = checkHeight(root->right);
+    if (right == -1) return -1;
+
+    if (abs(left - right) > 1) return -1;
+
+    return 1 + max(left, right);
+}
+
+bool isBalanced(TreeNode* root) {
+    return checkHeight(root) != -1;
+}
+
+* We go down to the very bottom of the tree and calculate how tall each branch is.
+* If the difference in height between left and right is more than 1, we return -1, meaning this part is unbalanced.
+* If any part is unbalanced, we bubble up that -1 all the way to the top, saying "nope, the tree isn't balanced."
+* If everything is okay, we just return the height.
+
+So we’re not just checking the heights—we’re using them to tell whether the whole tree structure is balanced like a seesaw.
+
+---
+
+**3. Leetcode 2942: Find Words Containing Character**
+
+**Problem:**
+You are given a list of words and a single letter. You need to return a list of all the positions (indexes) where the words contain that letter.
+
+
+Imagine you have a list of words written on a board. You’re asked to look at each word and say, “Hey, does this word contain the letter ‘x’?” If yes, you write down the number of that word on a separate sheet. You repeat this for every word in the list.
+
+**How the Code Works:**
+
+
+vector<int> findWordsContaining(vector<string>& words, char x) {
+    vector<int> result;
+    for (int i = 0; i < words.size(); ++i) {
+        if (words[i].find(x) != string::npos) {
+            result.push_back(i);
+        }
+    }
+    return result;
+}
+
+* We start with an empty list called 'result' to store the indexes of matching words.
+* We go through each word one by one.
+* We use .find(x) to check if the word contains the letter x.
+
+  * If it does, .find() returns the position of that letter inside the word.
+  * If it doesn't, it returns something special called string::npos (which basically means “not found”).
+* So if the letter is found, we add the index of that word to our 'result' list.
+* Finally, we return the list of all matching indexes.
+
+This is like scanning through a list and saying: “Word number 2 has the letter. Word number 4 also has it. Let me write those numbers down.”
+
