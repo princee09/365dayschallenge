@@ -1,0 +1,7 @@
+543. Diameter of Binary Tree
+
+Imagine a tree as a network of connected points, and you want to find the longest route between any two points in that tree. This route does not have to pass through the main root point. The key idea is that at each point in the tree, you can go as far as possible to the left and as far as possible to the right. By adding the depth of the left and right paths, you get the total length of the path that passes through that point. By checking all points this way, and keeping track of the maximum path found, you eventually get the longest path in the entire tree. This is done using a recursive function that starts from the bottom and works its way up.
+
+2131. Longest Palindrome by Concatenating Two Letter Words 
+
+You are given a list of two-letter words and want to use some of them to build the longest possible word that reads the same backward as forward. The trick is to look for pairs of words that are reverse of each other, like "ab" and "ba". These pairs can be placed on opposite ends of the final word to keep it balanced and palindromic. Each such pair adds to the total length. Additionally, if you find any word like "gg" or "cc" where both letters are the same, you can place just one of them in the center of your palindrome to make it even longer. By combining reverse pairs and at most one symmetric word in the middle, you get the maximum length of a palindrome that can be built.
