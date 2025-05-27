@@ -1,0 +1,18 @@
+You are given two numbers n and m.
+
+From 1 to n, you need to split the numbers into two groups:
+
+Group 1: Numbers not divisible by m → Add them all → call this num1
+
+Group 2: Numbers divisible by m → Add them all → call this num2
+
+Now the question is: What is the difference between these two sums?
+So, the final answer is: num1 - num2
+
+Instead of looping through all numbers, we can use math formulas:
+
+Total sum from 1 to n = n * (n + 1) / 2
+
+Sum of numbers divisible by m = m * (k * (k + 1) / 2) where k = n / m
+
+Then subtract to find the answer
