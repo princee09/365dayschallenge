@@ -1,0 +1,15 @@
+Imagine you have two trees, and you want to check if they look exactly the same.
+
+To do that, you start at the root of both trees and compare their values.
+
+If the values are different, then the trees are clearly not the same.
+
+If the values are the same, you go one step further — you check if their left children are the same and then if their right children are the same.
+
+You keep doing this again and again for every corresponding node in both trees.
+
+If at any point, one tree has a node where the other tree has nothing, or the values are different — you stop and say, “Nope, not the same.”
+
+But if you make it through the entire tree without finding any mismatches, then the trees are exactly the same in shape and in values.
+
+It's just like walking through both trees side-by-side and making sure they match at every single step.
