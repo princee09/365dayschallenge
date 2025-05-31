@@ -1,0 +1,25 @@
+Question 909: Snakes and Ladders
+
+The main goal is to reach the last square of the board in the minimum number of dice rolls. Each square is numbered in a zigzag manner, starting from the bottom-left and alternating directions every row. From any current square, you can roll a dice and move to any of the next six squares. If you land on a square that contains a ladder or a snake, you are immediately transported to the square it points to. However, you only follow one such jump per turn, even if the resulting square contains another ladder or snake.
+
+To solve this efficiently, we use Breadth-First Search (BFS), which is ideal for finding the shortest path. BFS helps us explore all reachable squares level by level, representing the number of dice rolls. We start from square 1 and simulate dice rolls by checking the next six possible squares. For each, if it contains a ladder or snake, we move to the destination square. We keep track of visited squares to avoid reprocessing.
+
+The moment we reach the final square, we return the number of moves taken. If it's impossible to reach the end, we return -1. This ensures the minimum number of moves is found efficiently without checking all possible combinations.
+
+
+
+
+
+Question 103: Binary Tree Zigzag Level Order Traversal
+
+
+
+
+In this problem, we are asked to traverse a binary tree level by level but in an alternating direction: the first level from left to right, the second from right to left, the third from left to right, and so on. This traversal pattern is known as zigzag level order traversal.
+
+To achieve this, we use a queue for level order traversal. For each level, we determine how many nodes exist at that level (using the size of the queue) and process them one by one. If the level is to be traversed left to right, we insert values in order. If it's right to left, we insert the values in reverse positions. This can be done efficiently by calculating the correct index before inserting the value into the level vector.
+
+After processing a level, we enqueue the left and right children of each node for the next level. We also toggle the traversal direction for the next level. This process continues until all levels have been visited. The result is a list of lists where each list contains node values in the required zigzag order.
+
+This approach ensures a clean and efficient solution that processes the tree one level at a time while maintaining the alternating direction pattern.
+
