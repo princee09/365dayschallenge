@@ -1,0 +1,87 @@
+101. Symmetric Tree (Recursive and Iterative)
+
+
+
+Imagine a tree structure growing out from the middle, where each node splits into a left and a right child. Think of it like a family tree or an organizational chart. Now, the question asks: if you stood directly in front of this tree and looked at it, would the left side be a perfect mirror image of the right side?
+
+So, if the left side has a branch that goes down-left with value 3, then the right side should have a branch that goes down-right with the same value 3. Every move left on one side should be matched by an equal move right on the other side, and vice versa. It’s like folding the tree in half vertically and checking if both halves match up perfectly.
+
+Recursive Solution Intuition:
+Recursion is like asking the tree to look at itself and decide, "Hey, does my left side look like my right side in a mirror?"
+
+Here's how it works:
+
+Start by comparing the left and right child of the root.
+
+If both are empty, that’s a match.
+
+If one is empty and the other is not, that’s not a match.
+
+If both have values, you check:
+
+Are their values the same?
+
+Is the left child's left side the same as the right child's right side?
+
+Is the left child's right side the same as the right child's left side?
+
+You repeat this process for every matching pair of nodes. It’s like checking mirror pairs from the top down.
+
+This solution is elegant because it trusts the tree to keep checking itself, much like passing a question down a chain of command.
+
+Iterative Solution Intuition:
+
+This approach avoids recursion by using a queue — a line of nodes waiting to be compared.
+
+Put the root's left and right children into the queue.
+
+As long as there are nodes in the queue:
+
+Pull out two nodes at a time (they're supposed to be mirror images).
+
+If both are null, it’s fine — move on.
+
+If one is null and the other isn’t, the symmetry breaks.
+
+If their values differ, it's not symmetric.
+
+Otherwise, add their children into the queue in a mirrored order:
+
+Left of the first node with right of the second node.
+
+Right of the first node with left of the second node.
+
+This is like manually checking the mirror pairs one by one, level by level, from top to bottom.
+
+
+
+199. Binary Tree Right Side View 
+
+
+
+
+
+Imagine standing on the right side of a tree, like walking alongside it and peeking at each level from the side. You can only see the outermost node at each level — the one farthest to the right. The rest of the nodes might be there, but they’re hidden behind the visible ones.
+
+The task is to figure out what nodes you would see if you scanned the tree from top to bottom, always looking from the right side only.
+
+Think of it like looking at a multi-floor building from the side. Each floor may have several rooms, but you can only see the room that is on the far right of each floor.
+
+BFS (Level Order Traversal) Intuition:
+The approach is to explore the tree level by level, from top to bottom, using a queue:
+
+Start by putting the root node in the queue.
+
+At each level:
+
+Count how many nodes are on that level.
+
+Go through all of them one by one.
+
+For every node, add its left and right children to the queue.
+
+When you're at the last node of the level (the one processed last in that group), record its value — because that's the one you can see from the right side.
+
+This is like visiting every floor of a building, looking left to right inside each floor, and only remembering the number on the last door you saw.
+
+This method guarantees that you're always capturing the rightmost visible node from each level, exactly as if you're walking past the tree on the right and looking at it from the side.
