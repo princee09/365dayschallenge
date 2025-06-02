@@ -1,0 +1,33 @@
+Maximum Width of a Binary Tree
+
+
+
+Imagine you have a tree where each node can have up to two children: a left child and a right child. The "width" of the tree at any level is the distance between the leftmost and rightmost nodes on that level, including any gaps where nodes could be but aren't actually present. 
+
+To find the maximum width of the tree, you need to look at every level of the tree and measure how wide it is from the leftmost to the rightmost node, considering all possible positions where nodes could exist, even if they're empty. The widest level you find is the maximum width of the tree.
+
+
+When you look at a binary tree, you can think of each node's position as being numbered from left to right. The root is at position 1. Its left child is at position 2, and its right child is at position 3. The left child of the left child is at position 4, and so on. 
+
+By numbering the nodes this way, you can calculate the width of each level by finding the difference between the positions of the leftmost and rightmost nodes on that level. The maximum width is simply the largest such difference you find across all levels.
+
+To avoid dealing with very large numbers (since the positions can grow exponentially with the depth of the tree), you can adjust the numbering at each level to start from zero. This keeps the numbers manageable and still allows you to correctly calculate the width.
+
+Lowest Common Ancestor in a Binary Tree
+
+
+
+Think of a family tree where each person can have two children. The "lowest common ancestor" of two people in this tree is the youngest person who is an ancestor of both. 
+
+For example, if you and your cousin want to find your lowest common ancestor, you'd look for the youngest grandparent or great-grandparent that you both share. That person is the lowest common ancestor because they are the closest ancestor you have in common.
+
+
+
+In a binary tree, the lowest common ancestor (LCA) of two nodes is the deepest node that has both nodes as descendants. A node can be a descendant of itself, so if one of the nodes is an ancestor of the other, the ancestor node is the LCA.
+
+To find the LCA, you can traverse the tree starting from the root. As you go down the tree, you check if the current node is one of the two nodes you're looking for. If it is, you note that you've found one of them. 
+
+You then continue searching in the left and right subtrees. If you find one node in the left subtree and the other in the right subtree, the current node is the LCA. If both nodes are found in one subtree, the LCA is in that subtree. 
+
+This approach ensures that you find the deepest node that connects both nodes, which is their lowest common ancestor. 
+
