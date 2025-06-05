@@ -1,0 +1,18 @@
+ 202. Happy Number
+
+Imagine you take a number and look at each digit in it. Then, for each digit, you square it (multiply it by itself), and then you add all those squared numbers together. Now you take that total and repeat the same process: break it into digits, square each digit, add them again. You keep doing this again and again.
+
+If, at some point, the number you get becomes 1, then we say it's a "Happy Number". If it never becomes 1 and just keeps cycling between other numbers forever, then it's not a happy number.
+
+Now, to make this fast and memory-efficient, we use something called Floyd’s Cycle Detection (like two people running in a circle — one faster than the other). One person moves step-by-step (slow), and the other moves two steps at a time (fast). If they ever meet at the same number (and it’s not 1), that means we're in a loop. But if the fast one reaches 1, we stop and say "yes, it’s a happy number".
+
+So we avoid storing all previous numbers and just check if we enter a loop using this clever two-speed pointer trick.
+
+
+344. Reverse String
+
+Think of the input string as a row of tiles lying on the floor, each tile having one letter. Your job is to flip the row around so the first tile becomes the last, the second becomes second-last, and so on — just like turning around a line of people standing one behind another.
+
+To do this without using extra space (no new boxes or arrays), we use two fingers — one pointing to the start of the array, and one to the end. We just swap the two letters they are pointing at. Then we move both fingers closer toward the center and keep swapping until they meet or cross.
+
+It’s like exchanging outer tiles and walking inward, one by one. In the end, the original array is reversed without using any extra memory — we just change things in place, directly in the original array.
