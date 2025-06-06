@@ -1,0 +1,39 @@
+Imagine you are in a grocery store, and you note down the total price after each item you add to your cart.
+
+So, say you add:
+
+item 1: -2 rupees
+
+item 2: 0 rupees
+
+item 3: 3 rupees
+
+item 4: -5 rupees
+
+item 5: 2 rupees
+
+item 6: -1 rupees
+
+Now instead of calculating total from scratch every time someone asks “what is the total price between item 2 and item 5?”, you already have a notebook where you wrote cumulative total after each item.
+
+For example:
+
+After item 0: total is 0
+
+After item 1: total is -2
+
+After item 2: still -2
+
+After item 3: becomes 1
+
+After item 4: becomes -4
+
+After item 5: becomes -2
+
+After item 6: becomes -3
+
+Now if someone asks: what is the sum from item 2 to item 5?
+You just subtract the total till item 1 (which is -2) from the total till item 5 (which is -3)
+So the answer is -3 - (-2) = -1
+
+This is what prefix sum does. It keeps a notebook of totals so we don't have to add up again and again. It makes repeated questions (sum queries) very fast by using subtraction instead of doing the full addition each time.
