@@ -1,0 +1,18 @@
+724. Find Pivot Index
+
+Imagine you are standing at a certain point in a line of people, and each person has a number written on their shirt. Now, you look to your left and add up all the numbers of the people standing on your left. Then you look to your right and add up the numbers on your right. You are trying to find a spot where the total of the left side is exactly equal to the total of the right side.
+
+To do this efficiently, you can first add up all the numbers from everyone — this is your total sum. Then, as you move through each person in the line, you keep track of the total sum of the people to your left. At each person, you check if the left sum is equal to the total sum minus the left sum and the number on the current person’s shirt (which would be the right sum). If it is, then that's your balance point — the pivot index. If you never find such a balance, return -1.
+
+
+
+1588. Sum of All Odd Length Subarrays
+
+
+
+Think of a list of numbers where you want to find the total sum of every group (or subarray) that has an odd number of items in it. For example, groups of 1, 3, 5 elements, etc. One way is to try out every possible odd group and add up all their numbers. But that’s slow.
+
+Instead, imagine this: for each number in the list, figure out how many times it will be part of an odd-length group. For example, some numbers will show up in many such groups and some only a few times. If you can count that number of appearances for each item, you just multiply that number by the value and add it to your total.
+
+You do this by thinking about how many ways a number can be included in a group that starts somewhere before it and ends somewhere after it. That count can be found by simple math, and about half of those will have odd lengths. This way, without actually listing every group, you can still find the total sum quickly.
+
