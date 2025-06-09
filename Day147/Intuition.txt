@@ -1,0 +1,35 @@
+191. Number of 1 Bits 
+
+Imagine you are counting how many lights are ON in a row of 32 light bulbs. Each bulb can be either ON (1) 
+or OFF (0), and they are all lined up in a row. When you get a number (like 11), it is like someone telling
+ you which bulbs are ON. For example, 11 in binary is 1011 — this means bulb 1, 2, and 4 are ON. Your job 
+is just to walk through these bulbs and count how many are glowing. Instead of checking each and every bulb 
+one by one, we use a smart trick: every time we find the first bulb that is ON, we switch it OFF and count 
+that one, and repeat. This way we skip all the OFF bulbs and go straight to the glowing ones.
+
+
+
+We use the & (bitwise AND) operator to do the trick. In every loop, we do n = n & (n - 1). This operation 
+removes the lowest set bit (the first 1 from the right) from n. We keep a counter, and every time we remove
+ a bit, we increase the count. This loop only runs as many times as there are 1s in the number. So, if there
+ are 5 ON bulbs, it runs 5 times. This makes it faster than checking all 32 bits.
+
+
+
+
+
+389. Find the Difference 
+
+
+
+Think of two bowls of alphabet magnets. The first bowl (s) has some letters, and the second bowl (t)
+ has the same letters but one extra letter thrown in. Now imagine you're blindfolded, and you’re allowed
+ to mix both sets by feeling them, and you want to figure out which one is the odd one out — the extra 
+magnet. Instead of comparing each letter one by one, you run your fingers over all the letters from both
+ bowls and kind of “cancel them out” in pairs. At the end, the one letter left in your hand is the one 
+that didn’t have a match — that’s the extra letter.
+
+
+We use the ^ (XOR) operator. When two same letters are XORed, they cancel out to 0. So we XOR every letter
+ in string s and every letter in string t. All common letters cancel each other out, and only the extra 
+letter from t remains in the result. This method uses just one variable and runs in linear time.
