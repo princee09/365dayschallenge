@@ -1,0 +1,62 @@
+3442: Maximum Difference Between Even and Odd Frequency I
+
+
+
+Imagine you are looking at how many times each letter appears in a word. Now you want to find:
+
+One letter that appears an odd number of times (like 5 times),
+
+And another that appears an even number of times (like 2 times),
+Then just subtract: 5 - 2 = 3.
+
+The goal is to find the biggest possible difference like this between one odd and one even count.
+
+So you look at all letters, check how many times each appears, collect the biggest odd count and the smallest even count, and subtract them.
+
+
+We use a map to count each letter. Like keeping a record: "a: 5", "b: 2", "c: 1".
+
+After that, we go through these numbers:
+
+If the number is odd (like 5), we keep track of the largest one seen so far.
+
+If it's even (like 2), we track the smallest one.
+
+Then at the end, we subtract: biggest odd - smallest even.
+
+It’s like finding the most "oddly repeated" letter and the least "evenly repeated" one and checking how far apart they are in number.
+
+
+
+409: Longest Palindrome
+
+
+
+
+We want to make a word that reads the same forwards and backwards (like "abba" or "racecar"). The rule is that letters on both sides must match.
+
+So if a letter appears even times (like 4), we can use all of them—half on the left, half on the right.
+
+If a letter appears odd times (like 5), we can only use 4 of them (leave one out) to keep it balanced.
+
+But wait—we can place one odd letter in the middle of the palindrome (like the "c" in "abcba").
+
+So in the end:
+
+Use as many even counts as possible.
+
+From the odd counts, use one less (like 5 becomes 4), and save one extra to place in the center.
+
+
+We again count how many times each letter appears using a map.
+
+Then for each letter:
+
+If its count is even, we can use all of it.
+
+If its count is odd, we use (count - 1) and remember that we found something odd.
+
+If at least one odd-count letter exists, we add 1 more in the end, to place it in the center of our palindrome.
+
+That’s how we calculate the maximum length of a word that can read the same backward and forward using letters from the original word.
+
