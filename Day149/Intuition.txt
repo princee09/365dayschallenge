@@ -1,0 +1,51 @@
+917. Reverse Only Letters
+
+
+Imagine you have a string like a sentence with letters and symbols like hyphens or numbers.
+Now, you're asked to reverse only the alphabets in it, but leave all the other characters (like -, =, 1, etc.) untouched at their positions.
+
+Think of it like this — take all the letters out, reverse them, and then put them back in the same spots where letters were originally.
+But the symbols like - or ! should not move — they stay fixed exactly where they are.
+
+So, you take one pointer from the start and one from the end, and keep swapping letters while skipping over symbols.
+
+
+
+We use two pointers: one starts from the beginning (left), and one from the end (right).
+
+We move both pointers inward:
+
+If the current character is not a letter (checked using isalpha()), we skip it.
+
+If both are letters, we swap them and move on.
+
+We continue this until both pointers meet.
+This ensures that only letters are reversed, and all special characters or numbers remain exactly where they are.
+
+
+
+219. Contains Duplicate II
+
+
+
+Imagine you're looking through a list of numbers.
+You want to check: "Did I see this number just a few steps ago?" — specifically, within a certain number of steps (k steps).
+
+Like you're walking on a path and remembering every number you see.
+If you see the same number again within k steps, you stop and say "Yes, I've seen this recently."
+If you never find such a pair, you say "Nope, all repeated numbers are too far apart."
+
+
+
+
+We use a map (called indexMap) to remember the last position (index) where we saw each number.
+
+As we go through the array:
+
+If the number has been seen before, we check how far apart the last seen index and the current index are.
+
+If the difference is less than or equal to k, return true — we found a duplicate close enough.
+
+If not, or it's a new number, we update its index in the map.
+
+This way, we only store what’s necessary and scan the list once — making the solution efficient.
