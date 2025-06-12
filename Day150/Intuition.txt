@@ -1,0 +1,39 @@
+3423: Maximum Difference Between Adjacent Elements in a Circular Array
+
+
+
+Imagine you are sitting around a circular table with some people, and each person has a card with a number written on it. These numbers can be positive or negative, big or small.
+
+
+Now, your job is to look at the number on each person's card and compare it with the number of the person sitting right next to them. You want to find the biggest jump — that is, the biggest change — between two neighbors. This "jump" is just the absolute difference between their numbers. For example, if one person has a 4 and their neighbor has a 1, the jump is 3. If someone has -10 and their neighbor has -5, the jump is 5.
+
+
+But here's the twist: since it's a circular table, the first and the last people are also considered neighbors. So you can’t just check from left to right — you also need to compare the first number with the last one, just like comparing two people sitting next to each other in a circle.
+
+
+You go through the circle once, compare each person’s number with their neighbor, keep track of the biggest difference you've found so far, and finally return that as your answer.
+
+This way, you ensure you find the maximum absolute difference between any two adjacent elements in a circular setup.
+
+
+
+
+
+
+349: Intersection of Two Arrays
+
+
+
+
+Let’s say you have two boxes of colored balls. The first box has a bunch of balls, and so does the second. Some colors might be repeated inside each box. Your job is to find out which colors are common in both boxes, but you only want to list each color once in your final answer — no duplicates.
+
+
+To do this efficiently, you do something smart. First, you make a small list of all unique colors in the first box. Think of this like keeping only one ball of each color and throwing away the duplicates from the first box.
+
+Now, you go to the second box and pick out each ball one by one. For every ball, you check: is this color already in the list you made from the first box? If yes, you keep it aside as part of your final answer.
+
+Since you're using a special list (called a set in programming) that automatically avoids duplicates, you don’t have to worry about the same color appearing twice in your answer — even if it appeared 10 times in each box.
+
+So the result is a neat list of only those colors (or numbers) that appeared in both boxes, listed only once.
+
+This method is fast and clean because it avoids comparing every ball in one box to every ball in the other, and instead uses a quick lookup method that saves time.
