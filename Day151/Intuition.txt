@@ -1,0 +1,63 @@
+1763. Longest Nice Substring
+
+
+
+
+
+Imagine you are given a word, and you have to find a part of the word (a substring) that follows one simple rule:
+
+For every letter inside it, both its small (lowercase) and big (uppercase) version must exist.
+
+So if the letter "a" is there, "A" must also be there.
+If "B" is there, "b" must also be there.
+If even one letter breaks this rule, that part of the word is not "nice".
+
+For example, in the word "YazaAay", the substring "aAa" is nice because "a" and "A" both exist in that part.
+Now, your task is to find the longest such nice part. And if there are multiple longest ones, you pick the one that comes first in the word.
+
+To solve this smartly, we go step by step:
+We look at the word and find any letter that does not follow the nice rule — meaning it has only lowercase or only uppercase in that section.
+We know that any nice part cannot include that kind of unbalanced letter.
+So we break the word into smaller parts around that bad letter and check those smaller parts.
+Then we just compare which part is the longest nice one.
+
+This way, instead of checking every possible part blindly, we only focus on breaking it wisely where the problem lies.
+It’s like finding a rotten apple in a box and saying, “Whatever is around this apple cannot be perfect,” and then checking only the clean sections.
+
+
+
+
+
+
+
+
+2269. Find the K-Beauty of a Number 
+
+
+
+
+
+You are given a number (like 240 or 430043) and another number k, which tells you how long the substrings should be.
+
+Now, the goal is:
+Find all the parts of the number that are exactly k digits long, and then count how many of those parts divide the original number perfectly.
+This is what we call the K-beauty of that number.
+
+For example, with 240 and k=2:
+You take all 2-digit parts: "24" and "40" (you slide a window of size 2 over the number).
+Now you check:
+Does 240 divide perfectly by 24? Yes.
+Does 240 divide perfectly by 40? Yes.
+So answer is 2.
+
+We skip any part that has a "0" because a number can’t be divided by zero.
+
+So the simple plan is:
+Convert the number to a string (so we can pick parts of it easily).
+Start from the left, grab every k-length group of digits.
+Turn that group back into a number.
+Check if the original number can be divided by it without any remainder.
+If yes, increase the beauty count.
+
+This is like looking at a number through a small magnifying glass window that sees only k digits at a time, and each time you slide the glass and ask:
+"Hey, can this portion divide the whole number?"
