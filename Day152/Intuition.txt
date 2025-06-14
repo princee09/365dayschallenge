@@ -1,0 +1,46 @@
+Maximum Difference by Remapping a Digit  
+
+
+
+
+Imagine you have a number like `11891`. Bob can change all copies of one digit to another digit. To get the biggest number, he should change the first non-9 digit he finds (from left to right) to a `9`. For the smallest number, he should change the very first digit to a `0`. The difference between these two new numbers is the answer.  
+
+
+
+ 
+1. Convert the number to a string for easy digit access.  
+2. **Find max value**:  
+   - Scan left to right for the first digit not `9`.  
+   - Replace all occurrences of that digit with `9`.  
+3. **Find min value**:  
+   - Replace all occurrences of the first digit with `0`.  
+4. Convert both results back to integers and return `max_value - min_value`.  
+
+
+
+
+
+
+2: Find K Closest Elements  
+
+
+
+
+ 
+Given a sorted list (e.g., `[1,2,3,4,5]`), find `k` numbers closest to `x` (e.g., `x=3`, `k=4` → `[1,2,3,4]`). Since the list is sorted, these `k` numbers must appear together as a continuous block. The best block is found by checking which end of the block (start or end) is farther from `x` and shifting the block toward the closer side.  
+
+
+
+
+1. Use binary search to find the optimal starting index for the block:  
+   - Initialize `left = 0`, `right = array_length - k`.  
+2. **Compare block boundaries**:  
+   - Calculate `mid = (left + right) / 2`.  
+   - If `x - arr[mid]` (distance from start) > `arr[mid+k] - x` (distance from end), move the block right (`left = mid + 1`).  
+   - Otherwise, keep the block or move left (`right = mid`).  
+3. Return the block `arr[left]` to `arr[left + k - 1]`.  
+
+### Key Operators Used:  
+- String Replacement: Replacing all occurrences of a digit in a string.  
+- Binary Search: Efficiently narrowing down the best block of `k` elements.  
+- Absolute Difference Comparison: Checking which element is closer to `x` by comparing distances.
