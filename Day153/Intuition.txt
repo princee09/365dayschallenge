@@ -1,0 +1,30 @@
+1432. Max Difference You Can Get From Changing an Integer
+
+
+Imagine you are given a number, and you are allowed to change all appearances of one digit to any other digit.
+ You can do this twice, separately. Your goal is to make the biggest number possible once and the smallest number 
+possible the second time, and then find the difference between the two.
+
+To make the largest number, you try to replace some digit in the number with 9, because 9 is the biggest possible
+ digit and will help increase the value the most.
+
+To make the smallest number, you replace some digit with either 1 or 0, depending on whether it’s the first digit 
+or not. But you must make sure the number doesn’t start with 0, because that would be invalid.
+
+Once you get your biggest and smallest numbers, just subtract the smaller one from the bigger one to get the answer.
+
+
+
+
+108. Convert Sorted Array to Binary Search Tree
+
+
+
+You are given a list of numbers that are already sorted in increasing order. You need to turn this list into
+ a binary tree in a way that the tree is balanced, which means it doesn’t lean too much to the left or right.
+
+To do that, you pick the middle number of the list and make it the root of the tree. Then you repeat the same
+ process for the left half of the list to build the left part of the tree, and the right half of the list to build the right part.
+
+This way, every time you split the list and choose the middle, you are making sure the tree stays even on both 
+sides, resulting in a height-balanced binary search tree.
