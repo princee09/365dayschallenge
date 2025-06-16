@@ -1,0 +1,49 @@
+2016. Maximum Difference Between Increasing Elements
+
+
+
+Imagine you are walking through a line of numbers from left to right.
+
+You want to find two numbers where the first comes before the second, and the first number is smaller than the second.
+
+The goal is to find the biggest increase between such a pair.
+
+So as you go through the list, keep track of the smallest number you've seen so far.
+
+At each step, check if the current number is bigger than that smallest one.
+
+If it is, calculate the difference and remember the largest difference you ever find.
+
+If the current number is smaller or equal, update your smallest number so far.
+
+At the end, you’ll have the biggest valid increase from an earlier small number to a later big number.
+
+If no such increase exists, return -1.
+
+
+
+
+2574. Left and Right Sum Differences 
+
+
+
+
+Think of a number line with multiple positions.
+
+For every position in the list, you want to know:
+
+What is the total of all numbers to its left?
+
+What is the total of all numbers to its right?
+
+Then, you just subtract the left total from the right total, and take the positive difference.
+
+To do this efficiently, go through the list once from left to right, and at each step keep adding up numbers to form the leftSum array.
+
+Then go from right to left, doing the same to form the rightSum array.
+
+Once you have both arrays, go through them and at each position, take the absolute difference of left and right sums.
+
+That gives you your final answer for each position.
+
+It’s like checking how unbalanced each point is between its left and right side.
