@@ -1,0 +1,49 @@
+226. Invert Binary Tree
+
+
+
+Imagine you're looking at a family tree where each person has two children—one on the left
+ and one on the right. In this task, we want to mirror the entire tree, which means every 
+left child should become a right child, and every right child should become a left child. 
+We go to each person in the tree and swap their left and right children, then move down and 
+do the same for their children, and keep repeating this process until we reach the bottom. 
+This way, the entire structure flips like a mirror image.
+
+
+
+
+129. Sum Root to Leaf Numbers
+
+
+
+
+Think of this tree like a treasure map, where each path from the top to the bottom forms a number 
+by sticking digits together. For example, if the path is 1 → 2 → 3, then it becomes the number 123. 
+The task is to go through all such paths from top to bottom, form numbers by combining the digits 
+along the way, and then add all those numbers together. If there are multiple paths, like 1 → 2 and 1 → 3, 
+you form 12 and 13, and return their sum which is 25. We repeat this number-building process for every path
+ until we reach all the leaf nodes (the endpoints).
+
+
+
+
+
+
+450. Delete Node in a BST
+
+
+
+
+
+This is like managing a bookshelf where books are arranged in a specific order 
+(like smallest on the left, largest on the right). Now someone tells you to
+remove a book with a certain number. You start searching for that book by
+comparing numbers and going left or right. Once you find it, you handle three cases:
+
+If the book has no other books connected, just remove it.
+
+If it’s connected to only one book, replace it with that one.
+
+If it’s connected to two books, then find the next smallest book from the right side, 
+copy its number to the current one, and remove the duplicate from where it came.
+This way, the order on the bookshelf stays correct even after deleting.
