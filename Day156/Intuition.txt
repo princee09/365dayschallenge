@@ -1,0 +1,41 @@
+2966: Divide Array Into Arrays With Max Difference
+
+
+
+Imagine you are given a bunch of numbered blocks, and you are told to make small groups of 3 blocks each.
+But there is one strict rule — in each group, the largest number and the smallest number must not differ 
+too much. That “too much” is defined by a number called k.
+
+Now, to make things easier, you first arrange all the blocks in increasing order.
+Then, you start picking 3 blocks at a time from left to right.
+Since they are sorted, the smallest number is always the first one in the group, and
+ the largest is the last one.
+You just check: Is the difference between the first and last block in this group less 
+than or equal to k?
+If yes, you keep the group. If not, then it means it is impossible to divide the blocks in a way that meets the rule.
+So you return an empty answer if even one group breaks the rule.
+
+
+
+
+
+
+
+526: Beautiful Arrangement
+
+Here, we are asked: How many nice ways can you arrange numbers from 1 to n in a row?
+
+A nice arrangement (called "beautiful") follows a simple rule:
+At every position i (starting from 1), the number at that position must either divide i, or be divisible by i.
+For example, if position 2 has number 4, it's okay because 4 is divisible by 2.
+Or if position 3 has number 1, it's also okay because 3 is divisible by 1.
+
+Now, to find how many such beautiful arrangements are possible, we try all possible number arrangements, but we do it smartly.
+
+We use a trick called "bitmasking" — think of it like switches that tell us which numbers have already been used.
+We start from position 1 and try every unused number that satisfies the beautiful condition.
+Each time we make a choice, we move to the next position, and keep track of what numbers are already used.
+If we reach the end successfully, it means this was one valid arrangement.
+
+To save time, we remember the results of previous steps using a memory table, so we don’t redo the same work again and again.
+
