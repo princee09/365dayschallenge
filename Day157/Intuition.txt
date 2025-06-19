@@ -1,0 +1,31 @@
+496. Next Greater Element I – :
+
+
+Imagine you have two lists of numbers. The first list is a smaller one (called nums1), 
+and the second one (called nums2) is the complete list that includes all numbers from the first list.
+Now, for each number in the first list, your job is to look it up in the second list and find the
+first number that is bigger and comes after it. If there's no bigger number after it, just say -1.
+
+To make this fast, we scan the second list from left to right while keeping a pile (called a stack) of 
+numbers we’re still waiting to find bigger ones for.
+When we find a number that is bigger than what’s on top of our pile, we say “aha, here’s your next greater 
+number!” and remember it in a dictionary.
+Later, for each number in the first list, we simply look up what we remembered for it.
+
+
+
+
+
+503. Next Greater Element II :
+
+
+
+Now imagine the numbers are in a circle, like a clock, where after the last number, you loop back to the first.
+Just like before, we want to find the next number that is bigger than the current one, but this time we can 
+also look ahead in a circular way.
+
+We pretend to go through the list twice (as if we looped around once), so we don’t miss any number that could be 
+bigger and come after wrapping around.
+We use a stack again to keep track of the numbers we’re still trying to find the next greater for.
+As we go through the list, if we find a number that's bigger than the one on top of our stack, we record it as 
+the answer for that number.
