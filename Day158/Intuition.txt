@@ -1,0 +1,31 @@
+387. First Unique Character in a String
+
+
+
+Imagine you are given a line of letters, and you are asked to find the first 
+letter that does not repeat anywhere else in the line. So you look at each 
+letter one by one, and for each letter, you want to know how many times it 
+appears in the full line. If it appears only once, you immediately return 
+its position. To do this efficiently, we first take a quick count of how many 
+times each letter appears (like tallying on paper). Then, we go through the line 
+again, and the first letter whose count is just one, that’s our answer. If no such 
+letter is found, we return -1. We use an array of size 26 to keep count for each alphabet 
+letter, which makes it very fast.
+
+
+
+
+933. Number of Recent Calls
+
+
+
+
+
+
+Think of this like you’re answering calls, and every time you get a new call, 
+you want to know how many calls you got in just the last 3 seconds (3000 milliseconds). 
+You don’t care about any older calls. So you keep a line (queue) of all the times when calls 
+happened. Every time a new call comes in, you add it to the line. Then, you remove all the old 
+calls that happened more than 3 seconds ago. After cleaning up the old calls, the number of items 
+left in the line is your answer. This way, you are always only storing recent calls, and removing 
+the outdated ones.
