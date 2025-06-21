@@ -1,0 +1,51 @@
+322. Coin Change 
+
+
+
+
+Imagine you have an unlimited supply of coins of different values like ₹1, ₹2, ₹5.
+Now suppose someone tells you to make ₹11 using as few coins as possible.
+
+What will you do? You’ll try all possible ways: maybe ₹5+₹5+₹1 or ₹2+₹2+₹2+₹2+₹2+₹1.
+The idea is to try every way to build smaller amounts like ₹1, ₹2, ₹3 and so on until ₹11,
+and at every step, remember the least number of coins you needed for that value.
+
+We use an array to remember the best answer for every smaller amount.
+For ₹0, we need 0 coins.
+For ₹1, we check if we can reach it by adding a coin to ₹0.
+For ₹2, we try reaching it from ₹1 or ₹0 using available coins.
+We repeat this until we reach ₹11.
+
+If we find a way, we return the minimum number of coins.
+If no combination works, we return -1.
+
+
+
+
+
+
+
+
+373. Find K Pairs with Smallest Sums
+
+
+
+
+
+
+
+
+
+Imagine you have two lists of numbers.
+The first list is like prices of items in one shop, the second list is prices in another.
+You want to pick one item from each list and form a pair.
+Your goal is to find the k pairs that give you the smallest combined prices.
+
+But making all combinations is too slow.
+So what we do is —
+We know both lists are sorted, so the smallest pair will always come from the first element of both lists.
+Then we slowly move to next best options by changing one item at a time.
+
+We use a "basket" that always gives us the smallest sum pair first.
+We put possible next combinations in it only when needed.
+This way we avoid checking useless or large pairs and still get the top k cheapest combinations quickly.
