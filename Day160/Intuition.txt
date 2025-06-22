@@ -1,0 +1,30 @@
+2138. Divide a String Into Groups of Size k
+
+
+
+Imagine you have a long string of characters, like a rope made of letters. You want to cut 
+this rope into smaller equal parts, each of size k. You start cutting from the 
+beginning—first k letters go into one group, then the next k letters into the next 
+group, and so on. If you reach the end and there's not enough letters left to make a full group, 
+you add some filler characters (like sticking x's at the end) so that the last piece is also of the 
+same size. This way, all your groups are equal in length, and you don’t lose or misplace any part of the original string.
+
+
+
+
+
+5. Longest Palindromic Substring
+
+
+
+
+
+
+Think of a word or sentence as a row of mirrors and try to find the longest part that looks 
+the same when read from both sides—like how “madam” or “racecar” reads the same forwards and 
+backwards. The goal is to find the biggest such symmetrical piece within the entire string. 
+Instead of checking every possible combination (which would be slow), 
+we use a clever trick: we expand from every letter outward in both directions, 
+like opening arms, to check how far we can go while it still looks the same on both sides. 
+We also use some special characters in-between to make even and odd-length symmetrical parts 
+easier to detect. After going through the string this way, we pick the longest symmetrical part we found and return it.
