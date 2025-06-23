@@ -1,0 +1,48 @@
+713. Subarray Product Less Than K
+
+
+
+
+Imagine you are checking all continuous parts of a list of numbers, and you want to count how many 
+of those have their multiplication result less than a given number k.
+
+Instead of checking each part one by one (which is slow), you use a clever window method.
+
+You keep stretching the window to the right by multiplying more numbers.
+
+If the multiplication becomes too big (greater than or equal to k), you start removing numbers 
+from the left side to make it smaller.
+
+Every time the window is valid, you know how many subarrays end at the current position, and you count them.
+
+This way, you go through the list only once, and count all valid pieces quickly.
+
+
+
+
+
+523. Continuous Subarray Sum
+
+
+
+
+
+
+Here, you are trying to find a piece of the list (at least two numbers long) 
+where the total adds up to a number that’s a multiple of k.
+
+You keep adding numbers one by one.
+
+But instead of storing every possible sum, you just store the remainder when the sum is divided by k.
+
+Why?
+
+Because if at two different points the remainder is the same, then the numbers in 
+between those points must add up to a multiple of k.
+
+You remember the first time each remainder shows up.
+
+If you ever see the same remainder again, and the distance between the two points is more 
+than one number, then it means you found a valid part of the list.
+
+This trick saves time and lets you check the entire list in one pass.
