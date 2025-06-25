@@ -1,0 +1,45 @@
+Question 1208: Get Equal Substrings Within Budget
+
+
+
+
+Imagine you have two strings of the same length. Each letter in the first string needs to 
+be changed to the matching letter in the second string. But changing a letter costs money — 
+the cost depends on how different the letters are. For example, changing 'a' to 'c' costs 2 because 
+the letters are two steps apart in the alphabet.
+
+Now, you are given a budget — the maximum money you can spend in total. You need to find the 
+longest possible part (a chunk) of the first string that you can convert into the second string without going over the budget.
+
+To do this efficiently, we move through the strings from left to right and keep track of the 
+cost of the changes. If the cost becomes more than the budget, we start removing letters from 
+the start of the chunk until the cost is within the budget again. This way, we keep updating the longest chunk we can afford.
+
+
+
+
+
+
+Question 413: Arithmetic Slices
+
+
+
+
+
+
+
+Suppose you're looking at a row of numbers. A slice is just a part of that row, 
+like taking 3 or more numbers in a row. Now, if the numbers in that slice increase 
+or decrease by the same amount every time, then it’s called an arithmetic slice. 
+For example, [2, 4, 6] increases by 2 every time, so it’s arithmetic.
+
+Now, the goal is to count how many of these slices are present in the array.
+
+To do that smartly, we move through the array and look at three numbers at a time. 
+If they form a pattern where the difference between them is the same, then that’s one 
+valid slice. And if this pattern keeps going, we can extend it and count more slices.
+
+
+For example, if [2, 4, 6] is valid, then [2, 4, 6, 8] is also valid, and includes 
+two slices: one ending at 6 and one ending at 8. We keep a counter for how many valid slices 
+we can form and keep adding that to the total as we go.
