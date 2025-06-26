@@ -1,0 +1,45 @@
+813. Largest Sum of Averages
+
+
+
+
+We are given a list of numbers, and we can break it into at most k groups. 
+Each group must be next to each other, and we must use all numbers.
+
+For each group, we can find its average, and the goal is to break the list in such 
+a way that the total of all these averages is the highest possible.
+
+To do this smartly, we use something called dynamic programming. Think of it as remembering 
+the best choices we already made so we don't repeat calculations.
+
+We calculate the total sum up to each point so that we can easily find the average of any part. 
+Then we try every possible place to cut the array and see what total score (sum of averages) we get, and we remember the best one.
+
+This way, we avoid checking all possibilities blindly and still get the best answer quickly.
+
+
+
+
+
+
+
+
+525. Contiguous Array
+
+
+
+
+
+
+
+
+We are given a list of only 0s and 1s. We have to find the longest part of this list where 
+the number of 0s and 1s is the same and they are next to each other.
+
+To do this, we treat 0s as -1 and keep a running total or balance. Every time the balance 
+goes back to the same value we had before, it means the number of 1s and 0s in between is equal.
+
+We use a map (kind of a memory) to remember where each balance first appeared. If the same balance 
+appears again later, the portion between the two points has equal 0s and 1s.
+
+So we just check all these parts and keep track of the longest one.
