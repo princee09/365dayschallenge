@@ -1,0 +1,31 @@
+1791. Find Center of Star Graph
+
+
+Imagine you have a group of people standing in a circle, and there is one person 
+in the middle who is shaking hands with everyone else. You are given a list of pairs showing who shook hands with whom.
+
+Now, the person in the center will be mentioned in every handshake because they are 
+the only one shaking hands with all. So, if you just look at the first two handshakes, the person who appears in both of them must be the center.
+
+That's all the code does. It checks who appears in both the first and second pair, and returns that person.
+
+
+
+
+
+
+841. Keys and Rooms
+
+
+
+You are standing outside a hallway with many locked rooms. Only room 0 is open. 
+Inside each room, there might be keys to other rooms.
+
+You start from room 0, pick up all the keys you find there, and go unlock the rooms 
+those keys open. Then in those rooms, you might find more keys, and so on. You keep doing this until you can't open any new rooms.
+
+At the end, you check if you have been inside every room. If yes, you return true, which 
+means it is possible to visit all rooms. Otherwise, you return false.
+
+So the idea is simple: start with the only open room, keep collecting and using keys, and make sure you've been to every room by the end.
+
