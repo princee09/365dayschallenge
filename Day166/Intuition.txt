@@ -1,0 +1,44 @@
+2099. Find Subsequence of Length K With the Largest Sum
+
+
+
+
+
+Imagine you are given a list of numbers, and someone asks you to pick only a 
+few (say 2 or 3) numbers from that list so that the total of those picked numbers is 
+as big as possible. But there is a rule — you cannot just pick the biggest numbers randomly. 
+You must pick them in the same order as they appeared in the original list. For example, 
+if 5 comes before 3 in the list, and you want both, you cannot swap their order.
+
+
+So, what the code does is: it goes through the list and keeps track of the top few 
+biggest numbers along with where they were in the list. It then sorts these selected 
+numbers based on their original position so that the final answer respects the order. 
+Finally, it gives you the group of numbers that has the biggest total but still follows the original list's order.
+
+
+
+
+
+
+
+
+310. Minimum Height Trees
+
+
+
+
+
+
+
+Think of a tree not as a plant, but as a web of connected points — like a family tree or 
+a network of friends, where each person is connected to others. Now, you're told to pick 
+one or two people (or points) in this network and make them the boss or the head so that 
+the network becomes as balanced as possible. A balanced tree means it does not stretch 
+too far in any direction — it stays short and centered.
+
+To do this, the code removes people from the outer edge of the network — 
+the ones connected to only one other person — because these outer points 
+make the tree tall. It keeps removing the outer layers, just like peeling an onion, 
+until only one or two people remain in the center. These are the best choices for leaders 
+if you want a balanced structure. These final one or two nodes are returned as the answer.
