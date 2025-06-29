@@ -1,0 +1,50 @@
+1498. Number of Subsequences That Satisfy the Given Sum Condition
+
+
+
+
+
+Imagine you have a group of numbers, and you're trying to find all the ways 
+you can pick some of them such that the smallest number in the group and the 
+biggest number together don't go over a given limit. To make this easier, first 
+sort the numbers so that the smallest is on one end and the biggest is on the other.
+
+
+Now, start from the smallest number and check, for each of them, what's the furthest 
+biggest number you can pair with it so that the total is still under the limit. If it works, 
+then all the combinations of numbers between them are good too, and the number of such 
+combinations is a power of 2 based on how many numbers you have in between. This is 
+because for each number, you can either include it or not, like flipping a switch on or off. 
+Keep doing this until you've checked all such combinations, and finally add them all together to get your answer.
+
+
+
+
+
+
+
+
+
+
+743. Network Delay Time
+
+
+
+
+
+
+
+
+
+Think of a group of cities connected by roads, and you're sending a message from one 
+city to the others. Each road takes a certain amount of time for the message to travel.
+Your goal is to find out how long it will take for all cities to receive the message, 
+and if any city can't get it at all, return -1.
+
+
+
+To do this, always go to the nearest city you haven't visited yet, 
+and from there, update how fast you can reach other cities from it. 
+Keep track of the fastest time to each city and update it whenever you 
+find a quicker route. At the end, check if every city got the message. 
+If yes, the slowest one among them tells you the total time it took for the message to fully spread.
