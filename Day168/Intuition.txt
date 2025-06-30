@@ -1,0 +1,49 @@
+594. Longest Harmonious Subsequence
+
+
+Imagine you have a list of numbers. You want to find the longest group of numbers 
+where the biggest number and the smallest number in that group differ by exactly 1. 
+But you don’t need to keep the numbers in the same order—they just need to be from the original list.
+
+To solve this, we first count how many times each number appears in the list. Then, 
+for every number we see, we check if the number just one more than it also appears in 
+the list. If it does, we add the count of both these numbers. We repeat this for all 
+numbers and keep track of the largest such combination we find. That biggest total is 
+our answer—it’s the length of the longest harmonious group.
+
+It’s like looking for all pairs of neighbors (like 2 and 3, or 5 and 6), and checking how big a team they can make together.
+
+
+
+
+
+
+
+
+
+
+
+785. Is Graph Bipartite
+
+
+
+
+
+
+
+
+
+
+Think of the graph as a set of people, and each person knows some others. 
+You are asked whether it's possible to divide all these people into two separate 
+groups such that no two people in the same group know each other. This means each 
+connection (or friendship) must be between someone from group A and someone from group B.
+
+
+To figure this out, we try to assign everyone to a group. We pick a person who hasn’t 
+been assigned yet and say they are in group A. Then we go to each person they know and 
+assign them to group B. Then we go to people in group B and make sure their friends go to group A, 
+and so on. If at any point we find someone who ends up in the same group as one of their friends, we know it's not possible, so we say no.
+
+We do this checking using a step-by-step process called breadth-first search, kind of like 
+spreading outwards in waves. If we make it through the whole graph without a problem, then the graph is bipartite, which means the division is possible.
