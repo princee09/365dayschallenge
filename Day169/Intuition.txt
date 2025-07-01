@@ -1,0 +1,48 @@
+3330. Find the Original Typed String I
+
+
+
+Imagine Alice is typing something on a computer. She’s a bit clumsy and 
+may accidentally hold a key for too long. That means if she wanted to type 
+the letter "c" just once, it might show up as "ccccc" on the screen. But this 
+mistake only happens once while typing the whole word.
+
+So, if we see a word like "abbcccc", we know maybe one group of repeated 
+letters (like "cccc") was typed too many times. We need to find out how 
+many original words Alice could have actually intended, by possibly shrinking 
+just one group of repeating letters. We go through the word, look at groups 
+where the same letter appears more than once in a row, and count how many 
+different ways we could reduce just one of those. Then we also count the original 
+word as a valid possibility. The total count gives us how many possible original words 
+she might have intended.
+
+
+
+
+
+
+
+
+
+
+997. Find the Town Judge
+
+
+
+
+
+
+
+Imagine a town where people can either trust each other or not. 
+There’s a rumor that someone in town is the judge. This judge is 
+different because they trust nobody, but everyone else in the town trusts them.
+
+
+
+So, if we want to figure out who the judge is, we look at each person and 
+keep track of two things — how many people they trust, and how many people 
+trust them. If someone trusts others, we subtract points from them. If someone 
+is trusted by others, we add points to them. At the end, the person who didn’t trust 
+anyone but was trusted by everyone else will have the highest score — exactly equal 
+to the number of people in town minus one. That’s our judge. If no one fits that description, then there’s no judge in the town.
+
