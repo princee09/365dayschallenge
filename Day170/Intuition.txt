@@ -1,0 +1,42 @@
+133. Clone Graph 
+
+
+
+
+
+Imagine you are given a map of a city where each house has a number and a 
+list of neighboring houses it is connected to. Now, your job is to create an 
+exact duplicate of this city map. But instead of just copying what you see, 
+you need to recreate each house and its connections from scratch. This means 
+every time you visit a house, you must create a new house with the same number 
+and then go and make copies of all the houses connected to it. To avoid going in 
+circles or copying the same house again and again, you keep a record of which houses 
+\you've already copied. This way, when you reach a house that was already created, 
+you just link to the existing copy instead of starting over. In the end, you have a 
+completely new city map that looks exactly like the original one but is built with brand new houses and roads.
+
+
+
+
+
+
+
+207. Course Schedule 
+
+
+
+
+
+
+
+Think of each course you want to study as a chapter in a book. Some 
+chapters can be read only after you read others. For example, to understand 
+Chapter 5, you must first read Chapter 2. If you are given a list of all such chapter 
+rules, your job is to figure out whether it is possible to read all chapters without 
+getting stuck. You start by reading chapters that don’t require any other chapter to be 
+read first. Then, once those are done, you check which chapters are now unlocked because 
+their required chapters are completed. You keep doing this step by step. If at some point 
+you find that no more chapters can be read because each of the remaining ones is waiting on 
+another, it means you’re stuck in a loop. In that case, it's impossible to read all chapters. 
+But if you finish reading all of them by following the rules, then it means it's fully possible to complete the course.
+
