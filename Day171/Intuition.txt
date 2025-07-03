@@ -1,0 +1,46 @@
+3304. Find the K-th Character in String Game I
+
+
+
+
+Imagine you start with the letter 'a'. Now every time you play the game, 
+you do something special: you take the word you have so far, and make a new word 
+by shifting every letter to the next letter in the alphabet. Then you stick that new word to the end of your original one.
+
+So if you have 'a', the next step adds 'b', giving 'ab'.
+Next, change 'ab' to 'bc' and stick that at the end → 'abbc'.
+Then, 'abbc' becomes 'bccd' and gets added → 'abbcbccd', and so on.
+
+Now, instead of building this long word again and again, we do something smart.
+We figure out in which half of the word the k-th letter sits (the original part or the new shifted part).
+Every time it’s in the new half, we know it was a letter shifted one step.
+So we trace back, counting how many times it had to shift to become what it is.
+
+Finally, we apply all those shifts to the original letter 'a', and that gives us the answer.
+
+
+
+
+
+802. Find Eventual Safe States
+
+
+
+
+
+
+Imagine a set of rooms connected by one-way doors. Some rooms have no exits 
+they are called terminal rooms. Now we call a room “safe” if, no matter what path 
+you take starting from it, you’ll always eventually reach a room with no exits.
+
+To figure out which rooms are safe, instead of checking from every room where the 
+doors go, we flip the connections: now we look at which rooms lead into each room.
+
+We start with rooms that originally had no doors going out – these are the terminal rooms, and they are obviously safe.
+Then, we go backwards: if a room only leads to rooms we already know are safe, then it’s also safe.
+
+We keep removing these “safe” rooms from our network until nothing more can be removed.
+Whatever is left might be part of a loop or lead to one, so we ignore them.
+
+In the end, we list all rooms we marked as safe and sort them.
+
