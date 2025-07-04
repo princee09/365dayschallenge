@@ -1,0 +1,50 @@
+1652. Defuse the Bomb
+
+Imagine you have a circle of numbers written around a bomb.
+
+Your job is to change each number based on a secret key k.
+
+If k is positive, it means for each number, you must look ahead at the next k numbers 
+(going in a circle), add them up, and replace the current number with that sum.
+
+If k is negative, you must look backwards at the previous k numbers (again, looping around 
+the circle if needed), and do the same—add them and replace the current number.
+
+If k is zero, you just replace every number with 0.
+
+So, you go around the circle once, look at the neighbors (next or previous based on k), calculate 
+their total, and use that to rewrite each number.
+
+To do this fast, instead of calculating the sum again and again from scratch for every number, 
+we slide a "window" over the numbers. We add the new number that enters the window and remove the old one that leaves it, so we reuse the calculation smartly.
+
+This way, even with hundreds of numbers, the work stays quick.
+
+
+
+
+
+
+1695. Maximum Erasure Value
+
+
+
+
+
+Think of this like walking through a path filled with numbers.
+
+You can pick a continuous sequence of numbers and remove them, but with one rule—all numbers in the chosen group must be different.
+
+The score you get is the total of all the numbers you remove.
+
+So your goal is to find the longest possible stretch of numbers where no number repeats, and the sum is the highest.
+
+To do this, we use a "sliding window" approach. We start from the beginning and keep adding numbers until we see a repeat.
+
+When we do see a repeat, we slide the starting point forward, removing numbers from our total, until the repeat is gone.
+
+As we go, we always keep track of the highest total we found with all unique numbers.
+
+This way, we cover the entire list only once, and never waste time recalculating everything.
+
+It's like walking on a rope and picking coins, but dropping some when the same one shows up twice, and trying to grab the biggest possible haul without breaking the rules.
