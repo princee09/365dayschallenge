@@ -1,0 +1,39 @@
+1394. Find Lucky Integer in an Array
+
+
+Imagine you are given a list of numbers. You have to find a number that 
+appears in the list exactly as many times as the number itself. For example, 
+if the number 2 appears exactly 2 times, that’s a lucky number. If the number 3 appears 3 times, 
+that’s also lucky. Now, you may have more than one lucky number, and your task is to return the 
+largest one among them. If there are no such numbers, you simply return -1.
+
+To solve this, we count how many times each number appears. Then we just check: does any number 
+appear exactly that many times? We start checking from the biggest number going down so that we can find the largest lucky number easily.
+
+
+
+
+
+
+
+112. Path Sum
+
+
+
+
+
+
+
+
+
+
+Think of a tree where each branch is a road, and every spot on the road has 
+a number written on it. You start at the root of the tree, which is like the 
+starting point, and you walk your way down until you reach a leaf, which is a spot where there are no more roads to take.
+
+As you walk, you add up all the numbers on the path. Your goal is to check whether 
+there’s any such path from start to end where the total of those numbers equals a specific 
+target number. If yes, you say “true.” If there’s no such path anywhere, you say “false.”
+
+The solution walks down all possible paths in the tree, keeps subtracting the current number from 
+the target, and when it reaches the end of a road (leaf), it checks if the remaining number is zero.
