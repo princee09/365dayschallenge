@@ -1,0 +1,33 @@
+1865. Finding Pairs With a Certain Sum
+
+
+You are given two lists of numbers. The first one is small, the second one is big. 
+You are allowed to add a number to any element in the second list. Then, someone gives 
+you a target number, and you need to count how many pairs you can form by picking one number 
+from the first list and one from the second list, so that both add up exactly to that target.
+
+To make this fast, we keep track of how often each number appears in the second list. 
+Then, to answer the question quickly, we just check for each number in the first list, 
+what number we’d need from the second list to reach the target, and how many times it appears. 
+This saves time by avoiding checking all combinations.
+
+
+
+
+
+
+
+
+
+
+3507. Minimum Pair Removal to Sort Array I
+
+
+You are given a list of numbers and your goal is to turn it into a list where every 
+number is equal to or bigger than the one before it. But you can only do one 
+type of move: pick two neighboring numbers with the smallest total, and merge them into one by adding them together.
+
+You keep doing this over and over. Each time, you find the pair with the smallest 
+total (and choose the one furthest to the left if there's a tie), merge them, and replace the two 
+numbers with their sum. You repeat this until the list becomes sorted from low to high. 
+The code simply counts how many such steps you have to do to reach that goal.
