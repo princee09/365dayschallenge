@@ -1,0 +1,43 @@
+1353. Maximum Number of Events That Can Be Attended
+
+Imagine you are a person who loves going to events, but you can only attend one event per day. 
+Each event has a start day and an end day, which means you are allowed to attend it on any day in that range.
+
+Now, you want to attend as many events as possible. To do this smartly, first you sort the events by 
+their start day so you can go through them in order. Then, for each day, you look at all the events that 
+are available to attend starting that day or earlier, and put them into a list.
+
+From this list, you choose the event that ends the earliest, so that you don't block the future days for 
+longer events and can attend more overall. You then remove any events from the list that have already expired.
+
+You keep doing this for each day until all events are either attended or expired. By following this 
+smart scheduling, you end up attending the maximum number of events possible.
+
+
+
+
+
+
+
+
+134. Gas Station
+
+
+
+
+Imagine you're on a circular road trip with several gas stations. Each station gives you a 
+certain amount of gas, and it costs a certain amount of gas to go from that station to the next one.
+
+You want to find out from which station you can start so that you can make the full circle without running out of fuel.
+
+Here's how you think about it: First, you check if the total gas from all stations is more than or 
+equal to the total cost. If it’s not, you know for sure the trip is impossible.
+
+If the total gas is enough, you try to simulate the journey. You start from station 0 and keep track 
+of how much gas you have in the tank. Every time you stop at a station, you add the gas it gives and subtract the cost to reach the next one.
+
+If at any point your gas tank becomes negative, it means you can’t start from that station or any 
+station before it. So, you restart your trial from the next station and continue the simulation.
+
+Eventually, the first station where you can complete the full circle from becomes your answer.
+
