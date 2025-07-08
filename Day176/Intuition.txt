@@ -1,0 +1,49 @@
+43. Multiply Strings
+
+
+
+
+Imagine you are multiplying two big numbers, like 123 × 456, but instead of doing it 
+using a calculator, you do it by hand on paper. You multiply each digit from the first 
+number with each digit from the second number, just like school method. You write the 
+results and carry over the extra value when the multiplication is more than 10.
+In the code, we store each multiplication result in a specific position in a list (like a digital version of paper). 
+Each place in the list represents the position of the digit in the final number.
+At the end, we combine this list into one final number by handling the carry and removing any unnecessary zeros at the front.
+
+The code basically simulates how humans multiply numbers on paper, but it does it step by step using code logic.
+
+
+
+
+
+
+
+
+
+
+
+91. Decode Ways
+
+
+
+
+
+
+
+
+Imagine you got a secret message written only in numbers. And someone tells you that 1 means A, 2 means B, and so on until 26 means Z.
+Now, someone gives you a number string like "226". You want to know in how many ways you can convert it to letters.
+
+You could split it like:
+
+2 2 6 → B B F
+
+22 6 → V F
+
+2 26 → B Z
+
+So total 3 ways to read it. But it gets tricky when there is a 0, because 0 does not have a letter. So we have to be careful and only allow valid combinations.
+The code checks each number and each pair of numbers and sees if they can be turned into a letter. Then it adds how many ways there are to decode the message step by step.
+
+It’s like counting how many paths you can take to read the message, where each step you can either take one digit or two digits (but only if they form a valid letter).
