@@ -1,0 +1,22 @@
+1337. The K Weakest Rows in a Matrix
+Imagine you are looking at an army training ground where soldiers (represented by 1s) 
+are standing in rows, and civilians (represented by 0s) are standing behind them in the 
+same row. Each row starts with soldiers, followed by civilians. Your task is to find the 
+rows with the weakest strength. A row is weaker if it has fewer soldiers. If two rows have 
+the same number of soldiers, the row that appears first is considered weaker. To solve this, 
+we simply count the number of soldiers in each row, then sort all the rows from weakest to 
+strongest based on the soldier count. Finally, we return the first k weakest rows.
+
+
+
+
+
+
+
+264. Ugly Number II
+Ugly numbers are special numbers that can only be made by multiplying 2, 3, or 5 again 
+and again. Think of it like this — you are building a list of numbers starting from 1, 
+and you are only allowed to use 2, 3, or 5 to make new numbers from the ones already in the list. 
+Every time, you look at what would happen if you multiply your current list by 2, by 3, and by 5. 
+You then choose the smallest result and add it to the list, making sure you don’t add the same number twice. 
+You keep repeating this until you reach the nth number in this list. That nth number is your answer.
