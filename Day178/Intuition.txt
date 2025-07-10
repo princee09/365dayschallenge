@@ -1,0 +1,39 @@
+787. Cheapest Flights Within K Stops
+
+
+We are given some cities and flights between them, each with a cost.
+
+We are also told how many stops we are allowed to take at maximum. Our goal is to find the cheapest way to travel from one city to another without going over that number of stops.
+
+To solve this, we think like a traveler who always tries the cheapest flight option available at every step. So we use a system (called a priority queue) that always picks the cheapest option first.
+
+At every step, we check where we can fly next, how much it costs, and how many stops we have already taken. If we have not taken too many stops yet and this route is cheaper than before, we explore that option.
+
+We keep doing this until we reach the destination or run out of allowed stops. If we never reach the destination within the allowed stops, we return -1, which means there’s no way.
+
+This is like Google Maps finding the cheapest flight with a maximum number of stops you allow.
+
+
+
+
+
+
+
+
+
+
+97. All Paths From Source to Target
+
+
+
+We are given a network of points (called a graph) where each point leads to some other points.
+
+We want to find every possible way to go from the starting point (which is 0) to the last point (which is n - 1).
+
+To do this, we start at the first point and explore every route we can take from there. Whenever we reach the last point, we save the complete route we took.
+
+If we reach a point where there are more routes to take, we explore them one by one, going all the way to the end each time. After each complete route, we go back to the last decision point and try the next possible route. This process of going forward and then coming back is called backtracking.
+
+Since there are no loops in the graph, we don’t have to worry about going in circles. Eventually, we will explore and collect all the possible paths.
+
+This is like writing down all possible roads you can take from home to your office without turning back or repeating any road.
