@@ -1,0 +1,32 @@
+4. Median of Two Sorted Arrays
+
+
+
+
+Imagine you have two sorted lists of numbers, like a list of test scores from two different classrooms. 
+You want to find the middle score when both lists are combined. But instead of actually joining the two lists 
+and sorting everything again, we use a smart shortcut. We use a method where we try to guess the dividing line 
+between the smaller half and the larger half of the combined list by only looking at parts of both lists. 
+We do this by adjusting our guesses until the numbers on the left half are all smaller than the numbers on the right half. 
+Once we find that perfect spot, we know the middle number or the average of the two middle numbers, which is the median. 
+This way, we save a lot of time and don’t need to process every number again.
+
+
+
+
+
+
+
+
+23. Merge k Sorted Lists
+
+
+
+
+
+Imagine you have several people who each have their own sorted list of tasks they want to do. 
+All lists are in order, but you want to create one big list for the entire team that is also sorted. 
+Instead of picking one person’s full list, then the next, and sorting everything again, we do something smarter. 
+We check the first task from each person and pick the one that comes first. Then we replace that with 
+their next task and check again. This way, we’re always picking the smallest task from the top of all lists.
+ We keep doing this until all the tasks from all the people are picked. This gives us one nice, clean, and sorted list, and we save time by not sorting again and again.
