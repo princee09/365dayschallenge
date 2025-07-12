@@ -1,0 +1,31 @@
+561. Array Partition
+Imagine you are given a group of numbers, and you are told to make pairs from them. For each pair, 
+you can only take the smaller number, and your goal is to maximize the total sum of these smaller numbers from all pairs.
+
+The best way to do this is to sort the numbers from smallest to largest, and then take every second number. 
+This way, you are always taking the smaller number in each pair, and the pairs are made in such a way that the smaller numbers are as large as possible — which helps increase your final total.
+
+Think of it like grouping socks by size — you always pair the closest sizes together so 
+you don’t waste a large sock with a small one. Sorting helps make sure the pairing is optimal.
+
+
+
+
+
+
+
+
+
+
+942. DI String Match
+You are given a string made up of just the letters 'I' and 'D'. 'I' means "the next number should be bigger", 
+and 'D' means "the next number should be smaller". Your task is to create a list of numbers from 0 to n 
+(where n is the length of the string), and arrange them in such a way that the list follows the 'I' and 'D' pattern.
+
+To do this, we use two numbers — the smallest available (low) and the largest available (high). 
+Whenever we see an 'I', we use the smallest available number and move low up. When we see a 'D', 
+we use the largest available number and move high down. This way, we are always assigning numbers 
+that naturally follow the required pattern without needing to go back or change anything.
+
+It’s like standing in a queue and giving people the lowest or highest token based on whether 
+they should go forward or backward — this method ensures the order always fits the pattern.
