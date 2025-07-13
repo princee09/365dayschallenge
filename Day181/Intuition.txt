@@ -1,0 +1,25 @@
+557. Reverse Words in a String III
+We are given a sentence where we have to reverse each word individually, but we must 
+not change the order of the words. Think of each word as a small puzzle, and our job is 
+to flip the letters of each word, while keeping the words in their original spots. For example, 
+if someone says “Let's take LeetCode contest,” we flip the letters of each word like 
+turning "Let's" into "s'teL", and "take" into "ekat", and so on. The overall order of the 
+words stays the same, we only reverse the letters inside each word.
+
+
+
+
+
+
+
+
+
+
+
+2410. Maximum Matching of Players With Trainers
+Imagine we have a group of players and a group of trainers. Each player needs a certain level 
+of support, and each trainer can only handle up to a certain level. We want to match as many 
+players to trainers as possible, but only if the trainer can handle the player's needs. 
+To do this, we sort both groups from lowest to highest ability or capacity. Then we try to 
+match the weakest player to the weakest trainer who can handle them. If a trainer is too weak, 
+we skip them and move on to the next. We keep doing this until we’ve gone through both groups, and we count how many pairs we could successfully make.
