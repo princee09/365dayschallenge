@@ -1,0 +1,47 @@
+1290. Convert Binary Number in a Linked List to Integer
+
+
+
+
+Imagine you are reading a binary number written on pieces of paper, where each paper has either 0 or 1, 
+and they are arranged from left to right. The leftmost paper holds the biggest value and 
+the rightmost one holds the smallest. For example, if the papers say 1, 0, 1, it means the binary number 101, which is 5 in decimal.
+
+Instead of converting the full number at once, we build it step by step. We start with 0. 
+As we read each paper from left to right, we multiply our current number 
+by 2 (just like shifting all digits left) and then add the current digit. 
+Doing this for every paper, we eventually get the final decimal value. 
+This is exactly how the code works. It reads each node, shifts the number, 
+and adds the current digit to get the final answer.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+844. Backspace String Compare
+
+
+
+
+Think of two people typing on two keyboards. Whenever they type a letter, it gets added to their screen. 
+But if they press the backspace key (represented by '#'), it deletes the last letter typed. 
+Your task is to check if both people end up typing the same final message.
+
+Instead of simulating the whole typing process, we go from the end of each string to the 
+start and ignore the characters that get removed by backspaces. We keep count of how many 
+letters we need to skip because of the '#' symbol. Once we find actual letters 
+(after skipping the erased ones), we compare them one by one. If at any point the letters 
+don’t match, we return false. If we reach the start of both strings and everything matched, we return true.
+
