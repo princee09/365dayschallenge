@@ -1,0 +1,37 @@
+3136. Valid Word
+
+
+
+To check if a word is valid, we look at a few simple rules. First, the word must 
+have at least 3 characters. Second, it should only contain English letters 
+(like A to Z or a to z) and numbers. If there are any special characters like $, #, or @, it is immediately invalid. Third, 
+it must have at least one vowel. Vowels are letters like a, e, i, o, and u. Lastly, 
+it must also have at least one consonant, which is just a non-vowel letter like b, c, d, etc. 
+So, we go through each character in the word. If we see any bad character, we return false right away. 
+While checking, if we find at least one vowel and one consonant, then we know it's valid and return true. If not, it’s not valid.
+
+
+
+
+
+
+
+
+
+
+
+1838. Frequency of the Most Frequent Element
+
+
+
+
+
+
+Here, we want to find out how many times we can make one number appear in the array after 
+we are allowed to increase some numbers up to a total of k times. Think of it like this: we can increase 
+numbers to make them equal to the biggest one in a group. But we can only use k total steps. 
+So we sort the array so that we can think about making all smaller numbers into the larger one, 
+from left to right. We slide a window over the array and keep checking how many 
+changes we’d need to make all numbers inside that window equal to the biggest one in that window. 
+If it takes more than k operations, we shift the window forward. We keep track of the biggest 
+window we find that works within k operations. The size of that window is the answer.
