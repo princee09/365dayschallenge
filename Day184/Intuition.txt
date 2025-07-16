@@ -1,0 +1,49 @@
+3201. Find the Maximum Length of Valid Subsequence I
+
+
+We are given a list of numbers. We have to pick a few numbers (in the same order as they appear) to form a sequence.
+
+The rule is simple: If you take two numbers at a time and add them, their sum should have the same evenness or oddness throughout the sequence. That means, either all such sums should be even or all should be odd.
+
+Now, how can this happen? There are two main ways:
+
+You pick numbers where every two consecutive numbers are both even or both odd. Because even+even = even, odd+odd = even. So you get even sums.
+
+You pick numbers where one is even, the next is odd, then again even, then odd, and so on. Because even+odd = odd, odd+even = odd. So you get odd sums.
+
+We simply try both ways while going through the list and keep track of the longest sequence possible that satisfies these conditions.
+
+In the end, we return the longest such sequence we found.
+
+
+
+
+
+
+
+
+
+
+
+3034. Number of Subarrays That Match a Pattern I
+
+
+
+
+
+
+We are given a list of numbers and a pattern made up of -1, 0, or 1.
+
+The pattern tells us how numbers should change from one to the next. For example:
+
+1 means the next number should be bigger than the current one.
+
+0 means the next number should be the same as the current one.
+
+-1 means the next number should be smaller than the current one.
+
+We need to find how many small chunks (called subarrays) in the main list follow this exact up/down/same pattern.
+
+So, we slide over the main list, one by one, and each time we check if the chunk of numbers follows the pattern. If it does, we count it.
+
+At the end, we return the total number of chunks that matched the pattern.
