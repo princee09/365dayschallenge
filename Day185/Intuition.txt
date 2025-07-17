@@ -1,0 +1,47 @@
+438. Find All Anagrams in a String
+
+
+
+
+Imagine you are looking for all parts of a big sentence (called s) that are just a shuffled version 
+of a small word (called p). For example, if the small word is "abc", then you are trying to find all 
+parts of the big sentence that have the same letters as "abc", but possibly in different order, like "bca", "cab", or "acb".
+
+To do this efficiently, we don't look at every part one by one from scratch. Instead, we use a window of 
+the same size as p and slide it across the big sentence. As we slide, we keep track of how many times each 
+letter appears in the current window, and compare it with the count of letters in p.
+
+If the counts match, it means this window is a valid anagram. We note down the starting position. We do this 
+sliding and checking for every possible window, and at the end, we return all the starting positions where we found valid anagrams.
+
+This is fast and avoids unnecessary repeated work.
+
+
+
+
+
+
+
+
+
+
+
+76. Minimum Window Substring
+
+
+
+
+
+
+Think of this problem like trying to find the smallest possible window in a large sentence that contains all 
+the characters from another smaller word. And not just once — if the small word has 2 a's, the window must have both of them.
+
+We go through the sentence from left to right using two pointers: one starts the window and the other one ends it. 
+As we move the end pointer forward, we keep adding letters to our window. Once our window contains all the letters 
+we need (with correct number of times), we start moving the start pointer forward to make the window as small 
+as possible while still keeping all the required letters.
+
+Every time we find a window that contains everything we need, we check if it is the smallest one we 
+have found so far. At the end, we return the smallest such window.
+
+This method is like stretching and shrinking a rubber band on the sentence — stretch to include needed letters, shrink to make it as small as possible.
