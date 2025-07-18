@@ -1,0 +1,49 @@
+647. Palindromic Substrings
+
+
+
+
+
+Imagine you are looking at every letter in a word and asking: "Can I grow a palindrome from here?"
+
+You try to expand around each letter and also between each pair of letters. You look to the left and right and check if the characters are the same. If they are, then it is a palindrome.
+
+You keep expanding as long as the letters match on both sides. Every time they match, you count it.
+
+So you move across the whole word, trying to grow palindromes around every point you can, and count how many you find.
+
+This way, you find all the small and big palindromes hidden inside the string.
+
+
+
+
+
+
+
+
+
+
+
+
+321. Create Maximum Number
+
+
+
+
+
+
+
+
+You are given two number lists and you are allowed to take a few numbers from each, but in the same order as they appear.
+
+Your goal is to build the biggest possible number using exactly k digits total.
+
+First, you try every possible way to split k digits between the two lists. For example, maybe 3 from the first and 2 from the second.
+
+From each list, you pick the biggest possible numbers but still keep their original order. You do this by always picking bigger digits first and skipping smaller ones if needed.
+
+Then, you combine the two selected parts to make the final number. While combining, you always choose the part that has the bigger number left to keep the result as big as possible.
+
+You repeat this for all possible splits and keep track of which final number is the biggest. That one is your answer.
+
+You basically try every smart way to mix both lists to get the largest number possible without messing up the order inside each list.
