@@ -1,0 +1,12 @@
+1314. Matrix Block Sum 
+
+
+Imagine you have a grid of numbers like a chart, and you are asked to calculate a new grid. In this new grid, each box should contain the sum of all the numbers in a square area around that box – like a small window or block – and the size of that window is given by the number k.
+
+For example, if k = 1, you are allowed to look at one row up, one row down, one column left, and one column right. If k = 2, your window is even bigger.
+
+Now doing this for every box by adding one-by-one each time would be slow, especially for big grids. So, instead of adding numbers again and again, we prepare a helper table in the beginning. This helper table stores the total sum of numbers from the top-left corner of the grid to every other position – like a running total.
+
+Then for any block, instead of going and manually adding numbers from the grid, we just use four values from this helper table to quickly calculate the sum in one go. It’s like using a shortcut by subtracting overlapping parts, just like how we cut out pieces from a cake to find the remaining portion.
+
+This saves a lot of time and makes the solution fast and efficient. The whole trick is in preparing the prefix sum table first, and then using it smartly to get answers for every block.
