@@ -1,0 +1,59 @@
+2760. Longest Even Odd Subarray With Threshold
+
+
+
+We are given a list of numbers and a limit value. We need to find the longest stretch of 
+numbers (in a row) that starts with an even number, all numbers are smaller than or equal to the limit, 
+and the even and odd numbers strictly take turns (like even, odd, even, odd or odd, even, odd, even 
+but in our case it must always start with even).
+
+So we check every possible starting point in the list. If a number is even and within the limit, 
+we begin checking forward. We continue adding numbers as long as they are within the limit and 
+alternate between even and odd. If anything breaks this rule, we stop. We keep track of the longest 
+such stretch found. At the end, we return the length of the longest valid sequence.
+
+
+
+
+
+
+
+
+
+
+2841. Maximum Sum of Almost Unique Subarray
+
+
+
+
+We are given a list of numbers and two values: k (how long the subarray must be) and 
+m (minimum number of different values needed). A subarray means a continuous piece of the list. 
+We want to find the highest possible total (sum) among all subarrays of length k, but only if the subarray contains at least m different numbers.
+
+So we use a sliding window of size k — which means we look at a stretch of k numbers 
+and slide that window one step at a time. While sliding, we keep track of how many 
+different numbers are in the current window and what the total sum is. If the window has at 
+least m different numbers, we consider its sum. Among all valid windows, we return the biggest sum found.
+
+
+
+
+
+
+
+
+
+
+
+2958. Length of Longest Subarray With at Most K Frequency
+
+
+
+
+We are given a list of numbers and a value k. We are asked to find the longest stretch of numbers
+in a row (a subarray) where no number appears more than k times.
+
+We solve this using a window that grows from left to right. Every time we add a number to the window, 
+we increase its count. If any number appears more than k times, that breaks the rule. So we start 
+shrinking the window from the left side until all numbers follow the rule again. During this whole process, 
+we keep checking and saving the size of the longest valid stretch we found. In the end, we return the size of that longest subarray.
