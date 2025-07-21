@@ -1,0 +1,50 @@
+1957. Delete Characters to Make Fancy String
+
+
+
+
+Imagine you are typing a message and you don’t want to press the same key more than twice in a row. 
+If you type three or more same letters back-to-back, you decide to delete the extras.
+
+So you go through the message from left to right.
+Each time you see a letter, you check how many times it has appeared right before.
+If it appeared less than two times, you keep it.
+If it appeared two times already, you skip adding it because three in a row is not allowed.
+
+This way, you build a clean message where no letter appears more than twice in a row.
+
+You only read the message once from left to right, so it is fast and efficient.
+
+
+
+
+
+
+
+
+
+
+
+139. Word Break
+
+
+
+
+Imagine you are given a long word like a puzzle, and a list of smaller words that you are allowed to use to solve it.
+
+You want to check if you can break the long word into pieces, where each piece is a valid word from the list.
+
+You start from the beginning of the long word and try cutting it at every point.
+At each cut, you check:
+
+Is the part before this cut made up of valid words?
+
+And is the part after the cut a valid word?
+
+If both are true, you mark this point as a place where cutting is allowed.
+
+You keep repeating this process until you reach the end of the word.
+
+If at the end you were able to cut the full word into valid dictionary pieces, then the answer is true.
+
+You remember which parts were valid as you go, so you don’t repeat work. This makes it efficient even for long words.
