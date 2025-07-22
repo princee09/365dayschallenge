@@ -1,0 +1,50 @@
+1876. Substrings of Size Three with Distinct Characters 
+
+
+
+
+
+Think of a string as a line of beads, where each bead has a letter on it.
+
+You want to look at every group of 3 beads that are next to each other, and check whether all the letters 
+on those 3 beads are different — no repeats.
+
+For example, if the group is “abc”, all letters are different, so it's a "good" group. 
+But if it's “aba” or “aab”, there's repetition, so it’s not good.
+
+So you just slide a window of 3 letters across the whole string, one letter at a time, 
+and count how many of those groups have 3 distinct letters.
+
+You do this quickly by simply checking each group of 3 letters — like checking if the first and second are different, second and third are different, and first and third are different. If all three are different, it's a good substring and you increase your count.
+
+This method is very fast because you only check 3 letters at a time, and stop when there are no more 3-letter groups left.
+
+
+
+
+
+
+
+
+
+
+
+
+2134. Minimum Swaps to Group All 1's Together II 
+
+
+
+
+
+
+Imagine you have a circle made of chairs. Some chairs have people sitting on them (represented by 1s), and some are empty (represented by 0s). You want all the people to sit together in one continuous group, and you're allowed to swap people with empty chairs.
+
+But the trick is, it’s a circle, so the last and first chairs are also next to each other.
+
+Now, first, count how many people (1s) are there in total — let’s call it k. That means we need a group of k chairs in a row to seat them all together.
+
+You now slide a window of k chairs one by one across the circle and see how many people are already sitting in that group. If many people are already in the group, we need fewer swaps to complete the group. If only a few are in that group, we need more swaps.
+
+The best possible window is the one that already has the most people (1s), so we only need to swap the missing few.
+
+This tells you the fewest swaps needed to group all the 1s together in any circular spot.
