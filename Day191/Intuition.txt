@@ -1,0 +1,42 @@
+1717: Maximum Score From Removing Substrings
+\
+
+
+
+
+We are given a string and two types of small words we can remove: "ab" and "ba". 
+Each time we remove one, we earn some points. But we are allowed to remove as many as we want. 
+The twist is that removing one type gives more points than the other. So, the trick 
+is simple: always try to remove the one that gives more points first.
+
+Imagine you are cleaning up a line of toys and you earn money for removing two specific types 
+of toy pairs. One pair gives more money than the other. You would obviously remove the 
+expensive pair first. After you are done with them, you can go and clean up the rest. 
+That’s what the code does. It picks the high-value pair, removes them one by one, and 
+then does the same with the second pair. The process is done using a stack, like keeping track of items in a basket while cleaning. This way, we get the maximum score possible.
+
+
+
+
+
+
+
+
+
+290: Word Pattern
+
+
+
+
+
+
+In this question, we are given a pattern made of letters and a sentence made of words. 
+We need to check if each letter in the pattern matches a word in the sentence in a consistent way. 
+That means, if the first letter 'a' matches with the word "dog", then every time we see 'a' again, 
+it should also match with "dog". And no other letter should also match with "dog".
+
+Think of it like name tags at a party. If you put a tag with the letter 'a' on a person named "dog", 
+then no one else can be called "dog", and the tag 'a' cannot be used for anyone else. This matching must 
+be perfect both ways. If we find any mismatch or duplicate tagging, then it’s not following the rule, 
+and we return false. Otherwise, everything checks out and we return true.
+
