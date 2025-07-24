@@ -1,0 +1,37 @@
+415. Add Strings
+
+
+
+
+Imagine you are adding two numbers by hand, like in a notebook, column by column from the 
+right side (units place) to the left side (tens, hundreds, etc). Since the numbers are 
+given as strings, you can't just directly add them like integers. So what we do is, 
+we start from the last character of each string (which represents the smallest digit). 
+We take one digit from each number, convert them to integers by subtracting the ASCII value of '0', add 
+them along with any carry from the previous step. If the sum of the digits is more than 9, 
+we keep the last digit in the result and carry over the tens to the next addition. 
+We repeat this until we've gone through both numbers completely and finally add any 
+remaining carry. Since we built the answer from the back to the front, we reverse
+the result before returning it. This way, we mimic how a human would do manual addition of large numbers on paper.
+
+
+
+
+
+
+
+
+
+
+541. Reverse String II
+
+
+
+
+Imagine you are given a long rope made of letters. You are asked to go through the rope in chunks of size 2k. 
+For each such chunk, your task is to flip the first k letters but leave the next k letters as they are. 
+If you reach near the end of the rope and there are fewer than k letters left, just flip all of them. 
+If you have at least k but not full 2k letters left, flip the first k and leave the rest. 
+You keep moving like this chunk by chunk till the whole rope is processed. 
+Flipping here means reversing the order of the characters — like turning "abc" into "cba". 
+We do this flipping by swapping the first and last letters of that part and then move inward until we reach the center.
