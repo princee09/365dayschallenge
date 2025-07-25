@@ -1,0 +1,58 @@
+921. Minimum Add to Make Parentheses Valid
+
+
+
+Suppose you are checking if the brackets in a sentence are balanced.
+
+Every opening bracket ( must have a closing bracket ).
+
+Now, imagine you're reading the sentence from left to right.
+
+You count how many opening brackets need a closing one.
+
+And if a closing bracket comes but no opening one came before it, then you know you'll need an extra opening bracket to fix it.
+
+So you keep track of two things:
+how many opening brackets still need a match,
+and how many closing brackets you need to add to balance extra closing ones.
+
+In the end, just add the number of opening and closing brackets that are still unmatched.
+That’s how many moves (insertions) are needed to make the whole bracket string valid.
+
+
+
+
+
+
+
+
+
+
+
+
+
+3487. Maximum Unique Subarray Sum After Deletion
+
+
+
+
+
+Imagine you are looking at a line of numbers and you are allowed to remove any of them.
+
+Then, from what's left, you have to choose a continuous group of numbers (called a subarray)
+such that none of them repeat and their total adds up to the highest possible value.
+
+Now since we can delete freely, we only care about picking unique numbers that give the best total sum.
+
+To do this, we use a window that moves from left to right.
+
+We keep adding numbers into this window until we find a duplicate.
+
+As soon as a duplicate appears, we remove numbers from the start until it’s unique again.
+
+While doing this, we keep checking the total sum of the window,
+and remember the highest sum we have seen so far.
+
+At the end, we return the best total we could find where all the numbers were unique.
+
+This approach gives the right answer and is fast because we go through each number just once.
