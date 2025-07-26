@@ -1,0 +1,16 @@
+1984. Minimum Difference Between Highest and Lowest of K Scores
+You are given scores of multiple students, and you need to choose exactly k students in such a way that the difference between the top score and bottom score among those k students is as small as possible.
+
+To solve this, the best strategy is to first sort all the scores in increasing order. This way, the scores that are closest to each other will appear next to each other. After sorting, you can slide a window of size k from left to right and look at each group of k consecutive scores. For each group, calculate the difference between the highest and lowest scores. Out of all these groups, you choose the one with the smallest difference.
+
+In short, sort the scores, then check every group of size k for the smallest score difference, and return that as the final answer.
+
+718. Maximum Length of Repeated Subarray
+You are given two lists of numbers. Your task is to find the longest sequence of numbers that appears in the same order and without gaps in both lists.
+
+Think of it like this: you're trying to find the longest common "piece" or "stretch" that both lists share. For example, if one list has [1,2,3,2,1] and the other has [3,2,1,4,7], you can see that both lists contain [3,2,1] as a continuous stretch. This is the longest such common stretch, so the answer is 3.
+
+To solve this, we create a table where we compare each number in the first list with each number in the second list. If we find a match, we look at how long the previous matching streak was and extend it. While doing this, we keep track of the maximum streak we find. That maximum becomes our final answer.
+
+In simple terms, we look for the longest piece of numbers that both lists have in common in the same exact order.
+
