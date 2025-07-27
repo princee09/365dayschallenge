@@ -1,0 +1,17 @@
+190: Reverse Bits
+
+
+We are given a 32-bit number, and we need to reverse its binary bits. That means we take the bits 
+from the right side and start placing them from the left side in a new number. For example, 
+if the number’s binary is 000...0101, we flip it to be 1010...0000.
+
+To do this, we create a new number called res, starting from 0. For 32 times (since it’s a 32-bit number), 
+we repeat these steps:
+We first shift res to the left by one space so that we make room for the next bit. Then we pick the last bit 
+from the original number n and add it to the rightmost part of res. We do this using bitwise operations. 
+After that, we shift the original number n one step to the right to process the next bit in the next iteration. 
+After 32 steps, res contains the reversed bits, and we return it.
+
+
+
+
