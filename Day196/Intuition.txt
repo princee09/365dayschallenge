@@ -1,0 +1,62 @@
+559. Maximum Depth of N-ary Tree
+
+
+
+
+
+
+Imagine a tree where every branch can have many smaller branches (not just two like a usual tree). 
+This is called an N-ary tree.
+
+We are asked to find how deep this tree goes, starting from the topmost point (root) to the very bottom leaf.
+
+Think of it like this — you start at the trunk of a tree, and you walk down the longest path to the last possible leaf. 
+You need to find how many steps (nodes) you take on that longest path.
+
+So what we do is, for every branch (node), we check all of its children (smaller branches), 
+go to each one of them and find how deep they are, and keep track of the deepest one. 
+Then we return that maximum depth plus one (because we count the current node too).
+
+If the tree is empty, the depth is zero.
+
+This is done using a method where we go deep down one path, then come back and check another, 
+and so on — this is called Depth First Search (DFS).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+230. Kth Smallest Element in a BST
+
+
+
+
+
+
+
+
+Here we are given a Binary Search Tree (BST) — which is a tree where for every point, 
+the left side has smaller numbers and the right side has bigger numbers.
+
+Our task is to find the kth smallest number in this tree — like asking, 
+"what is the 3rd smallest number here?"
+
+Now in such a tree, if we move from left side to root to right side, we get all the numbers in sorted order.
+
+So we just go in that order (called inorder traversal), and we count the numbers we visit.
+
+As soon as we reach the kth number, we stop and say “this is the answer”.
+
+We don’t have to go through the whole tree, we just stop once we find what we need.
+
+This method is smart because it uses the tree’s natural sorting property and stops early as soon as we find the correct number.
+
