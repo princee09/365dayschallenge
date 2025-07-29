@@ -1,0 +1,53 @@
+46. Permutations
+
+
+
+
+Imagine you have a set of distinct items, like different colored balls red, blue, and green. 
+You want to find every possible way you can arrange these balls in a line.
+
+For example, one way is red-blue-green, another is red-green-blue, and so on. 
+Our goal is to list all such possible arrangements.
+
+To do this, we use a method where we fix one ball at the front and then arrange the remaining 
+ones in all possible ways. After finishing one arrangement, we go back (undo our last step) and 
+try another ball in the front. This going forward and coming back is called backtracking.
+
+We keep repeating this until all positions are filled in every way possible. Since the input 
+has no duplicates, we don’t worry about repeated arrangements.
+
+This method is efficient because instead of copying the whole list again and again, 
+we just swap the elements and work with the same list, saving space and time.
+
+
+
+
+
+
+
+
+
+
+
+
+
+47. Permutations II
+
+
+
+
+
+
+Now imagine the same situation, but this time the balls are not all unique maybe you have two red balls and one green.
+
+If you use the method from the previous question directly, you will end up getting duplicate arrangements, 
+like red-red-green appearing more than once. But we want only unique arrangements.
+
+So, we first sort the balls, which puts all the same colors together. Then, while arranging them, 
+we keep track of which ball we’ve already used in a particular spot. And very importantly, 
+when we see a repeated ball (like two reds), we only use the first one if the previous one has already been used in that round.
+
+This trick ensures that we skip duplicate combinations and get only the distinct ways to arrange the balls.
+
+We still use backtracking fixing one ball at a time and going deeper, then stepping back
+but now with extra care to not repeat anything that looks the same.
