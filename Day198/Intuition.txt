@@ -1,0 +1,30 @@
+42. Trapping Rain Water
+
+
+
+Imagine a row of buildings of different heights and it rains. Water will collect in the dips between 
+taller buildings. For each building, how much water it can hold depends on the tallest building on its 
+left and the tallest building on its right. So we use two pointers, one from the left and one from the right, 
+and we keep track of the tallest wall seen so far on both sides. Whichever side has the smaller wall, 
+we check how much water it can trap there by comparing with its tallest wall seen. We move that pointer 
+inward and keep adding up all the trapped water. This saves us from checking every pair again and again and makes the solution fast.
+
+
+
+
+
+
+
+
+
+
+1163. Last Substring in Lexicographical Order
+
+
+
+Given a string, we want to find the part of it that looks the biggest if sorted in dictionary order. 
+Think of scanning the string from left to right with two fingers. One finger points to our current best answer, 
+and the other scans ahead looking for a better starting point. We compare letters from both positions step by step. 
+If the second position shows a bigger letter, we move our best answer to there. If it's smaller, we skip ahead. 
+This way we don't have to check every substring, we only focus on promising candidates. 
+This makes it efficient even for large strings.
