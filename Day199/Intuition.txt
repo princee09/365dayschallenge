@@ -1,0 +1,42 @@
+1297. Maximum Number of Occurrences of a Substring
+
+
+
+
+
+Imagine you are reading a long sentence, and you want to find the small piece of text (a substring) 
+that appears the most times. But there's a rule — that piece of text should have a limited number of 
+different letters (for example, only 2 unique letters), and it should be of a fixed size (say 3 letters long). 
+So, what we do is, we look at every piece of text in the string that is exactly 3 letters long, 
+and check how many different letters it has. If it has more than allowed, we skip it. If it’s valid, 
+we keep track of how many times we’ve seen it before. In the end, we find the one that appears the most. 
+To do this fast, we slide a small window over the string and count characters smartly 
+without checking everything again and again. This makes the solution efficient even for large strings.
+
+
+
+
+
+
+
+
+
+
+
+
+220. Contains Duplicate III 
+
+
+
+
+
+
+
+Think of walking down a long street and keeping a small notebook of the numbers you’ve seen recently. 
+You’re only allowed to keep notes about the last ‘indexDiff’ number of people (like a window). 
+For every new person you meet (every new number in the list), you want to check if there's someone 
+in your notebook whose number is close enough (within ‘valueDiff’ of the new number). If yes, 
+then you found a match and you return true. If not, you continue walking, removing the 
+oldest person from your notes and adding the new one. The trick is how to check quickly if a 
+close-enough number exists in your notebook — for that, we use a smart data structure (a multiset) 
+that keeps numbers sorted, so we can easily look around a number to see if a close match exists. This keeps the checking and updating very fast even for big inputs.
