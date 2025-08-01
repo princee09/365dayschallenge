@@ -1,0 +1,51 @@
+118. Pascal’s Triangle
+
+
+
+
+
+
+
+
+Imagine Pascal’s Triangle like a triangle of numbers where each number is built using the two numbers directly above it.
+
+You always start with 1 at the top. Then in every new row, you again put 1 at the beginning and 1 at the end. 
+For the numbers in between, you just add the two numbers that are diagonally above it from the previous row.
+
+So this code creates an empty list to hold all the rows of the triangle. Then it builds each row one by one. 
+For each row, it fills the first and last numbers with 1, and fills the middle numbers using the two numbers from the row above.
+
+This way, it builds all the rows up to the number you asked for.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+506. Relative Ranks
+
+
+
+
+
+
+
+
+You are given a list of scores, like a competition where each person has a score. 
+The task is to give them ranks based on their scores. The highest score gets the "Gold Medal", the 
+second highest gets the "Silver Medal", the third gets the "Bronze Medal", and the rest 
+just get their position number as a string like "4", "5" and so on.
+
+So this code first remembers which score belonged to which person using pairs — one part is the 
+score and the other is the person's original position in the list. Then it sorts the list of scores from highest to lowest.
+
+After sorting, it goes through the sorted scores and gives medals to the top three and 
+numbers to the rest. Finally, it puts the medals or rank strings back into their correct original places and returns the list.
