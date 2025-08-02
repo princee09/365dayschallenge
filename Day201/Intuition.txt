@@ -1,0 +1,40 @@
+501. Find Mode in Binary Search Tree
+
+
+Imagine you are walking through a garden where flowers are arranged in increasing order of height. 
+Some flowers have the same height. You want to find out which height occurs the most — that is, 
+which flower height is most repeated.
+
+Since the garden is arranged in order, as you walk, you can easily count how many times each height appears. 
+Whenever you see a new height, you check if the number of times the previous one appeared is more than your current maximum. 
+If yes, you update your record. If it’s equal, you just note it down as another frequently appearing height.
+
+In the same way, we walk through the binary search tree in order and count how many times each number shows up, 
+and we keep track of the number that appears the most. We do this smartly, without using extra space, 
+by just remembering the last number we saw and how many times we saw it.
+
+
+
+
+
+
+
+
+
+
+
+
+515. Find Largest Value in Each Tree Row
+
+
+
+
+
+Think of a big tree where each branch level is like a floor in a building. Now, you stand on each floor and 
+look around to find the tallest person standing on that floor. You repeat this for every floor from 
+top to bottom and write down the height of the tallest person you saw on each floor.
+
+In the same way, we look at the tree level by level — starting from the top level (root), and for each level, 
+we find the largest number among all the nodes present. We use a queue (like a line of people) to 
+help us go through one floor at a time. After visiting all levels, we end up with a list of the biggest values from each level of the tree.
+
