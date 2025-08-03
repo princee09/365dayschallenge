@@ -1,0 +1,47 @@
+1091. Shortest Path in Binary Matrix
+
+
+
+
+Imagine you are standing at the top-left corner of a square grid made of blocks. Some blocks are 
+walkable (marked with 0), and some are blocked (marked with 1). You want to reach the bottom-right 
+corner by taking the shortest path possible. You are allowed to move in any of 
+the 8 directions — up, down, left, right, and all 4 diagonals.
+
+The idea is to explore all possible paths starting from the top-left block, and we use 
+something called BFS (Breadth First Search), which means we try all nearby blocks first 
+before going deeper. This guarantees that the first time we reach the destination is through the shortest route.
+
+We use a queue to keep track of where we are and how many steps we’ve taken. Every time we move, 
+we check all the 8 possible directions. If a block is walkable and hasn’t been visited, 
+we add it to our list to explore. Once we reach the bottom-right corner, we return the number of steps taken. 
+If we never reach it, that means there is no path, so we return -1.
+
+
+
+
+
+
+
+
+
+1631. Path With Minimum Effort
+
+
+
+
+
+
+Imagine you are hiking on a terrain that has different heights. You start from the 
+top-left corner and want to reach the bottom-right corner. You can move up, down, left, or right. 
+Now, every step you take from one cell to another takes some “effort” — the effort is the difference 
+in height between the two cells. Your goal is not to find the shortest number of steps, but rather 
+a path where the biggest height difference (i.e., hardest climb) is as small as possible.
+
+To do this, we use a smart path-finding technique similar to Dijkstra’s algorithm. We keep track 
+of how much effort it takes to reach each cell. We start at the beginning with zero effort, 
+and we always explore the next cell that currently looks the easiest to reach — meaning the path with the lowest max effort so far.
+
+As we move, we calculate the difference in height and record the maximum effort we had to use up to that point. 
+If this is better than what we had before for that cell, we update it. We keep doing this until we reach 
+the final cell, and by that time, we will have found the path that required the smallest possible "maximum step".
