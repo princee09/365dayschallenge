@@ -1,0 +1,51 @@
+904. Fruit Into Baskets
+
+
+
+
+Imagine you're walking through a line of fruit trees. You have two baskets, and each basket can only carry one type of fruit, 
+but there's no limit on how many fruits of that type you can carry.
+
+You start at some tree and move only to the right. From each tree you pass, you must pick one fruit. 
+But the rule is that you can only pick fruits that can fit into your two baskets.
+
+So, as you walk, if a tree has a fruit of a third type that doesn't match what's already in your baskets, 
+you have to stop.
+
+To solve this efficiently, we use a window this is like looking at a stretch of trees 
+where the rule is followed. We keep expanding this window to the right, and if we ever get to a 
+point where there are more than two fruit types, we start shrinking the window from the left until we are back to two types.
+
+We keep track of the largest valid window we ever had that tells us the maximum number 
+of fruits we can collect in one go.
+
+
+
+
+
+
+
+
+
+179. Largest Number
+
+
+
+
+
+
+You're given a bunch of non-negative numbers, and you want to arrange them in such a way that when you 
+stick them together, they form the biggest possible number.
+
+Think of each number as a string. For example, if you have 10 and 2, you could 
+stick them as "102" or "210". Clearly, "210" is bigger.
+
+So, the key idea is: for every pair of numbers, compare the two possible ways they can be joined, 
+and place them in the order that gives the bigger combined result.
+
+We sort all the numbers using this idea. After sorting, we just stick all the 
+numbers together to make the final big number.
+
+One edge case is if all the numbers are zeroes, then just return "0", not something like "0000".
+
+This way, even if the list has many numbers, we’ll always end up with the largest number possible when they're arranged properly.
