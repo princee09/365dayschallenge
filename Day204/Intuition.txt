@@ -1,0 +1,52 @@
+3477. Fruits Into Baskets II
+
+
+
+Imagine you have different types of fruits, and each type has a certain quantity.
+
+You also have a row of empty baskets, and each basket can hold a limited number of fruits.
+
+Your job is to go through the fruits one by one from left to right, and for each fruit type, try to put it into the first basket from the left that has enough space to hold all of them.
+
+But remember:
+
+Each basket can only hold one kind of fruit.
+
+Once a basket is used, you can't use it again.
+
+If you can't find a basket big enough for a fruit type, you leave that fruit unplaced.
+
+In the end, you just count how many fruit types couldn't be placed in any basket.
+
+The code goes through each fruit and checks every basket from left to right. As soon as it finds one with enough space that hasn’t been used, it puts the fruit there and moves on. If it doesn’t find one, it increases the count of unplaced fruits.
+
+
+
+
+
+
+
+
+
+
+3042. Count Prefix and Suffix Pairs I
+
+
+
+You are given a list of words.
+
+Now you have to look at all possible pairs of words where the first one comes before the second one in the list.
+
+For each pair, check whether the first word appears both at the beginning and at the end of the second word.
+
+For example, the word "aba" is a prefix and suffix of the word "ababa", because:
+
+It starts with "aba"
+
+It also ends with "aba"
+
+The task is to count how many such pairs exist.
+
+So the code simply compares every possible pair of words in the list. For each pair, it checks if the first word fits both at the start and at the end of the second word. If yes, it counts that pair.
+
+This is done for all valid pairs where the first word comes before the second.
