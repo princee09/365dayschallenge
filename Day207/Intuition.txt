@@ -1,0 +1,32 @@
+808. Soup Servings
+
+
+
+Imagine you have two bowls of soup, both with the same amount. Every time, you randomly scoop out 
+soup from both bowls in one of four fixed ways. The game stops when either bowl is empty. We want to 
+know how likely it is that bowl A empties before bowl B, but if both get empty at the same time, we 
+count half of that chance. The code turns the soup amounts into small units to make the math easier, 
+because scooping is always in multiples of 25 ml. For very large starting amounts, the chance of A emptying 
+first is almost certain, so we just return 1. For smaller amounts, the code uses a smart memory-based 
+method to try all possibilities and remember answers it has already calculated so it does not redo work. 
+This way, it quickly adds up the probabilities from all possible scooping choices until we get the final answer.
+
+
+
+
+
+
+
+402. Remove K Digits
+
+
+
+
+
+Think of your number as a row of blocks, each with a digit on it. You can remove 
+exactly k blocks to make the smallest number possible. The trick is to remove bigger blocks that are in front of smaller ones, 
+because they make the number larger if they stay. So, we read the number from left to right and 
+keep a stack of blocks, removing from the top whenever the next block is smaller and we still have removals left. 
+If we still have removals left after going through all blocks, we just remove from the end. At the end, 
+we strip away any leading zeros so the number looks clean. If nothing is left, the smallest number is zero. 
+The code does all this efficiently so it works even for very long numbers.
