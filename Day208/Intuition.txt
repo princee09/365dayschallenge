@@ -1,0 +1,32 @@
+680. Valid Palindrome II
+
+
+
+
+
+
+We start by looking from both ends of the word at the same time, moving inwards, 
+checking if the letters match. If they always match, it is already a palindrome. 
+If we ever find two letters that do not match, we are allowed to remove only one letter. 
+So we try two possibilities remove the letter from the left side or remove the letter from 
+the right side and then check if what remains is a palindrome. If either choice works, 
+the answer is true. This works fast because we only scan the string at most twice.
+
+
+
+
+
+
+
+738. Monotone Increasing Digits
+
+
+
+
+
+We write the number as separate digits and look from left to right until we see the first 
+place where the order of digits is broken (a digit is smaller than the one before it). 
+When this happens, we move leftwards, reducing the digit before the break by one, 
+and if that causes more problems to the left, we keep going until the order is fixed. 
+Then, to make the number as large as possible while keeping the order, 
+we change all digits to the right into 9. This way we get the biggest number possible that still has digits in non-decreasing order.
