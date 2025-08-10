@@ -1,0 +1,30 @@
+611. Valid Triangle Number
+
+
+
+Think of having a bunch of sticks of different lengths, and you want to see in how many ways you 
+can pick three sticks to form a triangle. The rule for making a triangle is that the sum of the 
+lengths of any two sticks must be greater than the length of the third stick. To make this process 
+faster, we first arrange the sticks in order from smallest to largest. Then we choose the biggest 
+stick and check how many pairs of smaller sticks can be combined with it to make a triangle. 
+If two sticks together are long enough, then every stick in between will also work, so 
+we can count them all at once instead of checking each separately. This reduces the time spent 
+from checking every single combination to a much quicker method.
+
+
+
+
+
+
+
+481. Magical String
+
+
+
+
+Imagine a magical sequence made of only 1s and 2s that has a strange property — if you read the sequence 
+in terms of how many times each number appears in a row, you get the sequence itself again. It starts as 1, 2, 2, and 
+keeps growing following this rule. To know how many 1s appear in the first ‘n’ numbers of this sequence, we do 
+not generate the whole thing blindly. Instead, we keep track of a position that tells us how many times to add 
+the next number, and we alternate between adding 1s and 2s. Each time we add a 1, we count it. We stop when we 
+reach the first ‘n’ numbers. This way, we build only as much as needed and count the 1s while building it.
