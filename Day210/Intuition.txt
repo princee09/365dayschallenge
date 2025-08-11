@@ -1,0 +1,20 @@
+848. Shifting Letters
+
+
+
+Imagine you have a word, and for each letter you have a number telling you how many times to push it forward in the alphabet. 
+But each number means you push not just that letter, but all letters before it too. Instead of moving letters again and again 
+from the start each time, you start from the end and keep track of the total pushes needed so far. You add the current letter’s pushes 
+to your running total, wrap it around the alphabet so it never goes beyond ‘z’, and change the letter right there. This way you 
+avoid repeating work and finish much faster.
+
+1140. Stone Game II
+
+
+
+Think of a row of stone piles and two players, Alice and Bob, taking turns. On each turn, the player can take a 
+few piles from the start, but the allowed number grows based on the last move. Both want the most stones possible. 
+The trick is to figure out the best move now by looking at what would happen later if the opponent also plays perfectly. 
+We work backward, imagining all possible moves and recording the best result for each situation 
+so we do not have to think about it again. This way, we make sure Alice always gets the 
+maximum possible stones she can, no matter how Bob plays.
