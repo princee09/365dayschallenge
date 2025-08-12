@@ -1,0 +1,41 @@
+1005. Maximize Sum Of Array After K Negations
+
+
+
+
+The idea is simple. We want to get the biggest possible total after flipping the sign of numbers exactly K times. 
+First, we sort the numbers so that negative ones come first. Then, we keep flipping the smallest negative numbers into 
+positive until we either run out of negative numbers or use up all K flips. After that, we calculate the total sum. But 
+if we still have flips left and the remaining flips count is odd, we flip the smallest number once more 
+because flipping an odd number of times will change the sign. This ensures the total sum is as large as possible.
+
+
+
+
+
+
+
+
+
+
+1013. Partition Array Into Three Parts With Equal Sum
+
+
+
+
+We want to check if the array can be split into three non-empty sections where each section has the same total. 
+First, we find the total sum of the array. If it is not divisible by 3, it is impossible to split equally, 
+so we return false. Otherwise, we go through the array adding numbers one by one and count how many times the running 
+total equals one-third of the total sum. If we can find this situation twice before the end of the array, 
+it means the third section will automatically have the same sum, so we return true. This way, 
+we check if the array can be divided into three equal-sum parts.
+
+
+
+
+
+
+
+
+
+Ask ChatGPT
