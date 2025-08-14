@@ -1,0 +1,31 @@
+2264. Largest 3-Same-Digit Number in String
+
+
+
+We are given a long number written as a string, and we need to find the largest group of three same digits 
+sitting next to each other. For example, if we have "6777133339", the groups of three same digits are "777" 
+and "333". Out of these, "777" is bigger, so we return that. The code simply moves through the number, 
+checking every position to see if the next two characters are the same as the current one. If they are, 
+we remember the largest digit we have seen so far. In the end, we return that digit three times as our answer, 
+or nothing if no such group exists.
+
+
+
+
+
+
+
+
+
+324. Wiggle Sort II
+
+
+
+
+We are given a bunch of numbers, and we want to rearrange them so that they go up, down, up, down,
+and so on. That means the first number should be smaller than the second, the second bigger than the third, 
+the third smaller than the fourth, and so on. To do this efficiently, the code first finds the middle value of 
+all the numbers (the median). Then it rearranges the numbers in such a way that bigger numbers are placed in the 
+high spots (like peaks) and smaller numbers in the low spots (like valleys). It uses a clever trick to decide 
+which position to fill next so that we never break the up-down pattern. In the end, this makes sure the 
+sequence has the correct wiggle shape without needing extra memory or sorting everything fully.
