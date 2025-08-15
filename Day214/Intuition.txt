@@ -1,0 +1,34 @@
+342. Power of Four
+
+
+
+
+Think of it like checking if a number came from multiplying 4 again and again starting from 1.
+If the number is 1, we know it is 4 raised to the power 0, so it is valid.
+If the number is less than or equal to 0, or it is not perfectly divisible by 4, then it can never be made by multiplying 4 again and again, so it is not valid.
+Otherwise, we keep dividing the number by 4 and check again.
+If we keep dividing and finally reach 1, then yes, it is a power of four.
+
+
+
+
+
+
+
+
+
+
+
+
+459. Repeated Substring Pattern 
+
+
+
+
+
+Here we want to see if the whole string is just a smaller piece repeated again and again.
+We try every possible length for the smaller piece, starting from 1 character to half the size of the string.
+If the total length of the string cannot be evenly split into pieces of that size, we skip it.
+If it can be split evenly, we take the first piece and compare it with all the other pieces in the string one by one.
+If all pieces match the first piece exactly, then the string is made of repeated parts.
+If even one piece does not match, we try with a different piece size until we find a match or confirm it is not possible.
