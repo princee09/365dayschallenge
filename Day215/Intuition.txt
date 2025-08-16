@@ -1,0 +1,39 @@
+Question 114: Flatten Binary Tree to Linked List
+
+
+
+
+
+Think of a family tree where each person may have children on the left side and right side. 
+The task is to turn this tree into a straight chain, like a necklace, so that each person is linked only to the 
+next one on the right side. The order of people in this chain should follow the same order you would visit them 
+if you walked the tree from top to bottom, always going left before right. To do this, we look at 
+each person: if they have a left child, we connect the rightmost person from that left side to 
+the original right side, then move the left side into the right, and erase the left link. 
+By repeating this, the tree naturally stretches into a single straight line without using extra memory.
+
+
+
+
+
+
+
+
+
+Question 946: Validate Stack Sequences
+
+
+
+
+
+
+
+
+
+Imagine you are stacking plates on a table, one by one, in the order given by the first list. 
+At any moment, you are allowed to remove the plate from the top of the stack. The second list tells you 
+in which order the plates should be removed. The question asks if it is possible to remove the plates in 
+exactly that order while following the rule that you can only take from the top of the stack. To check this, 
+we place each plate from the first list onto the stack. After placing a plate, if the top plate matches the 
+next one we are supposed to remove, we take it off. We keep doing this until all plates are either matched and 
+removed or we get stuck. If we successfully remove all plates in the right order, then the answer is yes, otherwise it is no.
