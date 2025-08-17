@@ -1,0 +1,34 @@
+Question 1046: Last Stone Weight
+
+
+
+
+
+
+Think of it like you have a bunch of heavy stones and you are playing a game. Each time, 
+you pick the two heaviest stones and smash them against each other. If they are of the same weight, 
+both are destroyed completely. If one is heavier, then only the lighter one breaks and the heavier one 
+becomes smaller by the lighter stone’s weight. You keep doing this until there is at most one stone left. 
+The answer is simply the weight of that last stone.
+
+
+
+
+
+
+
+
+
+
+
+Question 1464: Maximum Product of Two Elements in an Array
+
+
+
+
+
+
+Here you are given numbers, and you need to pick two of them in such a way that after subtracting 1 from each, 
+their multiplication is the largest possible. In simpler terms, to make a product as big as possible, 
+you should pick the two largest numbers in the list. For example, if you had numbers 5 and 4, 
+then after subtracting 1 from each, you multiply 4 times 3 which is 12.
