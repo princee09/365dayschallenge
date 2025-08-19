@@ -1,0 +1,30 @@
+Question 888: Fair Candy Swap
+
+
+
+
+The idea is that Alice and Bob both have candies in different boxes, but the total number of candies they own is not equal. They want to swap one box each so that after the swap, both have the same total number of candies.
+
+To figure this out, we first calculate the total candies Alice has and the total Bob has. Then we find the difference between their totals. Since they are swapping one box each, the difference must be shared equally. This means the difference between the candy box Alice gives and the candy box Bob gives should be exactly half of the total difference.
+
+So, for every box Alice owns, we check if Bob has a box that would balance this equation. Once we find such a pair, that is the swap they should make. This works efficiently because we store Bob’s boxes in a fast lookup structure, so checking is very quick.
+
+
+
+
+
+
+
+
+
+Question 744: Find Smallest Letter Greater Than Target
+
+
+
+
+
+Here, we are given a list of letters that is already sorted alphabetically, and we are asked to find the smallest letter that comes after a given target letter. If the target is larger than all letters, then we simply return the very first letter in the list.
+
+The reasoning is simple: since the letters are sorted, we can quickly search for the first letter that is bigger than the target. Instead of checking one by one, we use a method called binary search that divides the list into halves again and again until we find the right position. This makes the search much faster.
+
+If we do not find any letter that is bigger, we just wrap around and return the first letter of the list, because the problem says so.
