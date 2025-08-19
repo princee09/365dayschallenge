@@ -1,0 +1,29 @@
+628. Maximum Product of Three Numbers
+
+
+
+
+
+We are asked to find three numbers from a list such that their multiplication is the biggest possible. The trick is that the maximum product can come in two different ways. First, it can come from the three largest numbers. For example, if the list is [1, 2, 3, 4], then the biggest product is 2 × 3 × 4 = 24.
+
+Second, the maximum product can also come from two very small negative numbers and one large positive number. This happens because multiplying two negative numbers makes a positive number. For example, in [-10, -9, 5], the biggest product is -10 × -9 × 5 = 450, which is larger than any other combination.
+
+So the idea is simple: we check both possibilities (three largest numbers, or two smallest numbers with the largest number) and pick whichever gives the bigger answer.
+
+
+
+
+
+
+
+667. Beautiful Arrangement II
+
+
+
+
+
+We need to create a list of numbers from 1 to n in such a way that the differences between neighbors give exactly k unique values. If we just put numbers in order, like [1, 2, 3, 4], then all differences are 1, so only one unique difference is present.
+
+To make more unique differences, we can arrange numbers in a zig-zag way. For example, if we start from the smallest number, then jump to the biggest number, then again take the next smallest, then the next biggest, and so on, the differences between them become large, then smaller, and keep changing. This gives us exactly k different differences.
+
+Once we have created k unique differences, we stop the zig-zag and just keep filling the rest numbers in order. This way, the final list satisfies the rule.
