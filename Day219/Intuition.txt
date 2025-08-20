@@ -1,0 +1,20 @@
+Question 796. Rotate String
+
+Think of the string like people standing in a line. A "shift" means the first person in line goes to the very end. 
+If you keep doing this again and again, the line changes shape but the order of people stays the same, just rotated. 
+To check if one string can become another through this shifting, we simply try all possible rotations one by 
+one and see if at any point the new line of people matches the target line. If yes, the answer is true, otherwise false.
+
+
+
+
+
+
+Question 1143. Longest Common Subsequence
+
+Imagine you have two sentences and you want to find the longest pattern of letters that appear in both, 
+in the same order, though not necessarily side by side. For example, in "abcde" and "ace", the 
+letters "a", "c", and "e" appear in both in the same order, so that is the longest common subsequence. 
+The way we solve this is by comparing letters of both words step by step and keeping track of the longest 
+sequence found so far. If the letters match, we extend our sequence. If they don’t, we keep the longer 
+sequence we already had. By the end, we know the length of the longest chain of matching letters that both strings share.
