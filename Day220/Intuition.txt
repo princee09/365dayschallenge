@@ -1,0 +1,18 @@
+Question 2411. Smallest Subarrays With Maximum Bitwise OR
+
+Imagine you have a list of numbers, and for each position in the list, you want to find the 
+shortest stretch of numbers starting from there that gives you the best possible result when 
+you combine them with a rule called “OR” (which basically means keeping all the 1s from each number’s binary form). 
+To solve this, we look at the list backwards, from the end to the start. For each spot, we note down the last place 
+where each important piece of information (each bit in binary) shows up. Then, to get the maximum possible result from that spot, 
+we just need to make sure our subarray goes far enough to include all those needed bits. The answer for each position 
+is simply how long we need to go to capture all of them.
+
+Question 1839. Longest Substring Of All Vowels in Order
+
+Here we are given a word made only of vowels and asked to find the longest stretch where the vowels appear in order, 
+starting from a’s, then e’s, then i’s, then o’s, and finally u’s. Also, every vowel must appear at least once. 
+To solve this, you move through the word from start to end, keeping track of how long the current valid stretch 
+is and how many different vowels you have seen so far in the correct order. If the order breaks, you restart 
+counting from that point. Whenever you have seen all five vowels in order, you check if the current stretch is 
+the longest so far. In the end, the longest valid stretch is your answer.
