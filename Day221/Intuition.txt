@@ -1,0 +1,26 @@
+Question 257. Binary Tree Paths
+
+
+
+Think of the tree as a family tree where each person can have two children, one on the left and 
+one on the right. What the problem asks is to write down all possible paths starting from the top ancestor 
+(the root) and going down to the last descendant who has no children (a leaf). The way we solve this is by 
+walking down the tree step by step, remembering the path we took so far. Whenever we reach someone who has no children, 
+that means the path is complete, so we write it down. Then we go back and try the other possible paths. 
+By doing this carefully, we can collect all the paths from the top to every leaf.
+
+
+
+
+
+
+Question 299. Bulls and Cows
+
+
+
+This game is about comparing two strings of numbers. Imagine you have a secret code and your friend is guessing it. 
+If your friend gets the right digit in the exact right place, that is a bull. If the digit exists in your secret code 
+but is in the wrong place, that is a cow. To find bulls, we just compare both numbers position by position and count 
+how many match perfectly. For the cows, we only look at the digits that did not match and see how many of those 
+are present in both numbers. But since one digit can only be used once, we only count the minimum times that 
+digit appeared in both. In the end, we give the answer in the format showing the number of bulls and cows.
