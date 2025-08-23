@@ -1,0 +1,42 @@
+Question 81. Search in Rotated Sorted Array II
+
+
+
+
+
+Imagine you have a list of numbers that was originally in order but someone cut it at a point and then attached 
+the front part to the end. So the order looks rotated. Now you are asked if a certain number is inside this list. 
+Normally, if there are no repeated numbers, you can easily decide which side of the list is sorted and search there 
+using a smart method called binary search. But when there are repeated numbers, it becomes tricky because you 
+cannot always be sure which part is neatly sorted. In such cases, the safest thing to do is slowly move 
+the edges inwards until you can decide. This way, you keep shrinking the search space and continue 
+applying the same logic until you either find the number or finish checking. This method is much faster than searching one by one.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Question 275. H-Index II
+
+
+
+
+
+
+Think of a researcher who has written several papers, and each paper has received a certain number of citations. 
+The list of citations is already sorted from smallest to biggest. The h-index is a score that says the researcher 
+has written at least h papers where each of those h papers has been cited at least h times. To find this 
+number quickly, instead of checking every possibility, we look at the middle of the list. At any point, 
+the number of papers left including the current one is equal to the total papers minus that position. 
+If the current paper’s citation count is greater than or equal to that number, then that many papers 
+satisfy the rule. We then try to see if an even larger h-index exists by moving to the left. 
+If not, we move right. By narrowing the range step by step, we find the exact maximum h-index. 
+This approach saves a lot of time compared to checking each paper one by one.
