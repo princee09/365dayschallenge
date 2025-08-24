@@ -1,0 +1,49 @@
+90. Subsets II
+
+Imagine you have a small set of numbers, like [1, 2, 2].
+
+You want to list every possible group of these numbers, including empty groups.
+
+The tricky part is that some numbers are repeated, so you don’t want the same group to appear twice.
+
+To do this, first we sort the numbers, so repeated numbers come together.
+
+Then we start making groups one by one.
+
+We begin with an empty group.
+
+At each step, we either take the current number or skip it.
+
+If we see the same number again right after a previous one, we skip it to avoid duplicates.
+
+This way, we explore all possible combinations without repeating any group.
+
+Finally, we get a list of all unique subsets.
+
+
+
+
+
+
+
+
+
+476. Number Complement
+
+
+
+Imagine a number like 5. In binary, it is 101.
+
+The complement of a number is what you get when you flip all the bits, changing 0 to 1 and 1 to 0.
+
+So for 5, 101 becomes 010, which is 2 in decimal.
+
+To find the complement efficiently, we first figure out how many bits the number has.
+
+Then we make a mask of the same length with all bits as 1.
+
+For 5, the mask is 111 in binary.
+
+Finally, we use XOR between the number and the mask. XOR flips only the bits where the mask has 1s, giving the complement.
+
+We use unsigned integers in the code to avoid errors if the number is very large, because shifting bits on signed integers can cause problems.
