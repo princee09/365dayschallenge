@@ -1,0 +1,34 @@
+Question 49: Group Anagrams
+
+
+
+
+The problem is about putting words that are made of the same letters into the same group. 
+For example, "eat" and "tea" both use the letters e, a, and t, so they should be grouped together. 
+The trick is to find a way to recognize when two words are built from the same set of letters, no matter the order. 
+The solution does this by counting how many times each letter appears in the word. 
+This count becomes like a fingerprint for the word. Words that have the same fingerprint are anagrams and are placed together in the same group.
+
+
+
+
+
+
+
+
+
+
+
+Question 32: Longest Valid Parentheses
+
+
+
+
+
+This problem is about finding the longest stretch of brackets that are correctly matched. 
+A correct pair is one opening bracket "(" and one closing bracket ")" that fit together. 
+If we take the string of brackets, sometimes they do not all match. The challenge is to find the longest part of 
+the string where the brackets are balanced and valid. The solution uses a stack, which is like a 
+pile where we keep track of unmatched opening brackets. When we see a closing bracket, we try to 
+match it with the last opening bracket from the pile. If it matches, we know we have a valid piece. 
+By checking how long that piece is, we keep track of the maximum length. In the end, the biggest balanced portion gives the answer.
