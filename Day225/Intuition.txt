@@ -1,0 +1,30 @@
+1929. Concatenation of Array
+
+
+
+
+The problem is asking us to take a list of numbers and make a new list that is just two copies of the original 
+stuck together. To solve this, we first create a new empty list of double the size. Then we go through each number 
+in the original list. For each number, we place it once in the front half of the new list and once again in the back half. 
+In the end, the new list looks like the original list written two times one after another. This works in one straight pass, 
+so it is fast and simple.
+
+
+
+
+
+
+
+
+956. Tallest Billboard
+
+
+
+
+
+Here the problem is like building two poles of equal height from given rods. We want both poles to be as tall as possible, 
+and we do not have to use all rods. The tricky part is to decide which rods go to the left pole, which rods go to the 
+right pole, and which rods we skip. The idea is to keep track of the difference in height between the two poles while 
+adding rods one by one. For each rod, we try three things: add it to the left pole, add it to the right pole, or ignore it. 
+We record what maximum tallness we can achieve for each difference. At the end, when the difference is zero, 
+it means both poles are the same height, and that height is our answer.
