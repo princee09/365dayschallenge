@@ -1,0 +1,43 @@
+563. Binary Tree Tilt
+
+We want to find how “tilted” a tree is.
+
+Think of each node in the tree as a balance. The tilt of a node is like the difference between the total weight of its left side and right side.
+
+We go from the bottom of the tree to the top.
+
+For every node, we first calculate the total weight (sum of values) of its left side and right side.
+
+Then we find the tilt by taking the absolute difference between left and right sums.
+
+We add this tilt to a total count.
+
+By the time we reach the top node, we have the sum of tilts for the whole tree.
+
+We do this efficiently in one pass using recursion.
+
+
+
+
+
+
+
+
+
+
+
+652. Find Duplicate Subtrees
+
+We want to find trees that look exactly the same.
+
+Think of each subtree as a small picture. To compare pictures, we convert them into a unique string that represents the shape and values.
+
+We go through the tree and make a string for every subtree using its value and the strings of its left and right children.
+
+We keep track of how many times each string appears using a map.
+
+If a string appears more than once, it means we found a duplicate subtree.
+
+We collect the root of each duplicate subtree once and return them.
+
+This way, we can efficiently find all duplicate subtrees without comparing every pair manually.
