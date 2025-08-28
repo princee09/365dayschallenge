@@ -1,0 +1,50 @@
+1480. Running Sum of 1D Array
+
+
+
+Imagine you are adding up numbers one by one as you walk along a line. You start from the first number, 
+and at each step, you carry the total so far and add the next number to it. For example, if you have [1,2,3,4], 
+first you have 1, then add 2 to get 3, then add 3 to get 6, and finally add 4 to get 10. 
+This way, every position in the new list tells you the total of everything up to that point. 
+It is like keeping a running balance in your wallet after each expense or income.
+
+Code explanation:
+In the code, we loop through the list starting from the second element. At each step, we take the 
+current number and add the number before it, which already has the total up to that point. 
+This way, we do not need extra space, and the original list itself becomes our answer. 
+We used a simple for loop to move through the list, and we used the += operator to update the 
+value at the current position. Finally, we return the list as the running sum.
+
+
+
+
+
+
+
+
+
+
+
+1664. Ways to Make a Fair Array
+
+
+
+
+
+Think of a fair array as one where the sum of numbers at even positions and odd positions are equal. 
+The problem says we can remove one number to try and make the array fair. The challenge is that when you remove a number, 
+everything to the right shifts left, and so the positions (even or odd) also change. For example, 
+if you remove the second number, the third number will now move into the second place, and so on. 
+So the key idea is to calculate how the even and odd sums change after each possible removal. 
+To solve this efficiently, we keep track of totals of even positions and odd positions, 
+then as we go through the list, we simulate removing one number and check if after the shift the even and odd sums match. If they do, then that index is valid.
+
+Code explanation:
+In the code, we first calculate the total sum of numbers at even indices and the total sum at odd indices. 
+These are like two buckets holding the totals. Then, we walk through the array and at each index we try removing that number. 
+Before checking fairness, we adjust the totals by removing the current number from its bucket. 
+After that, we compare new even and new odd sums. The tricky part is that after removal, 
+the roles of the numbers to the right switch between even and odd, so we handle that by combining 
+left side sums with opposite right side sums. If the sums match, we increase our answer count. 
+Throughout, we keep updating prefix sums for the left part so that we can move smoothly. 
+sThe main tools here are a for loop to try each index, simple addition and subtraction to update sums, and condition checking to count valid removals.
