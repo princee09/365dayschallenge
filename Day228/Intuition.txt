@@ -1,0 +1,44 @@
+Question 86: Partition List
+
+
+We are given a list of numbers arranged one after another, like a chain. We also have a value called x. 
+Our task is to rearrange the chain in such a way that all numbers smaller than x come first, and then all numbers 
+greater than or equal to x come after. The important condition is that we are not allowed to change the order among 
+the numbers that belong to the same group. For example, if the smaller numbers were in a certain order before, 
+they must stay in that same order in the final arrangement. Similarly, the bigger numbers must also remain in their original order.
+
+
+To achieve this, the code makes two new temporary chains. One chain collects all the numbers smaller than x, 
+and the other chain collects all the numbers greater than or equal to x. It goes through the list one number at a time, 
+and depending on the value, attaches it to the correct chain. Once we finish scanning the list, we join the two chains together. 
+The "before" chain is connected to the "after" chain, and we return the new head of the combined chain. 
+The trick here is using two dummy starting points so we can easily build the two lists without worrying about special cases.
+
+
+
+
+
+
+
+
+
+
+
+
+Question 82: Remove Duplicates from Sorted List II
+
+
+
+We are given a chain of numbers that is already sorted in increasing order. Some numbers may appear more than once, 
+and our job is to remove all numbers that appear more than once. That means if a number occurs two or more times,
+ we should completely erase all of its appearances. In the end, we only want to keep numbers that appear 
+exactly once in the list. For example, if the list is 1, 2, 3, 3, 4, 4, 5, then the result should be 1, 2, 5.
+
+
+
+To do this, the code first creates a dummy node at the beginning of the chain. This helps to handle 
+situations where even the first number might be a duplicate. Then, while moving through the list, it checks 
+if the current number is repeated by looking ahead to the next one. If it finds a repeat, it remembers that 
+number and skips all of its occurrences until a different number appears. It then connects the previous unique 
+node to this new position, effectively removing the duplicates. If no duplicate is found, it simply moves 
+the pointer ahead. By doing this throughout the list, we end up keeping only the numbers that appeared once.
