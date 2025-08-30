@@ -1,0 +1,49 @@
+1991. Find the Middle Index in Array
+
+
+
+
+
+Imagine you have a line of numbers placed on a balance scale. The “middle index” is like the point where the left 
+side of the scale weighs exactly the same as the right side. You want to find the first position in 
+the line where everything before it adds up to the same total as everything after it. If such a balance point exists, 
+that index is the answer, otherwise there is none.
+
+
+
+The code first calculates the total sum of the whole array because this will help us figure out the right side quickly. 
+Then, as we move one by one through the array, we keep track of the sum of numbers on the left side. At each position, 
+the right side can be calculated by subtracting the left sum and the current number from the total. If at any point the 
+left sum equals the right sum, we immediately return that index. If no index works, the code returns -1. 
+This approach avoids recalculating sums again and again, making it efficient.
+
+
+
+
+
+
+
+
+
+
+
+
+1854. Maximum Population Year
+
+
+
+
+
+Think of each person as arriving at a party in their birth year and leaving just before their death year. 
+The question is asking: during which year was the party most crowded, and if there are ties, which was the 
+earliest such year? Instead of checking every year for every person (which would be slow), 
+we just mark when people arrive and when they leave, then track how the crowd changes over time.
+
+
+
+
+The code uses a small range of years (1950–2050) so it builds an array for these years. For every person, 
+it adds +1 in their birth year (because they join the party) and -1 in their death year 
+(because they leave before it). After processing all people, the code goes year by year, keeping a running total 
+of how many people are present. Whenever this running total is higher than before, it records that year. 
+Because it checks in order, the earliest year with the maximum population is chosen automatically.
