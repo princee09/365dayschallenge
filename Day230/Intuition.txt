@@ -1,0 +1,55 @@
+Question 547. Number of Provinces
+
+
+
+
+Think of each city as a dot on a map. If two cities are directly connected by a road, we draw a line between them. 
+Now, if city A is connected to city B, and city B is connected to city C, then all three cities form a group. 
+Such a group is called a province. Our task is to count how many such separate groups exist.
+
+To solve this, we need to explore all cities and see which ones are connected directly or indirectly. 
+Once we fully explore one group, we mark it as visited so we don’t count it again. By repeating this process, 
+we find the total number of groups (provinces).
+
+
+We used a Depth First Search (DFS) method. This works like starting from one city and following all roads 
+until we cannot go further. Every time we start from a new unvisited city, it means we found a new province. 
+We keep a visited list to remember which cities we have already explored. DFS is used here because it 
+is a simple way to explore all connections of one city before moving to the next. The final count of times 
+we had to start DFS gives the number of provinces.
+
+
+
+
+
+
+
+
+
+
+
+
+Question 399. Evaluate Division
+
+
+
+
+Imagine we have equations like "a divided by b equals 2" and "b divided by c equals 3". 
+This is like saying if one apple costs twice as much as one banana, and one banana costs three times as much 
+as one cherry, then one apple costs six times as much as one cherry. So, we are building a chain of relationships. 
+Each variable is like a point, and the relationship is like a link with a weight (the number). 
+To answer a query like "what is a divided by c", we follow the chain from a to c and multiply the values along the way.
+
+If there is no chain between two variables, then we cannot calculate the answer, so we return -1. 
+If both variables are the same, the answer is always 1, provided that variable exists.
+
+
+
+
+We used a graph to represent the relationships. In this graph, each variable is a node, and each 
+equation is a connection between two nodes with a weight. For example, "a / b = 2" is stored as an 
+edge from a to b with weight 2, and also from b to a with weight 1/2 (because division works both ways).
+
+When a query comes, like "a / c", we use Depth First Search (DFS) again. Starting from "a", 
+we try to reach "c" by moving along the edges and multiplying the weights. If we reach "c", 
+the product gives the answer. If we cannot reach, we return -1. We also keep a visited set to avoid going in circles.
