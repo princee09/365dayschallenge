@@ -1,0 +1,49 @@
+404. Sum of Left Leaves
+
+
+
+Think of a tree as a family tree where each person can have a left child and a right child. 
+A leaf is someone who has no children at all. A left leaf means that this person is sitting on the left 
+side of their parent and has no children. The task is to walk through the whole tree and whenever we see a left leaf, 
+we collect its value and add it to our total sum. In the end, we return that total. We are basically searching 
+every corner of the tree to find the small children who are sitting on the left side without any children of their own, 
+and then summing their values.
+
+
+
+
+In the code, we first check if the root is empty. If it is not empty, we then look at the left child. 
+If the left child exists and itself has no left or right child, then it is a left leaf, so we add its value to our sum. 
+After that, we call the same function again for the left side and right side of the tree to continue the search. 
+This way we make sure that every part of the tree is covered and no left leaf is missed. 
+The recursive call means we are letting the function handle smaller pieces of the tree one by one until everything is checked.
+
+
+
+
+
+
+
+
+
+513. Find Bottom Left Tree Value
+
+
+
+
+Here we want to find the very bottom row of the tree and then take the leftmost value from that row. 
+Think of it like looking at a tree in levels from top to bottom. The last row is the lowest 
+level where the leaves are sitting. Among that row, we want the person who is sitting at the very leftmost seat. 
+One way to do this is to read the tree level by level like how people line up in rows. If we keep checking until 
+we reach the last row, the first value in that row is our answer.
+
+
+
+
+
+
+In the code, we use a queue which helps us process the tree level by level. We push the root into the queue 
+and then start taking elements out one by one. For each node, we first push its right child and then its left child. 
+Because of this order, the very last node that comes out of the queue will actually be the leftmost node of the bottom row. 
+At the end, when the queue is empty, the last node we removed from it is exactly the answer we want. 
+This method saves us from keeping extra details about each row and directly gives us the leftmost bottom value.
