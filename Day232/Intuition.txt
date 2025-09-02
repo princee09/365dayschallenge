@@ -1,0 +1,59 @@
+Question 1700. Number of Students Unable to Eat Lunch
+
+
+
+
+Imagine there are two types of sandwiches in the cafeteria, one round and one square. 
+Each student only likes one type. Students stand in a line, and sandwiches are stacked in a pile. 
+The first student in line looks at the top sandwich. If it is what they like, they take it and leave. 
+If not, they go to the end of the line and wait again. This continues until no one in line wants the sandwich at the top anymore. 
+At that point, the game ends and the students who cannot eat are counted.
+Now instead of moving students around again and again, we can make it simpler by just counting how many 
+students like round sandwiches and how many like square ones. Then we look at each sandwich on the pile one by one. 
+If there are still students who want that type, one is removed from the count. If no students want that type anymore, 
+then all remaining students will be unable to eat, so we just stop there.
+
+
+
+
+
+In the code, first we count how many students prefer round and how many prefer square. 
+This is done by checking the students’ list. Then we go through the sandwiches one by one. 
+If the sandwich is round but no student wants it, we return the number of students who still want square ones. 
+If the sandwich is square but no student wants it, we return the number of students who still want round ones. 
+If a student does take a sandwich, we reduce that count. If we finish the sandwich pile, it means every student ate, 
+so the answer is zero. This way we avoid unnecessary movements and make the solution very fast.
+
+
+
+
+
+
+
+
+
+
+Question 1823. Find the Winner of the Circular Game
+
+
+
+
+
+Think of a group of friends sitting in a circle. Starting from the first friend, we count a certain number, 
+and the last counted friend has to leave the circle. Then we continue counting again from the next person. 
+This keeps happening until only one friend remains, who becomes the winner. This problem is actually a very old 
+mathematical puzzle called the Josephus problem. Instead of actually removing friends one by one, we can use a 
+formula that directly calculates where the winner will sit. The formula basically says that the safe 
+position keeps shifting as people are removed, and we can track it step by step with a simple calculation.
+
+
+
+
+
+
+In the code, we start by saying that if there is only one person, the winner is at position zero.
+Then we loop from two people up to n people. At each step, we update the winner’s position 
+using the formula (winner + k) % current_number_of_people. This keeps track of where the safe position moves 
+after each elimination. In the end, we add one because our code uses counting from zero but the problem uses counting from one. 
+The result is the number of the friend who will be the last one sitting. This way, instead of simulating the whole game, 
+we just calculate directly in one loop, which is very efficient.
