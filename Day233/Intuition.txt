@@ -1,0 +1,59 @@
+2461: Maximum Sum of Distinct Subarrays With Length K
+
+
+
+
+Imagine you have a row of cards, each with a number on it. You need to pick exactly K consecutive cards such that all cards in your hand have different numbers. Your goal is to find the group of K consecutive cards with the highest total sum where no number repeats.
+
+To do this efficiently, you slide a window of size K along the row of cards. For each position of the window, you check if all cards inside are unique. If they are, you calculate their sum and keep track of the maximum sum encountered.
+
+You maintain a frequency count of the numbers in the current window using a dictionary. This helps you quickly check if all elements are distinct. As you move the window one step to the right, you remove the leftmost card from the frequency count and add the new card on the right. You update the sum by subtracting the left card and adding the right card. If the frequency dictionary has exactly K keys, it means all cards are unique, so you compare the current sum with your maximum sum.
+
+
+
+
+The code uses a sliding window approach. It starts by initializing the first window of size K, storing the frequency of each number and the sum of the window. If the frequency dictionary has K entries, it means all numbers are unique, so the sum is recorded as the maximum.
+
+Then, the window slides one step at a time. For each slide, the leftmost number is removed from the frequency dictionary (and entirely removed if its count becomes zero), and the new number on the right is added. The sum is adjusted by subtracting the left number and adding the right number. After each update, if the frequency dictionary has K keys, the current sum is compared to the maximum sum, updating it if necessary.
+
+Finally, the maximum sum found is returned, or zero if no valid window was found.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2260: Minimum Consecutive Cards to Pick Up
+
+
+
+
+
+
+You have a deck of cards, each with a number. You want to find the smallest number of consecutive cards you need to pick up so that you have at least one pair of matching numbers (two cards with the same number). If no such pair exists, you return -1.
+
+The key idea is to remember the last position where you saw each number. As you go through the deck, for each card, if you have seen that number before, the distance from the last occurrence to the current card (plus one) gives the length of a consecutive sequence that contains a matching pair. You keep track of the smallest such length encountered.
+
+
+
+
+
+
+
+The code uses a dictionary to record the most recent index where each number appeared. It initializes a variable to a large value to store the minimum length found.
+
+It iterates through each card in the array. For each card, if it has been seen before, it calculates the number of consecutive cards from the last occurrence to the current card (i.e., current index minus last index plus one). This value is compared with the current minimum length, updating it if smaller.
+
+The dictionary is updated to store the current index for the card number. After processing all cards, if no matching pair was found (minimum length unchanged), it returns -1; otherwise, it returns the minimum length. This approach efficiently finds the shortest segment with a duplicate by leveraging the last seen positions.
+
+
