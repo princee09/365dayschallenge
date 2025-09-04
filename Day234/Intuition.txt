@@ -1,0 +1,53 @@
+3516: Find Closest Person
+
+
+
+
+
+Imagine three people standing on a straight line. Person 1 is at position x, Person 2 is at position y, and Person 3 
+is at position z. Both Person 1 and Person 2 start walking towards Person 3 at the same speed. 
+The question is to figure out who reaches Person 3 first. Since they walk at the same speed, 
+the one who has less distance to cover will arrive first. So, we simply calculate how far each person is from Person 3. 
+If Person 1 is closer, they win. If Person 2 is closer, they win. If both are equally close, they arrive at the same time.
+
+
+
+
+The code calculates the absolute distance between Person 1 and Person 3, and between Person 2 and Person 3. 
+Absolute distance is used because direction doesn't matter; we only care about how far apart they are. 
+Then, it compares these two distances. If Person 1's distance is smaller, it returns 1. 
+If Person 2's distance is smaller, it returns 2. If both distances are equal, it returns 0, meaning they arrive together.
+
+
+
+
+
+
+
+
+
+
+448: Find All Numbers Disappeared in an Array
+
+
+
+
+
+You have a list of numbers from 1 to n, but some numbers are missing and some are duplicated. 
+The goal is to find which numbers are missing without using extra space. The clever idea is to use the 
+list itself to keep track of which numbers we have seen. Since all numbers are between 1 and n, 
+every number corresponds to a position in the list (for example, the number 3 corresponds to index 2). 
+As we go through the list, we mark the position that a number points to as "visited" by making the value at 
+that position negative. After marking all seen numbers, we look through the list again. Any position 
+that still has a positive number means that the number corresponding to that 
+position (which is index + 1) was never seen, so it is missing.
+
+
+
+
+
+The code first iterates through each number in the list. For each number, it finds the 
+corresponding index (by taking the absolute value of the number minus one). If the value at that index is positive, 
+it is made negative to mark it as visited. Then, in a second pass, it checks all indices. If the value at an index is 
+still positive, it means the number (index + 1) was not present in the original list, so it is added to the result. 
+This way, we find all missing numbers without using any additional storage space.
