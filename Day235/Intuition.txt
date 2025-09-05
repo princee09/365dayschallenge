@@ -1,0 +1,84 @@
+1732: Find the Highest Altitude
+
+
+
+
+Imagine a biker going on a road trip. The trip has several points, each at a different height. 
+The biker starts at height zero. As the biker moves from one point to the next, the change in height is given. 
+We need to figure out the highest point the biker reaches during the entire trip.
+
+To do this, we keep track of the current height after each change. We start at zero. Then, 
+for each change in height, we add it to the current height. After each addition, we check if this new height 
+is the highest we have seen so far. If it is, we remember it. At the end, we simply return the highest height we recorded.
+
+
+
+
+
+The code uses two variables: one to hold the current height and another to hold the maximum height found. 
+It starts both at zero. Then, it goes through each change in height one by one. For each change, 
+it updates the current height by adding the change. Then, it checks if this updated current height is greater than the stored maximum. 
+If yes, it updates the maximum. After processing all changes, it returns the maximum height. This way, 
+it efficiently tracks the highest altitude reached during the trip.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1590: Make Sum Divisible by P
+
+
+
+
+
+
+
+
+We have an array of numbers and a number p. We want to remove the smallest contiguous part (subarray) from the 
+array so that the sum of the remaining numbers is divisible by p. We cannot remove the entire array.
+
+First, we check if the total sum of the array is already divisible by p. If it is, we do not need to remove anything, 
+so the answer is zero.
+
+If not, we need to remove a subarray whose sum has a specific remainder when divided by p. Specifically, 
+if the total sum has a remainder r when divided by p, we need to remove a subarray whose sum also has remainder r when 
+divided by p. This is because removing such a subarray would adjust the total sum to be divisible by p.
+
+To find the smallest such subarray, we use prefix sums. A prefix sum is the cumulative sum of elements from 
+the start up to a certain point. We use these prefix sums to efficiently calculate the sum of any subarray. 
+We also use a map to remember the most recent index where each prefix sum remainder occurred.
+
+As we move through the array, we compute the current prefix sum remainder. For each step, we calculate a target remainder that, 
+if we have seen it before, indicates that the subarray between that previous index and the current index has the required remainder. 
+We then check the length of that subarray and keep the smallest length found.
+
+If we find no valid subarray (other than the entire array, which is not allowed), we return -1.
+
+
+
+
+
+
+
+The code first calculates the total sum of the array and its remainder when divided by p. If the remainder is zero, it returns zero.
+
+Otherwise, it initializes a map to store prefix sum remainders and their indices, starting with a prefix remainder 
+of zero at index -1 (to handle subarrays starting from the beginning).
+
+It then iterates through each element, updating the current prefix sum remainder. For each update, it calculates a 
+target remainder that would indicate a valid subarray if found in the map. If found, it calculates the length of the 
+subarray and updates the minimum length if necessary.
+
+It stores the current prefix remainder and its index in the map. After processing all elements, if a valid subarray was found, 
+it returns the minimum length; otherwise, it returns -1. This approach efficiently finds the smallest subarray to remove 
+using properties of modular arithmetic and hash maps for quick lookups.
