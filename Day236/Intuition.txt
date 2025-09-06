@@ -1,0 +1,61 @@
+2516. Take K of Each Character From Left and Right
+
+
+
+
+
+You can only pick letters from the two ends. That is the same as saying you will leave some continuous middle part 
+untouched and take everything else from both ends. To get at least k of a, b, and c, the letters you leave in the 
+middle must be such that the letters outside the middle already have enough of each type. So the task becomes to 
+find the biggest middle piece you can safely leave so that the remaining letters (the ones you take) still have 
+at least k a’s, k b’s, and k c’s. If you can leave a larger middle part, you will take fewer letters from the ends, 
+which means fewer minutes. If the total number of any letter in the whole string is less than k, it is impossible and the answer is -1.
+
+
+
+
+
+First, count how many a, b, and c there are in the whole string to quickly detect an impossible case. 
+Then use a sliding window to represent the middle piece you plan to skip. As you expand the right end of the window, 
+you track how many a, b, and c are inside that middle. The letters outside are total minus inside. While the outside no 
+longer has enough of some letter, you shrink the left end to restore the outside counts. Each time the outside has at 
+least k of all three, you record the window size as a valid middle. You keep the largest such window. Finally, 
+the minimum minutes equals total length minus that largest window length, because those are the letters you will take from the ends. 
+This uses constant extra space for three counts and scans the string once, so it is fast and memory-light.
+
+
+
+
+
+
+
+
+
+
+
+
+
+1234. Replace the Substring for Balanced String
+
+
+
+
+
+
+A balanced string means each of Q, W, E, R appears exactly n/4 times. If some letters appear more than n/4, those extras must be “fixed”. 
+Replacing any substring lets you turn those extra letters into whatever is missing. 
+So you only need to find the shortest substring that contains all the “extra” copies of every letter. 
+If the part you replace already covers every extra, then after replacement the counts outside that part are not above n/4, 
+and the whole string can be made balanced.
+
+
+
+
+
+
+
+First, count how many times Q, W, E, and R occur. Compute the target n/4. If every count is already at most target, return 0. 
+Otherwise, use a sliding window to find the smallest substring whose removal would bring the remaining counts down to target or less. 
+You move the right end forward, and for each added character, you decrease its “outside” count because you are imagining this character being 
+inside the window you will replace. Whenever all four outside counts are at most target, you try to shrink from the left to make the window as small as possible and update the best answer. This process ensures the window holds all the extra letters and is as short as possible.
+The method needs only a few counters and one pass over the string, so it is efficient and simple to implement.
