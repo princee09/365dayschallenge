@@ -1,0 +1,53 @@
+1304: Find N Unique Integers Sum up to Zero
+
+
+
+
+The problem requires creating a list of exactly N different numbers that all add together to equal zero. 
+Think of it like having a set of numbers where each positive number has a matching negative number, so they cancel each other out. 
+For example, if you have +3 and -3, they add to zero. If N is odd, we include zero because zero does not change the sum. So, for even N, 
+we can have pairs like (1, -1), (2, -2), and so on. For odd N, we do the same pairs but also include zero to make the total count correct. 
+This way, all numbers are unique, and their total sum is zero.
+
+
+
+
+The code starts by creating an empty list to hold the numbers. It then calculates how many pairs are needed by dividing N by 2. 
+For each number from 1 to this half value, it adds both the positive and negative version of that number to the list. If N is odd, 
+it adds a zero at the end. This ensures the list has exactly N unique numbers, and the positives and negatives cancel each other out, 
+resulting in a sum of zero.
+
+
+
+
+
+
+
+
+
+
+
+633: Sum of Square Numbers
+
+
+
+
+
+
+This problem asks whether a given number C can be written as the sum of two perfect squares. For example, 5 can be written 
+as 1 squared plus 2 squared (1 + 4 = 5). To check this without testing every possible combination, we use a two-pointer approach. 
+Imagine one pointer starting at the smallest possible number (0) and another at the largest number whose square is less than or equal to C. 
+We then check the sum of their squares. If the sum is too small, we move the left pointer up to try a larger number. If the sum is too large, 
+we move the right pointer down to try a smaller number. We continue this until we find a pair that works or until the pointers meet, 
+meaning no such pair exists.
+
+
+
+
+
+
+The code sets two pointers: one at 0 and the other at the integer square root of C. It then enters a loop where it calculates the sum of the
+squares of these two pointers. If the sum equals C, it returns true immediately. If the sum is less than C, it increases the left pointer to 
+try a larger number. If the sum is greater than C, it decreases the right pointer to try a smaller number.
+The loop continues until the pointers cross each other. If no pair is found by then, it returns false. 
+This method efficiently narrows down the possibilities without checking every number, making it fast even for large values of C.
