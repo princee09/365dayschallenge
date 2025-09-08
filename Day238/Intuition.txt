@@ -1,0 +1,41 @@
+1317: Convert Integer to the Sum of Two No-Zero Integers
+
+
+
+
+The problem is about splitting a given number into two smaller numbers that add up to the original number. The important condition is that 
+neither of these two smaller numbers should contain the digit zero anywhere in them. For example, the number 10 has a zero, so it is not 
+allowed. But numbers like 5 or 23 are fine because they have no zeros.
+
+To solve this, we start by trying out pairs of numbers. We take the first number as 1, and the second number as the original number minus 1. 
+Then we check if both numbers have no zeros. If they do, we return them. If not, we try the next pair: first number as 2, second number as 
+original number minus 2, and check again. We keep doing this until we find a pair that works.
+
+The code uses a helper function to check if a number has any zeros. It does this by looking at each digit one by one. For example,
+to check the number 105, it looks at the last digit which is 5 (not zero), then the next digit which is 0 (zero), 
+so it knows this number is invalid. The main function tries pairs from 1 up to half of the original number.
+This is efficient because if a pair exists, it will be found quickly without checking every single possibility unnecessarily.
+
+
+
+
+
+
+
+
+122: Best Time to Buy and Sell Stock II
+
+
+
+
+This problem involves buying and selling stock over multiple days to make the most profit. You can buy and sell as many times as you want, 
+but you can only hold one stock at a time. The idea is to take advantage of every price increase.
+
+Imagine the stock prices over several days. If you see that the price is going to be higher tomorrow than today, you should buy today 
+and sell tomorrow to make a profit. Even if the price keeps rising over several days, you can think of it as 
+making a series of small trades: buy on day one, sell on day two; then buy on day two again, and sell on day three, and so on. 
+The total profit from all these small trades is the same as if you bought at the lowest and sold at the highest.
+
+The code simply goes through each day starting from the second day. For each day, it compares the price with the previous day. 
+If the current price is higher, it adds the difference to the total profit. This way, it collects profit from every small 
+upward movement in the stock price. This approach is straightforward and ensures that we get the maximum possible profit without missing any opportunities.
