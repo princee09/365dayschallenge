@@ -1,0 +1,61 @@
+316. Remove Duplicate Letters
+
+
+
+
+Imagine you are building the smallest possible word in dictionary order from a set of letters, but you must use each unique letter exactly once
+and you cannot change the original order you found them in. The goal is to pick each letter at the perfect time. If a bigger letter comes 
+before a smaller one, you might want to skip the bigger one, but only if you know you will see that same bigger letter again later. 
+This way, you can use the smaller letter first to make the overall word smaller, and then come back to the bigger letter afterwards.
+
+
+The code uses a stack, which is like building the answer one letter at a time from left to right. 
+It keeps track of two things: how many times each letter appears in the remaining part of the string, 
+and which letters are already in the answer.
+
+As it goes through each letter in the string, it reduces the count for that letter. If the letter is already in the answer, 
+it is skipped. Otherwise, it checks the last letter added to the answer. If that last letter is bigger than the current letter and 
+if that last letter will appear again later in the string, the code removes that last letter from the answer. This makes room for the smaller current letter to be placed earlier, which helps create a smaller word.
+
+Finally, the current letter is added to the answer. In the end, the letters in the stack form the smallest possible word in dictionary order.
+
+
+
+
+
+
+
+
+
+
+
+
+
+2327. Number of People Aware of a Secret
+
+
+
+
+
+
+
+This problem is like modeling the spread of gossip. One person starts knowing a secret on day one. After a waiting period, 
+each person tells one new person every day. However, after a certain number of days, a person forgets the secret and stops 
+telling anyone. We need to find out how many people still know the secret at the end of a given number of days.
+
+
+
+
+
+
+The code uses a dynamic programming approach. It creates an array called dp where each entry dp[i] represents the number of 
+new people who learn the secret on day i.
+
+To efficiently track when these new people start and stop sharing, it uses a second array called share. This array acts like a helper, 
+marking the days when the sharing begins and ends for each group of people.
+
+For each day, the code calculates how many people start sharing that day. These people will then begin to tell others after the 
+delay period, and they will continue to tell one person each day until they forget. The share array is updated to show that from the day they start sharing, they will contribute to new people learning the secret, and on the day they forget, they stop contributing.
+
+At the end, to find the total number of people who know the secret, the code adds up all the people who learned the secret in the 
+last few days (specifically, within the period before they would have forgotten). This gives the count of people who still remember the secret on the final day.
