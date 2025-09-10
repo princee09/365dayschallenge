@@ -1,0 +1,41 @@
+109: Convert Sorted List to Binary Search Tree
+
+
+The problem is about taking a sorted linked list and turning it into a balanced binary search tree. A balanced tree means that the tree 
+is as even as possible in height on both sides, which helps with efficient searching. Since the list is sorted, the middle element is 
+the perfect candidate to be the root because it splits the list into two equal halves. This way, the left subtree gets all the 
+smaller elements and the right subtree gets all the larger elements. We repeat this process recursively for each half to build the entire tree.
+This ensures that the tree remains balanced and efficient.
+
+
+
+The code uses a recursive approach. First, it checks if the list is empty or has only one node, which are simple base cases. 
+To find the middle of the list, it uses two pointers: one that moves slowly (one step at a time) and one that 
+moves quickly (two steps at a time). When the fast pointer reaches the end, the slow pointer is at the middle. 
+The list is then split into two parts: everything before the middle and everything after. The middle node becomes the root of the current subtree. The left part of the list is used to build the left subtree recursively, and the right part is used to build the right 
+subtree recursively. This method efficiently constructs a balanced tree by always choosing the middle element as the root at each step.
+
+
+
+
+
+
+
+
+
+
+445: Add Two Numbers II
+
+
+This problem involves adding two numbers where each digit is stored in a linked list, with the most significant digit first. 
+The challenge is to add them without reversing the lists. Since addition starts from the least significant digit, we need a 
+way to access the digits in reverse order. Using stacks is ideal because they allow us to get the digits in last-in-first-out order, which reverses the list naturally. We push all digits from both lists into stacks. Then, we pop digits from both stacks, add them 
+along with any carry from the previous step, and create new nodes for the result. The result is built in reverse order, so the first digit we compute becomes the last node in the result list.
+
+
+The code first traverses both linked lists and pushes all digits into two separate stacks. This allows access to the digits from 
+least significant to most significant. Then, it initializes a carry variable to zero. It enters a loop that continues as long as 
+there are digits in either stack or there is a carry remaining. In each iteration, it pops digits from the stacks (if available) and 
+adds them along with the carry. The sum is split into a digit (by taking modulo 10) and a new carry (by integer division by 10). 
+A new node is created with the digit and is added to the front of the result list. This builds the result list from least significant 
+to most significant without needing an extra reversal step. Finally, the result list is returned, which now represents the sum of the two numbers.
