@@ -1,0 +1,31 @@
+2785: Sort Vowels in a String
+
+
+The problem requires us to rearrange a string such that all consonants stay in their original positions, while the vowels are sorted in increasing order based on their ASCII values. Vowels include both uppercase and lowercase letters: 'a', 'e', 'i', 'o', 'u'.
+
+The intuition is straightforward: first, we need to identify all the vowels in the string and note down their positions. Then, we collect these vowels and sort them in ascending order. Finally, we place these sorted vowels back into the original positions where vowels were found. This way, the consonants remain unchanged, and the vowels are sorted correctly.
+ 
+
+we iterate through the string to check each character. If it is a vowel, we record its position and add the vowel to a list. After collecting all vowels, we sort that list. Then, we create a new string (or modify the original) and for each recorded vowel position, we assign the next vowel from the sorted list. This ensures that the vowels are sorted while consonants stay in place.
+
+
+
+
+
+
+
+
+
+
+410: Split Array Largest Sum
+
+
+
+This problem involves splitting an array into k contiguous subarrays such that the largest sum among these subarrays is as small as possible.
+
+The intuition is to use binary search to efficiently find the minimum possible largest sum. We know that the largest sum must be at least as large as the maximum element in the array (because one subarray must contain that element) and at most the total sum of the entire array (if we only have one subarray).
+
+We perform binary search within this range. For each candidate value (mid), we check if it is possible to split the array into k subarrays where no subarray has a sum exceeding mid. We do this by traversing the array and adding elements to a current sum until adding the next element would exceed mid. Then we start a new subarray. If we need more than k subarrays, the candidate is too small; otherwise, it is feasible.
+
+The code uses a while loop for binary search. In each step, it calculates a mid value and checks feasibility. If feasible, it searches for a smaller value by adjusting the upper bound; otherwise, it increases the lower bound. The process continues until the bounds converge, giving the minimized largest sum. The feasibility function counts how many subarrays are needed if each has a sum at most mid, and returns true if that count is within k.
+
