@@ -1,0 +1,48 @@
+155. Min Stack
+
+
+
+
+The goal of the Min Stack is to design a stack that can quickly return the minimum element. Normally, if you just have a regular stack, 
+finding the minimum would require looking through all elements, which is slow. To solve this, we use two stacks. One stack holds 
+all the values we push, just like a normal stack. The second stack, called the min stack, keeps track of the minimum value at every step.
+
+Every time we push a value, we compare it with the current minimum (which is the top of the min stack). If the new value is smaller, 
+we push it to the min stack. If not, we push the current minimum again. This way, the top of the min stack always has the smallest 
+value in the entire stack. When we pop, we remove the top from both stacks. This ensures that the min stack always reflects the 
+minimum of the remaining elements. So, getting the minimum is always fast because we just look at the top of the min stack.
+
+
+The code uses two stacks. The main stack stores all the values. The min stack stores the minimum values. When pushing a value, 
+it is added to the main stack. The min stack is updated by comparing the new value with its top. If the min stack is empty or the 
+new value is smaller, the new value is pushed. Otherwise, the current top (minimum) is pushed again. Popping removes the top from 
+both stacks. The top function returns the top of the main stack. The getMin function returns the top of the min stack, 
+which is the current minimum.
+
+
+
+
+
+
+
+173. Binary Search Tree Iterator
+
+
+
+
+
+
+The problem requires creating an iterator that returns elements of a Binary Search Tree (BST) in ascending order, one by one. 
+The challenge is to do this efficiently without storing all elements in memory at once. The solution uses a stack to 
+simulate the in-order traversal, which visits nodes in sorted order.
+
+The idea is to start from the root and go as left as possible, pushing all nodes along the way. This leaves the smallest element at 
+the top of the stack. When we call next, we pop the top node, which is the next smallest. If that node has a right child, 
+we then go to that right child and again push all left nodes of that subtree. This ensures that we always have the next smallest 
+element ready. The hasNext function simply checks if the stack has any elements left.
+
+The code uses a stack to keep track of nodes. During initialization, it pushes all left nodes starting from the root. 
+The next function pops the top node, which is the current smallest. If that node has a right child, it pushes all left nodes 
+of that right child onto the stack. This prepares the next smallest element. The hasNext function checks if the stack is not empty. 
+This approach efficiently traverses the tree in sorted order without storing all nodes in memory, using only space proportional to the height of the tree.
+
