@@ -1,0 +1,46 @@
+3541: Find Most Frequent Vowel and Consonant
+
+
+
+Imagine you have a word, and you need to do two things. First, find the most common vowel (the letters a, e, i, o, u) in that word. Second, 
+find the most common letter that is not a vowel (these are called consonants). Your final answer is just the number of times that top 
+vowel appears added to the number of times that top consonant appears.
+
+The plan is straightforward. You go through the word and count how many times each letter shows up. You keep two separate 
+mental notes: one for the highest vowel count and one for the highest consonant count. After you've counted all the letters, 
+you just add those two highest numbers together.
+
+
+
+The code works exactly like the intuition. It uses a simple list (a dictionary) to count every letter in the word. Then, 
+it goes through that list of counts. For each letter, it checks if it is a vowel. If it is, it compares the count to the current 
+highest vowel count and updates it if this letter's count is bigger. If the letter is not a vowel, it does the same thing for the 
+highest consonant count. Finally, it returns the sum of the highest vowel count and the highest consonant count.
+
+
+
+
+
+
+
+
+397: Integer Replacement
+
+
+
+
+You start with a number, and your goal is to get to the number 1 using the fewest steps. The rules are simple: if the number is even, 
+you must cut it in half. If the number is odd, you have a choice; you can either add 1 or subtract 1 to make it even.
+
+The trick is knowing what to do when the number is odd. The best choice is usually the one that lets you do more "cut in half" steps 
+later. Think about it in terms of making the number even. The ideal move is the one that creates a number that can be divided by 2 many 
+times in a row. For example, a number divisible by 4 can be cut in half twice. So, for an odd number, if adding 1 makes it divisible by 4, 
+that is often the better move. The only exception is the number 3, where subtracting 1 is actually faster.
+
+
+
+The code follows these rules step-by-step. It uses a loop that continues until the number becomes 1. In each loop, if the number is even, 
+it gets cut in half. If the number is odd, the code makes a decision: if the number is exactly 3, it subtracts 1. For any other odd number, 
+it checks if adding 1 would make it divisible by 4. If yes, it adds 1. If not, it subtracts 1. Every time an operation is performed, 
+a step is counted. The code finally returns the total number of steps taken to get from the original number down to 1.
+
