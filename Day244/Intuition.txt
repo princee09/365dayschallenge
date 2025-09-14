@@ -1,0 +1,54 @@
+382: Linked List Random Node
+
+
+
+The problem requires randomly selecting a node from a linked list where every node has an equal chance of being chosen. Since the list size 
+is unknown and potentially large, we need an efficient method without storing all nodes.
+
+The solution uses a technique called reservoir sampling. Imagine you have a stream of items and you want to pick one randomly without 
+knowing how many there are. As you go through each item, you give it a chance to be the chosen one. For the first item, you always pick it. 
+For the second, you randomly decide whether to replace the first with the second. For the third, you randomly decide to replace the 
+current choice with the third, and so on. This way, after going through all items, each one has an equal probability of being selected.
+
+In this code, we traverse the linked list once. For each node, we generate a random number. If that number falls within a certain 
+range (specifically, if it is zero when taken modulo the current count), we update our chosen value to the current node's value. 
+This ensures that every node has an equal chance of being selected by the end of the traversal.
+
+
+
+The code defines a class that initializes with the head of the linked list. The getRandom function starts by setting an initial chosen 
+value and a counter. It then goes through each node in the list one by one. For each node, it increases the counter. It then generates a 
+random number between 0 and the current counter minus one. If that random number is zero, it sets the chosen value to the current node's 
+value. This process continues until the end of the list, at which point the chosen value is returned. This method guarantees that each 
+node has an equal probability of being chosen without prior knowledge of the list size or extra storage.
+
+
+
+
+
+
+
+
+
+
+725: Split Linked List in Parts
+
+This problem involves splitting a linked list into k parts as evenly as possible. The parts should be in the same order as the 
+original list, and earlier parts should be slightly larger if the total nodes aren't divisible by k.
+
+First, we need to know the total number of nodes in the list. Then, we calculate how many nodes each part should have. The base size 
+is the total nodes divided by k. The remainder tells us how many parts need an extra node. For example, if there are 10 nodes and k=3, 
+each base part has 3 nodes, with a remainder of 1, so the first part gets an extra node, making it 4 nodes, and the others have 3.
+
+We then traverse the list again, breaking it into k segments. For each segment, we determine its size (base size plus an extra node if 
+remainder is left). We traverse through the required number of nodes, break the link at the end, and move to the next segment. If k is 
+larger than the number of nodes, the extra parts will be empty.
+
+
+
+The code first calculates the length of the linked list by traversing it. It then computes the base size for each part and the remainder.
+A vector is initialized to store the k parts. The code then iterates over each part. For each part, it sets the starting node. The size 
+of the current part is base size plus one if there is remainder (which is decremented after use). It then moves through the list to the 
+last node of the current part, breaks the link by setting the next pointer to null, and moves to the next node for the next part. 
+This efficiently splits the list into k parts with sizes as equal as possible, maintaining the order and handling cases where k 
+exceeds the number of nodes by leaving extra parts as null.
