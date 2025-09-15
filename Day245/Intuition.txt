@@ -1,0 +1,42 @@
+62. Unique Paths
+
+
+
+The problem involves finding how many unique paths a robot can take from the top-left corner to the bottom-right corner of a grid. The robot 
+can only move right or down. To solve this, we use dynamic programming, which is a method to break down a complex problem into 
+simpler subproblems. We create an array to store the number of ways to reach each cell. For the first row and first column, there is 
+only one way to reach any cell—by moving all right or all down. For any other cell, the number of ways to reach it is the sum of the 
+ways to reach the cell above and the cell to the left. This is because the robot can only come from the top or the left. By filling 
+the array step by step, we eventually get the number of ways to reach the bottom-right corner.
+
+In the code, we use a one-dimensional array to save space. We initialize the array with ones for the first row. Then, for each subsequent 
+row, we update the array. For each column in the current row, the value is updated by adding the value from the left (which represents 
+paths coming from the left) to the current value (which from the previous row represents paths coming from above). This way, 
+we efficiently compute the result without storing the entire grid, reducing space usage.
+
+
+
+
+
+
+
+
+63. Unique Paths II
+
+
+
+
+This problem is similar to the previous one, but now there are obstacles in the grid. The robot cannot pass through obstacles, 
+so any path that includes an obstacle is invalid. We again use dynamic programming to count the number of valid paths. We create an array 
+to store the number of ways to reach each cell. However, if a cell has an obstacle, we set the number of ways to zero because it cannot be reached.
+
+We start by initializing the first row. For each cell in the first row, if there is no obstacle, there is one way to reach it by 
+moving right. But if we encounter an obstacle, all subsequent cells in that row become unreachable, so we stop initializing further. 
+Similarly, for the first column in each row, we check for obstacles. For the rest of the cells, if there is an obstacle, we set the value 
+to zero. Otherwise, we set it to the sum of the value from above (from the previous row) and the value from the left 
+(from the current row). This sum represents the total paths coming from the top and left.
+
+In the code, we use a one-dimensional array to save space. We first initialize it for the first row. Then, for each new row, we update 
+the array. We check the first column of the current row for obstacles and update accordingly. For the other columns, if there is an obstacle, 
+we set the value to zero. If not, we add the value from the left to the current value (which from the previous row represents 
+paths from above). This efficiently computes the number of valid paths while handling obstacles correctly.
