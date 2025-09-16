@@ -1,0 +1,70 @@
+567: Permutation in String
+
+
+
+We are trying to see if any arrangement (permutation) of the first string s1 exists as a continuous part of the second string s2. For 
+example, if s1 is "ab", its permutations are "ab" and "ba". So we need to check if either "ab" or "ba" appears anywhere in s2 as a 
+continuous substring.
+
+To do this efficiently, we use a method called a sliding window. Imagine we have a window of the same length as s1 that we slide along s2. 
+For each position of the window, we check if the characters inside the window have the same frequencies as the characters in s1. If they do, 
+it means the window contains a permutation of s1.
+
+Instead of comparing the entire frequency count every time we move the window, which would be slow, we use an optimized approach. We maintain 
+a count of how many letters (from a to z) have matching frequencies between the current window and s1. When we move the window, we only 
+update the frequencies for the letter that exits the window (left side) and the letter that enters (right side). We adjust the match count 
+based on these changes. If at any point the match count becomes 26, it means all letters match, and we return true.
+
+
+
+The code starts by checking if s1 is longer than s2, in which case it's impossible to find a permutation. Then, it creates two arrays to 
+store the frequency of each letter in s1 and the first window of s2. It calculates an initial match count by comparing these frequencies.
+
+Then, it slides the window one step at a time along s2. For each step, it checks if the match count is already 26. If not, it removes 
+the leftmost character of the current window and updates its frequency and the match count accordingly. Then it adds the new character on 
+the right and updates its frequency and match count. After processing all windows, it checks if the last window had all matches. 
+This approach efficiently checks each possible substring without recalculating everything from scratch each time.
+
+
+
+
+
+
+
+826: Most Profit Assigning Work
+
+
+
+
+
+
+We have a list of jobs, each with a difficulty and a profit. We also have a list of workers, each with a certain ability. A worker can only 
+do a job if the job's difficulty is less than or equal to the worker's ability. Each worker can do at most one job, but a job can be done 
+by multiple workers. We want to assign jobs to workers to maximize the total profit.
+
+The key idea is that for a worker with a given ability, we should assign the job with the highest profit that has difficulty within 
+their ability. To do this efficiently, we first combine the job difficulties and profits into pairs and sort them by difficulty. 
+This way, jobs are ordered from easiest to hardest.
+
+Then, we create an array that, for each job index, stores the maximum profit achievable from all jobs up to that difficulty. This is because 
+if a worker can handle a job of a certain difficulty, they can also handle all easier jobs, so we want the best profit among those.
+
+We also sort the workers by their ability. This allows us to process workers from least able to most able. As we go through each worker, 
+we consider all jobs that are within their ability. We use a pointer to keep track of the highest difficulty job that the current worker 
+can handle. For each worker, we find the maximum profit among all jobs they can do, and add that to the total profit.
+
+
+
+
+The code starts by creating a list of job pairs (difficulty, profit) and sorting them by difficulty. It also sorts the list of workers by ability.
+
+It then builds an array that holds the maximum profit found up to each job index. This is done by iterating through the sorted jobs and 
+keeping a running maximum.
+
+Next, it initializes variables to calculate total profit and to use a pointer for jobs. It then iterates through each worker in sorted 
+order. For each worker, it moves the job pointer forward as long as the job difficulty is within the worker's ability. During this, 
+it updates the best profit found so far for jobs within the worker's ability. After considering all possible jobs for that worker, 
+it adds the best profit to the total.
+
+This ensures that each worker is assigned the best job they can do, and the total profit is maximized efficiently without 
+checking every job for every worker.
