@@ -1,0 +1,114 @@
+51. N-Queens
+
+
+
+
+The N-Queens problem is like a puzzle where you need to place N queens on an N by N chessboard so that no two queens can attack each 
+other. Queens can attack horizontally, vertically, and diagonally. So, each queen must be in its own row, its own column, and not share 
+any diagonals with another queen.
+
+To solve this, we use a method called backtracking. Backtracking is like trying out different possibilities step by step, and if we reach 
+a point where we cannot place a queen without conflict, we go back and try a different path. It is similar to exploring all possible paths 
+in a maze.
+
+We start from the first row and try to place a queen in each column of that row. For each placement, we check if it is safe. Safe means no 
+other queen is in the same column, or in the same left diagonal (which goes from top-left to bottom-right), or in the same right diagonal 
+(which goes from top-right to bottom-left). We use arrays to keep track of which columns and diagonals are already occupied. This 
+helps us check quickly if a position is safe.
+
+If it is safe, we place the queen there and mark that column and the two diagonals as occupied. Then we move to the next row and repeat 
+the process. If we successfully place queens in all rows, we have found a solution. We save the current board configuration. Then we 
+backtrack, which means we remove the last queen we placed and try the next column in the same row. This way, we explore all possible 
+ways to place the queens.
+
+The code uses a recursive function. Recursion means the function calls itself. Here, the function calls itself to try the next row. 
+We also use vectors (which are like flexible arrays) to represent the board and to keep track of occupied columns and diagonals. 
+The board is stored as a list of strings, where each string is a row of the board.
+
+In summary, we systematically try every possible position for each queen, row by row, using backtracking to avoid invalid placements. 
+We use arrays to quickly check for conflicts. This ensures we find all distinct solutions.
+
+
+
+
+
+
+The code defines a class with a function that takes an integer n. It initializes the board as a vector of strings, all dots initially, 
+meaning empty spaces. It also initializes three boolean vectors: one for columns, one for left diagonals, and one for right diagonals. 
+These vectors are used to mark if a column or diagonal is already occupied by a queen.
+
+A recursive function named backtrack is defined. This function takes the current row as input. If the current row equals n, 
+it means we have placed queens in all rows, so we add the current board to the result.
+
+For each column in the current row, we calculate the indices for the left and right diagonals. We check if the column or either 
+\diagonal is already occupied. If not, we place a queen at that position by setting the board character to 'Q'. We mark the column 
+and both diagonals as occupied.
+
+Then we call the backtrack function for the next row. After returning from the recursive call, we backtrack by removing the queen 
+and unmarking the column and diagonals. This allows us to try the next column in the same row.
+
+Finally, we start the backtracking process from row 0 and return the result containing all distinct board configurations.
+
+
+
+
+
+
+
+
+
+
+
+52. N-Queens II
+
+
+
+
+
+
+
+
+
+
+This problem is very similar to the first one, but instead of returning all the distinct board configurations, we only need to count 
+how many distinct solutions there are. This means we do not need to store each board, which can save memory and time.
+
+We use the same backtracking idea, but we optimize it further using bitmasking. Bitmasking is a technique where we use integers to 
+represent states. Each integer is treated as a sequence of bits. Each bit represents a column. If a bit is set to 1, it means that 
+column is occupied.
+
+Similarly, we use integers to represent the diagonals. For left diagonals, the index can be thought of as row minus column plus a 
+constant to avoid negative numbers. But with bitmasking, we can use bit shifts to update the diagonals for the next row.
+
+We define a recursive function that goes row by row. For each row, we calculate which columns are available. Available columns are 
+those not attacked by any queen already placed. We combine the column bitmask and the two diagonal bitmasks to get a bitmask of 
+attacked positions. Then we invert it to get available positions.
+
+We then iterate through each available position. For each, we place a queen by updating the bitmasks. For the columns, we set the bit 
+for the current column. For the left diagonal, we set the bit and then shift left by one for the next row. This is because the left 
+diagonal moves one step left each row. Similarly, for the right diagonal, we set the bit and shift right by one for the next row.
+
+We call the function recursively for the next row. When we reach the last row, we increment the solution count.
+
+This method is very efficient because bitwise operations are fast. It allows us to count the solutions without building the actual board, 
+saving memory and time.
+
+
+
+The code defines a function that takes an integer n. It initializes a count variable to zero. It defines a recursive function 
+using a lambda. This function takes the current row and three integers: one for columns, one for left diagonals, 
+and one for right diagonals, all represented as bitmasks.
+
+The base case is when the current row equals n. Then we increment the count.
+
+We calculate the available positions by creating a bitmask with n bits set to 1. Then we combine the column and diagonal bitmasks 
+with a bitwise OR to get all attacked positions. We invert this to get available positions.
+
+We then loop through each available position. We get the rightmost set bit using a trick: availablePositions & -availablePositions. 
+This gives us the position to try. We remove this bit from availablePositions.
+
+We call the recursive function for the next row. We update the column bitmask by ORing with the current position. For the left diagonal, 
+we OR with the position and then shift left by one. For the right diagonal, we OR with the position and shift right by one.
+
+Finally, we start the recursion with initial bitmasks all zeros, meaning no columns or diagonals are occupied initially. 
+We return the total count of solutions.
