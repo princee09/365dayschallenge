@@ -1,0 +1,49 @@
+287: Find the Duplicate Number
+
+
+
+Imagine you have a list of numbers where each number tells you which position to go to next. For example, if the first number is 3, 
+you go to the third position. Then, from there, you go to the position given by the number at that third position, and so on. 
+This creates a chain of moves. Because there is a duplicate number in the list, this chain will eventually form a loop, like a circle 
+where you start repeating the same positions. This is similar to a race between two runners: one slow and one fast. The slow runner moves 
+one step at a time, and the fast runner moves two steps at a time. They start at the same point. Eventually, inside the loop, the fast 
+runner will catch up to the slow runner. Once they meet, we reset the slow runner to the start. Then, both runners move one step at a time. 
+The point where they meet again is the duplicate number. This happens because the duplicate number is the entrance to the loop. 
+This method efficiently finds the duplicate without changing the list and using very little memory.
+
+
+
+The code uses two pointers, slow and fast, both starting at the first number. The slow pointer moves one step each time, and the fast 
+pointer moves two steps each time. They continue moving until they meet, which means they are inside the loop. Then, the slow pointer is 
+reset to the start. Now, both pointers move one step at a time. The point where they meet again is the duplicate number, and this is 
+returned as the answer. This approach works without modifying the original list and uses only a constant amount of extra space.
+
+
+
+
+378: Kth Smallest Element in a Sorted Matrix
+
+
+
+
+
+Think of a grid of numbers where each row is sorted from left to right and each column is sorted from top to bottom. We need to find the 
+kth smallest number in this entire grid. Instead of checking every number, which would be inefficient, we use a smart approach. We know 
+the smallest number is at the top-left corner and the largest is at the bottom-right corner. We use binary search between these two values. 
+For each middle value, we count how many numbers in the grid are less than or equal to that middle value. To count efficiently, we start 
+from the bottom-left corner of the grid. If the current number is less than or equal to the middle value, then all numbers above it in the 
+same column are also less than or equal, so we add all those to the count and move right to the next column. If the current number is 
+greater, we move up to the previous row. This way, we quickly count without scanning the entire grid. If the count is less than k, it 
+means the kth smallest number is larger than the middle value, so we adjust our search to the higher half. Otherwise, we search the lower 
+half. We repeat this until we find the exact value.
+
+
+
+
+The code starts by setting the low value to the smallest number in the grid and the high value to the largest. It then enters a loop where 
+it calculates the middle value. It counts how many numbers are less than or equal to this middle value using a helper function. 
+The helper function starts at the bottom-left corner and moves right or up based on whether the current number is less than or equal to 
+the target. If it is, it adds the entire column count from the current row to the top and moves right. If not, it moves up. Based on the 
+count, if it is less than k, the low is adjusted to mid plus one; otherwise, high is set to mid. The loop continues until low and high meet, 
+at which point low is the kth smallest number. This method efficiently narrows down the search without using extra memory.
+
