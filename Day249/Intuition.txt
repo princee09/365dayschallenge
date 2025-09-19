@@ -1,0 +1,96 @@
+198. House Robber
+
+
+
+Imagine you are walking down a street with houses. Each house has a specific amount of money hidden inside. You want to rob these houses to 
+get the most money possible. However, there is a big rule you cannot break. If you rob two houses that are next to each other, a silent 
+alarm will trigger and the police will be called. Your goal is to figure out the maximum amount of money you can steal without ever robbing 
+two houses in a row.
+
+The core of this problem is making a sequence of decisions. For every house you approach, you have a simple choice: rob it or skip it. 
+If you rob it, you cannot have robbed the previous house. If you skip it, your total remains what it was from the previous house. 
+The challenge is that the best decision for a single house depends on the decisions you made for all the houses before it.
+
+
+
+We solve this by building up our answer step by step, one house at a time. We start from the first house and ask ourselves: what is the 
+maximum money I can get up to this point? We keep a running tally of the best possible outcome after considering each new house.
+
+For any house, the maximum money you can have when you reach it is determined by one of two options. The first option is to take the money 
+from the current house and add it to the maximum amount you had two houses ago (because you cannot rob the adjacent house). The second option 
+is to simply take the maximum amount you had from the very previous house, which means you decided to skip robbing the current house. 
+The correct answer for the current house is whichever of these two options gives you more money.
+
+We only need to remember the results for the last two houses to calculate the result for the next house. This is an optimization that 
+saves memory. We do not need to remember the results for every single house we ever calculated. We just keep track of the last two results 
+and update them as we move down the street.
+
+
+The code uses two variables, let's call them previous and before_previous. before_previous starts as the result from two houses back, 
+and previous starts as the result from the immediate previous house.
+
+The code then walks through each house in the list, starting from the second one. For each new house, it calculates a new current maximum. 
+This current maximum is the larger of two values: either the previous maximum (meaning we skip the current house), or the before_previous maximum plus the money in the current house (meaning we rob the current house).
+
+After calculating the new current maximum, the code prepares for the next house. It shifts the values: what was the 
+previous maximum now becomes the new before_previous for the next calculation, and the current maximum we just calculated becomes the new previous maximum. By the time we finish looking at all houses, the previous variable holds the maximum amount of money we can rob 
+from the entire street.
+
+
+
+
+
+
+
+
+
+
+
+
+
+313. Super Ugly Number
+
+
+
+
+This problem is about generating a special list of numbers in a specific order. A "super ugly number" is a number whose building blocks, 
+its prime factors, all come from a given list of prime numbers. For example, if the list is [2, 7, 13, 19], then the number 32 is a super 
+ugly number because it can be built by multiplying 2 by itself five times (2 x 2 x 2 x 2 x 2). The number 1 is also included by default, 
+as it is the starting point. The goal is to find the nth number in the sequence of all such numbers, ordered from smallest to largest.
+
+
+
+The key insight is that every new super ugly number must be created by multiplying a smaller, existing super ugly number by one of the 
+prime numbers from our given list. The challenge is to generate these numbers in perfect ascending order without missing any.
+
+The solution works by maintaining a list of pointers, one for each prime number in the list. Each pointer keeps track of the position in 
+the main sequence of ugly numbers that it should be multiplied with. Think of it as each prime number having a finger pointing to the last 
+ugly number it was used with.
+
+To find the next ugly number, we look at what each prime can produce. For each prime, we calculate the candidate number it would generate: 
+the prime multiplied by the ugly number its pointer is currently pointing to. The smallest candidate among all these possibilities is the 
+next super ugly number in the sequence.
+
+Once we select the smallest candidate, we add it to our sequence. Then, we must update our pointers. For every prime number that produced 
+this selected candidate, we move its pointer forward by one. This is crucial. If multiple primes produce the same candidate value, we move 
+all their pointers forward. This ensures we never use the same ugly number with the same prime again to generate a duplicate candidate, 
+and it systematically explores all possible combinations of multiplications.
+
+
+
+The code starts by creating a main list to store the ugly numbers, initializing it with the first number, 1. It also creates a list of pointers,
+ all starting at zero, meaning each prime initially points to the first ugly number (which is 1).
+
+The code then enters a loop to find the next n-1 ugly numbers. In each step of the loop, it calculates a candidate value for every prime. 
+This candidate is the prime multiplied by the ugly number that the prime's pointer is currently pointing to.
+
+It then finds the smallest candidate value among all primes. This smallest value becomes the next ugly number and is added to the sequence.
+
+Finally, the code goes through each prime again. For every prime whose calculated candidate is equal to the new ugly number we just found, 
+it increments that prime's pointer by one. This moves the pointer to the next ugly number in the sequence, ensuring that the next time we 
+use this prime, it will be multiplied by a larger ugly number, producing a larger candidate.
+
+This process repeats, building the sequence one number at a time, always in the correct order, until we reach the nth super ugly number. 
+The code uses long for calculations to prevent temporary mathematical operations from causing errors due to number size, even though the 
+final answer is guaranteed to be a smaller standard integer.
+
