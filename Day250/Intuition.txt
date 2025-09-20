@@ -1,0 +1,76 @@
+821: Shortest Distance to a Character
+
+
+
+Imagine you are on a long, straight road with several gas stations (the character c) at different points. You are standing at various spots 
+on this road (each character in the string s), and you need to know the distance to the nearest gas station, either behind you or ahead of you.
+
+The simplest way to solve this is to make two separate trips down this road.
+
+First Trip (Left to Right): You start at the beginning of the road and walk to the end. As you walk, you keep track of the last gas station 
+you passed. For every spot you are at, you calculate the distance back to that last gas station. If you haven't passed one yet, you just 
+write down a very large number for now.
+
+Second Trip (Right to Left): Now, you start at the end of the road and walk back to the beginning. This time, you keep track of the last 
+gas station you passed coming from the opposite direction. For every spot, you now also calculate the distance to this gas station ahead of 
+you. You then compare this new distance with the one you wrote down on your first trip. You keep the smaller of the two numbers. 
+This smaller number is the shortest distance to a gas station from that spot.
+
+By combining the information from both directions, you are guaranteed to find the closest gas station for every single spot on the road.
+
+
+
+
+The code follows this two-trip idea exactly. It first creates an answer list filled with a very large number (like a placeholder for 
+"distance unknown"). On the first left-to-right pass, it moves through the string. Whenever it finds the target character c, it remembers 
+that position. For every other character, it calculates how far it is from this last remembered c position. On the second right-to-left pass, 
+it does the same thing but in reverse. It updates the answer list each time, always keeping the smaller distance value. The final answer 
+list contains all the shortest distances.
+
+
+
+
+
+
+
+
+
+457: Circular Array Loop
+
+
+Imagine a board game with a circular path of spaces. Each space has a instruction telling you how many spaces to move forward 
+(positive number) or backward (negative number). The goal is to find a loop: a sequence of moves that takes you through two or more spaces 
+and brings you back to the start of the sequence. Crucially, all the moves in this loop must be in the same direction (all forward 
+or all backward); you cannot have a mix.
+
+The challenge is to find such a loop efficiently without getting stuck checking the same paths over and over.
+
+The solution uses a clever strategy:
+
+Check Every Starting Point: It considers every space on the board as a potential start of a loop.
+
+The "Tortoise and the Hare" Trick (Cycle Detection): To check for a loop from a starting point, it uses two pointers, a slow one and a fast 
+one. The slow pointer moves one step at a time according to the instructions. The fast pointer moves two steps. If there is a loop, the 
+fast pointer will eventually lap the slow pointer and they will meet inside the loop. This is a classic and efficient way to detect cycles.
+
+Validating the Loop: Just meeting isn't enough. The code must check two more things:
+
+Same Direction: It checks that every instruction in the loop is pointing the same way (all positive or all negative). If any instruction 
+points the wrong way, the loop is invalid.
+
+Not a One-Node Loop: It ensures the loop has more than one space. A loop where an instruction points to itself (e.g., moving 5 steps 
+from space #1 lands you back on space #1) does not count.
+
+Marking Visited Paths (Optimization): To avoid wasting time re-checking spaces that are already known to be part of a failed loop, the 
+code "marks" them as visited (by setting their value to zero, which is an invalid instruction). This ensures the algorithm runs very quickly.
+
+
+
+
+
+The code goes through each element in the array. For each non-zero element (an unvisited space), it uses the slow/fast pointer method to find 
+a cycle. Once the pointers meet, it checks if it's just a single element pointing to itself; if so, it marks that element as visited and 
+moves on. If it's a potential multi-element loop, it then traverses the entire loop to verify that every instruction has the same sign 
+(all positive or all negative). If this check passes, it returns true immediately. If any check fails, it marks all the elements in that 
+failed path as visited (zero) so they are skipped in the future. If no valid loop is found after checking all elements, it returns false. 
+The getNext helper function simply calculates the next index in the circular array based on the current instruction.
