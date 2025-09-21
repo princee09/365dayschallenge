@@ -1,0 +1,57 @@
+1044: Longest Duplicate Substring
+
+The problem is to find the longest substring that appears at least twice in a given string. For example, in "banana", the longest 
+duplicate substring is "ana", which appears starting at index 1 and 3. A straightforward way would be to check every possible substring, 
+but that would be too slow for long strings. Instead, we use a smarter approach.
+
+We use binary search to guess the length of the longest duplicate substring. For each guessed length, we check if there exists any substring 
+of that length that appears at least twice. To check this quickly, we use a rolling hash technique. A rolling hash allows us to compute the 
+hash value of a substring in constant time by using the hash of the previous substring. This is efficient because we avoid recalculating 
+the entire hash from scratch each time.
+
+We also handle hash collisions by storing the starting indices of substrings that have the same hash. If two substrings have the same hash, 
+we compare them character by character to ensure they are actually the same, not just a coincidence due to the hash function.
+
+By combining binary search (to narrow down the length) and rolling hash (to quickly check for duplicates), we efficiently find the 
+longest duplicate substring without checking every possibility manually.
+
+
+
+
+The code uses binary search over possible substring lengths. For each length, it computes rolling hashes for all substrings of that length. 
+It maintains a hash map where keys are hash values and values are lists of starting indices. For each substring, it calculates its hash 
+and checks if that hash has been seen before. If so, it compares the actual substrings to confirm a duplicate. If found, it returns 
+the substring. The binary search adjusts the length based on whether a duplicate was found, moving to longer lengths if found, or 
+shorter otherwise. The rolling hash uses a base and modulus to avoid large numbers and collisions.
+
+
+
+
+
+
+
+
+
+992: Subarrays with K Different Integers
+
+This problem requires counting the number of contiguous subarrays that contain exactly k distinct integers. For instance, in [1,2,1,2,3] 
+with k=2, there are 7 such subarrays. A direct approach of checking every subarray would be inefficient for large arrays.
+
+Instead, we use a mathematical insight: the number of subarrays with exactly k distinct integers equals the number of subarrays with at most 
+k distinct integers minus the number of subarrays with at most k-1 distinct integers. This transforms the problem into two simpler subproblems.
+
+For each subproblem, we use a sliding window technique. We maintain a window that expands by moving the right pointer and shrinks from the 
+left if the number of distinct integers exceeds k. For each valid window, the number of new subarrays ending at the right pointer is 
+calculated, which is the window length. This counts all subarrays with at most k distinct integers efficiently.
+
+
+
+
+The code defines a helper function that counts subarrays with at most k distinct integers. It uses a frequency map to track the count of 
+each integer in the current window. The window expands by moving the right pointer, updating the frequency. If distinct integers exceed k, 
+the left pointer moves to reduce the frequency until distinct integers are within k. The number of valid subarrays ending at each right 
+pointer is the current window length, which is added to the total.
+
+The main function calls this helper for k and k-1, and subtracts the results to get the count for exactly k distinct integers. 
+This approach efficiently narrows down the exact count without explicitly checking every subarray, leveraging the sliding window for 
+linear time complexity.
