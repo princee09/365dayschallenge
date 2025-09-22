@@ -1,0 +1,60 @@
+3005: Count Elements With Maximum Frequency
+
+
+
+Imagine you have a list of numbers, and you want to find out which numbers appear the most frequently in that list. Once you know which 
+numbers appear the most times, you then want to count how many times those top numbers actually appear in total. For example, if the list 
+has numbers 1, 2, 2, 3, 1, 4, the numbers 1 and 2 each appear twice, which is the highest frequency. So, you would add up the frequencies of 
+all such numbers: 2 (for 1) + 2 (for 2) = 4.
+
+To do this, you first count how many times each number appears. You go through each number in the list and keep a tally for each number. 
+Then, you look at all these tallies to find the highest value. Finally, you go through all the tallies again and for every number that 
+has a tally equal to the highest value, you add that tally to your total. This total is your answer.
+
+
+
+The code uses an array to keep track of how many times each number appears. Since the numbers are between 1 and 100, the array has 101 
+spots (indexes 1 to 100). It goes through each number in the input list and increases the count for that number in the array. Then, it 
+finds the maximum count in that array. After that, it goes through the array again and for every number that has a count equal to the 
+maximum, it adds that count to the result. This result is returned as the answer.
+
+
+
+
+
+
+
+
+
+
+974: Subarray Sums Divisible by K
+
+
+
+
+You are given a list of numbers and a number k. You need to find how many contiguous parts (subarrays) of the list have a sum that is 
+divisible by k. For example, if the list is [4,5,0,-2,-3,1] and k is 5, there are 7 such subarrays.
+
+The key idea is to use prefix sums. A prefix sum is the sum of all numbers from the start up to a certain point. If you have two prefix 
+sums that have the same remainder when divided by k, then the difference between them (which is the sum of the subarray between those 
+two points) is divisible by k. This is because if two numbers have the same remainder when divided by k, their difference is exactly 
+divisible by k.
+
+To handle negative numbers, we adjust the remainder to always be between 0 and k-1. We do this by taking (prefixSum % k + k) % k. This 
+ensures that the remainder is always positive.
+
+We start by assuming that there is a prefix sum of 0 at the beginning (before the first element), which has a remainder of 0. We keep a 
+count of how many times each remainder has occurred. As we go through the list, we compute the prefix sum and its remainder. For each 
+remainder, if we have seen it before, it means that there are that many previous points where the prefix sum had the same remainder. 
+Each such pair gives a subarray whose sum is divisible by k. So, we add the count of that remainder to our result. Then, we update the 
+count for the current remainder.
+
+
+
+
+The code uses a map to keep track of how many times each remainder has occurred. It starts by setting the remainder 0 to have a count 
+of 1 (for the prefix sum 0 at the start). Then, it goes through each number in the list, adding it to the running prefix sum. For each 
+prefix sum, it calculates the remainder adjusted to be non-negative. If that remainder has been seen before, it means there are previous 
+prefix sums with the same remainder, and each pair corresponds to a valid subarray. So, it adds the count of that remainder to the result. 
+Then, it increases the count for that remainder by one. After processing all numbers, the result is the total number of subarrays with sums divisible by k.
+
