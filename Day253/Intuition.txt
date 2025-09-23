@@ -1,0 +1,85 @@
+912: Sort an Array
+
+
+
+The goal is to arrange a list of numbers from smallest to largest. The challenge is to do this very efficiently, without using the ready-made sorting tools the programming language provides.
+
+Think of it like sorting a deck of cards. A simple but slow way would be to go through the deck again and again, each time finding the smallest card and putting it in a new pile. This would take a very long time for a big deck.
+
+We need a smarter, faster method. The key idea is a strategy called "Divide and Conquer." This means we break the big, hard problem into smaller, easier problems, solve those, and then combine the solutions.
+
+Imagine you have a long list of numbers. First, you split the list right down the middle into two smaller lists. Then, you take each of 
+those two smaller lists and split them again. You keep doing this until you have many tiny lists containing just one number each. A list 
+with one number is, by definition, already sorted.
+
+Now, the clever part begins. You start combining these tiny sorted lists back together, but you do it in a sorted way. Imagine merging 
+two sorted piles of cards. You look at the top card of each pile, always take the smaller one, and place it into a new pile. You repeat 
+this until both piles are empty. The new pile you created is now a perfectly sorted, combined pile.
+
+You keep merging these small sorted piles into larger sorted piles until you have merged everything back into one single, perfectly sorted 
+list. This process of repeatedly splitting and then merging in a sorted way is extremely efficient for large lists.
+
+
+
+The code first checks if the list is already tiny (like one number). If it is, it does nothing. If not, it calculates the middle point. 
+It then tells itself to sort the left half of the list and then to sort the right half of the list, using the same method 
+(this is called recursion).
+
+Once both halves are sorted, it combines them. It compares the first number from the left half with the first number from the right half. 
+It picks the smaller number and puts it into a temporary spot. It continues this, moving through both halves, always picking the 
+smaller available number, until all numbers from both halves are placed into the temporary list in correct order. Finally, it copies 
+this newly ordered sequence from the temporary spot back into the original list.
+
+
+
+
+
+
+
+
+
+
+
+918: Maximum Sum Circular Subarray
+
+
+
+We are given a circle of numbers, and we need to find a connected segment of this circle where the sum of the numbers is larger than 
+the sum of any other connected segment. Because it's a circle, the segment can wrap around from the end of the list to the beginning.
+
+There are two main situations to consider. The first situation is simple: the best segment exists somewhere in the middle of the list 
+without wrapping around the circle. Imagine finding the best stretch of positive numbers in a straight line.
+
+The second situation is unique to the circular problem. The best segment might be the one that wraps around. This happens when the 
+segment takes numbers from the end of the list and continues with numbers from the beginning of the list. How can we find this?
+
+A key insight is that a wrapped-around segment is equivalent to the entire circle minus a segment in the middle. If you take the sum 
+of all the numbers in the circle and then subtract the sum of a segment of negative numbers in the middle, what you are left with is a 
+segment that wraps around the circle, excluding that bad, negative part.
+
+Therefore, the maximum sum in a circular array will be the larger of two values: first, the maximum sum we can get from a normal, 
+straight segment (case 1). Second, the total sum of all numbers in the circle minus the sum of the minimum segment we can find (case 2). 
+The minimum segment represents the part we want to remove.
+
+However, there is a special case. If every single number in the list is negative, then the total sum minus the minimum segment would be 
+zero (because the minimum segment would be the entire list, and total sum minus total sum is zero). But zero is not a valid answer if we 
+are not allowed to take an empty segment. In this all-negative scenario, the answer is simply the least negative number (which is the 
+largest number in the list).
+
+
+
+
+
+The code makes a single pass through the list. As it goes, it does two things simultaneously. First, it uses a method 
+called Kadane's algorithm to keep track of the maximum sum of a segment ending at each position. This gives us the best 
+normal segment (case 1).
+
+Second, it also uses a similar method to keep track of the minimum sum of a segment. It also adds up all the numbers to get the 
+total sum of the circle.
+
+After the pass is complete, it checks the special case: if the maximum normal segment sum is negative, it means all numbers are 
+negative, so it just returns that maximum normal segment sum.
+
+If not, it calculates the candidate for the circular segment by subtracting the minimum segment sum from the total sum. The final 
+answer is the larger number between the normal maximum segment and this circular candidate.
+
