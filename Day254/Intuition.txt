@@ -1,0 +1,70 @@
+682: Baseball Game
+
+
+
+Imagine you are keeping a list of scores on a piece of paper. You start with an empty list. Someone gives you a series of commands, one by one. Each command tells you what to do with your current list of scores.
+
+The commands are special. Some commands tell you to add a simple number, like "5" or "-2". Other commands are instructions that require you to look at the scores you have already written down to figure out what new number to add.
+
+The "+" command means you must add a new score. This new score is not a random number. It is the sum of the last two scores you already have on your list. So you look at the two most recent scores, add them together, and write that total down as a new score.
+
+The "D" command means you must double the last score you wrote. You look at the most recent score, multiply it by two, and write that new number down.
+
+The "C" command is like an undo button for the last score. It tells you that the last score you wrote was a mistake. So you take your pen and cross out the last score, removing it from the list completely.
+
+After you have followed all the commands in order, your final task is to add up all the scores that remain on your list. That final total is your answer.
+
+
+
+The code uses a simple list, often called a stack, to represent the piece of paper where we write the scores.
+
+We go through each command given to us. If the command is a number, we simply add that number to the end of our list.
+
+If the command is a "+", we look at the last two numbers in our list. We add those two numbers together. Then, we take the result and add it as a new number to the end of the list.
+
+If the command is a "D", we look at the very last number in our list. We double that number. Then, we add that doubled value as a new number to the end of the list.
+
+If the command is a "C", we remove the last number from our list. It is as if we are erasing it.
+
+After processing every single command, we have a final list of numbers. The code then adds all these numbers together to get the final answer, which it returns.
+
+
+
+
+
+
+
+
+
+1003: Check If Word Is Valid After Substitutions
+
+
+
+The rule for this problem is that you can only build the string by inserting the block "abc" into any position of an existing string. You start with an empty string.
+
+Think of it like building a structure with identical blocks. The only block you have is labeled "abc". You can take your current structure and insert a new "abc" block anywhere inside it—at the beginning, in the middle, or at the end.
+
+The question is: Can the target string be built using only these "abc" blocks?
+
+A powerful way to check this is to work backwards. Instead of building the string up, we try to break it down. If the string was built by inserting "abc" blocks, then it must contain the pattern "abc" within it. We can simulate deconstruction by continuously looking for and removing "abc" from the string.
+
+Imagine the string is a long chain. We look for any place where the letters 'a', 'b', and 'c' appear right next to each other in that exact order. Whenever we find this "abc" pattern, we can remove it. This removal represents reversing one insertion step.
+
+After removing one "abc", the chain becomes shorter. We then look at this new, shorter chain and again search for an "abc" pattern to remove. We keep repeating this process.
+
+If the string is valid, we will eventually be able to remove all the letters, resulting in an empty string. If the string is invalid, there will be a point where no "abc" pattern exists to remove, but there are still letters left over. This means the string could not have been built solely from "abc" blocks.
+
+
+
+
+
+The code simulates this deconstruction process using a virtual "container" or "stack". We will look at each letter of the string one by one and place it into this container.
+
+The key is that every time we put a new letter into the container, we immediately check the last few letters. Specifically, after adding a letter, we check if the last three letters in the container are 'a', followed by 'b', followed by 'c'.
+
+If they are, it means we have just completed an "abc" pattern at the end. We can then remove these three letters from the container. This is like finding a block and taking it out.
+
+We repeat this for every letter in the original string. We keep adding letters and checking if the last three form "abc". If they do, we remove them.
+
+After we have processed every single letter from the original string, we check our container. If the string was valid, all the "abc" blocks would have been found and removed, leaving the container empty. If the container is not empty, it means there were letters that did not form perfect "abc" blocks, so the string was invalid. The code returns true if the container is empty, and false otherwise.
+
