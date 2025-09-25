@@ -1,0 +1,71 @@
+95: Unique Binary Search Trees II (Generating All Trees)
+
+
+Imagine you are given a sorted set of numbers, say from 1 to 3. Your task is to build every possible binary search tree. A binary search tree has a simple rule: for any node, all numbers in its left branch must be smaller than it, and all numbers in its right branch must be larger than it.
+
+The key idea to solve this is to consider each number, one by one, as the root of the tree. Once you pick a root, the problem naturally splits into two smaller, independent problems.
+
+If you pick the number i as the root, all numbers less than i (from 1 to i-1) must go into the left subtree. All numbers greater than i (from i+1 to n) must go into the right subtree. Now, your job is to find all possible left subtrees that can be made from the numbers 1 to i-1, and all possible right subtrees that can be made from the numbers i+1 to n.
+
+The beautiful part is that these are just smaller versions of the original problem. You can solve them using the same method. For example, to find all trees for numbers 1 to 2, you would again pick 1 as a root (left subtree is empty, right subtree has node 2) and then pick 2 as a root (left subtree has node 1, right subtree is empty).
+
+Finally, for each left subtree you generated and for each right subtree you generated, you combine them by attaching them to the left and right of your current root node i. This gives you one unique tree. You repeat this process for every possible root choice, and for every combination of left and right subtrees.
+
+To avoid doing the same work over and over again, we use a technique called memoization. We store the answers for smaller ranges of numbers. For instance, once we calculate all trees for numbers from 2 to 4, we save that result. If we need it again later, we can just use the saved result instead of recalculating it from scratch.
+
+
+
+The code implements this recursive idea with memoization. The main function generateTrees(n) starts the process for the range 1 to n.
+
+It first creates a special storage space, a 3D vector called dp. This dp table is like a notebook where we can write down the answer for the question: "What are all the trees for numbers from start to end?" We store this answer in dp[start][end].
+
+The helper function generateTrees(start, end, dp) is where the real work happens. If the start number is greater than the end number, it means there are no numbers to put in the tree. In this case, we return a list containing just a null pointer, which represents an empty tree.
+
+Before doing any calculation, the function checks the dp notebook to see if we have already solved this problem for the current start and end. If we have, it simply returns the saved answer.
+
+If it's a new problem, it initializes an empty list for the result. Then, it loops through every number i between start and end, treating each as a potential root.
+
+For each root i, it recursively calls itself to get all possible leftSubtrees from the numbers start to i-1. It also recursively gets all possible rightSubtrees from the numbers i+1 to end.
+
+Then, it goes through every tree in leftSubtrees and every tree in rightSubtrees. For each pair, it creates a new tree node for the root i, attaches the left subtree to its left pointer and the right subtree to its right pointer. This newly built tree is added to the result list.
+
+After processing all numbers as roots, the complete result list, which contains all unique BSTs for the range start to end, is saved into the dp notebook before being returned. This ensures we never solve the same problem twice.
+
+
+
+
+
+96: Unique Binary Search Trees (Counting the Trees)
+
+
+
+
+This problem is a simpler version of the first one. Here, we don't need to build all the trees; we only need to count how many unique trees are possible. This changes the approach significantly because counting can be much faster than building.
+
+The core idea, however, remains the same. The total number of unique BSTs for n nodes depends on how we choose the root. If we choose a specific root, the number of unique trees with that root is equal to the number of possible left subtrees multiplied by the number of possible right subtrees.
+
+Let's say we have n nodes. If we choose one node as the root, then i nodes will be in the left subtree and n - i - 1 nodes will be in the right subtree (the -1 is for the root node itself). The number of trees for the left side only depends on how many nodes are there, not on what the actual values are. The same applies to the right side. The number of unique BSTs with 3 nodes is always 5, whether the nodes are {1,2,3} or {5,7,9}.
+
+Therefore, if we know the number of unique BSTs for 0 nodes, 1 node, 2 nodes, and so on, we can calculate the number for n nodes. We use a dynamic programming array, often called dp, where dp[i] stores the number of unique BSTs for i nodes.
+
+We start with the smallest cases. dp[0] is 1 because there is exactly one way to represent an empty tree (a null pointer). dp[1] is 1 because a single node can only form one tree.
+
+To calculate dp[n], we consider every possible number of nodes j that could be in the left subtree. The number of nodes in the left subtree, j, can be 0, 1, 2, ..., up to n-1. For each j, the number of nodes in the right subtree will be n - j - 1.
+
+The total number of trees for this configuration is dp[j] * dp[n - j - 1]. We sum this value for all possible j to get the final answer for dp[n].
+
+
+
+
+
+The code uses a one-dimensional vector dp of size n+1 to store the counts. It initializes the base cases: dp[0] = 1 (one empty tree) and dp[1] = 1 (one tree with a single node).
+
+Then, it starts a loop from i = 2 up to n. For each i, which represents the number of nodes we are solving for, it initializes dp[i] to zero.
+
+Inside, another loop runs for j from 0 to i-1. Here, j represents the number of nodes in the left subtree. The number of nodes in the right subtree is automatically i - j - 1.
+
+The code then adds to dp[i] the product of dp[j] (number of left subtrees) and dp[i - j - 1] (number of right subtrees). This is done for every possible split of nodes between left and right.
+
+After the inner loop finishes, dp[i] contains the total count of unique BSTs for i nodes. Finally, after the outer loop, the answer is found in dp[n].
+
+This method efficiently builds the solution from the bottom up, using the answers to smaller problems to solve larger ones, which is the essence of dynamic programming.
