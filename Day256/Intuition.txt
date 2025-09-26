@@ -1,0 +1,52 @@
+1129: Shortest Path with Alternating Colors
+
+
+
+Imagine you are in a city with roads that are colored either red or blue. You want to travel from your starting point (city 0) to other cities using these colored roads. However, there is a special rule: you must alternate the colors of the roads you take. If you just traveled on a red road, your next road must be blue, and vice versa.
+
+The challenge is to find the shortest path to each city while following this alternating color rule. Some cities might be unreachable if you cannot reach them while alternating colors properly.
+
+Think of it like this: you have two different types of transportation systems (red and blue) and you need to switch between them at each step. You need to track not only which city you are in but also what type of transportation you used to get there, because that determines what type you can use next.
+
+
+
+The solution uses a smart searching technique called BFS (Breadth-First Search). This is like sending out explorers in all possible directions simultaneously, making sure we find the shortest path first.
+
+We create two separate maps: one for red roads and one for blue roads. This helps us quickly see which cities we can reach using each color of road.
+
+We keep track of which cities we have visited, but with a twist: we remember both the city and the color of the road we used to get there. This is important because visiting a city with a red road is different from visiting it with a blue road, since it affects what color road we can take next.
+
+We start from city 0 with no previous road color. From there, we can take either red or blue roads. As we explore, we alternate colors: if we just used a red road, we look for blue roads next, and vice versa.
+
+For each city we reach, we record the shortest distance. The BFS approach guarantees that the first time we reach a city (with any valid color pattern) is the shortest possible path.
+
+
+
+
+
+
+
+
+
+
+1615: Maximal Network Rank
+
+
+
+Imagine several cities connected by roads. The "network rank" of two cities is simply the total number of roads connected to either city. However, if there is a direct road between these two cities, we count it only once instead of twice.
+
+We need to find the pair of cities that has the highest such network rank. This tells us which two cities, when considered together, have the most road connections to them.
+
+Think of it like measuring the importance of two cities in a transportation network. Cities with more roads are more important. When we combine two important cities, their combined importance might be even higher, unless they are directly connected by a road (in which case we avoid double-counting that connection).
+
+
+
+The solution first counts how many roads are connected to each city (this is called the "degree" of each city). A city with many roads has a high degree, meaning it is well-connected.
+
+We also create a connection map that quickly tells us if any two cities are directly connected by a road. This is important because if two cities are directly connected, the road between them should be counted only once in their network rank.
+
+Then, we check every possible pair of cities. For each pair, we calculate their network rank by adding up their individual road counts, and then subtract one if they are directly connected (to avoid double-counting the road between them).
+
+We keep track of the highest network rank we find among all pairs. Since we check every possible pair, we are guaranteed to find the maximum possible value.
+
+The solution is efficient because we precompute the road counts and connections, making the pair checks very fast. For each pair, we can quickly calculate the network rank using simple addition and one quick check for direct connection
