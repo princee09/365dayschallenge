@@ -1,0 +1,74 @@
+1537: Get the Maximum Score
+
+
+
+Imagine you are on a road trip with two parallel highways. Both highways have rest stops with unique prize values, and both are arranged in increasing order. You must start at the beginning of one highway and drive forward. Your total score is the sum of the prize values at the rest stops you visit.
+
+The special rule is this: if you reach a rest stop that exists on both highways (an interchange), you are allowed to instantly switch to the other highway and continue your journey from that same point.
+
+The goal is to plan your route to collect the maximum total prize value.
+
+The Core Idea: The common rest stops (the interchanges) are your key decision points. The best strategy is to stay on the highway that has given you the higher cumulative sum until you reach an interchange. At the interchange, you compare the total prizes collected on each highway so far. You then choose the highway that has the better sum, and from that point forward, both your "running totals" are reset to this new, maximum value. This makes sense because arriving at the same interchange from either highway means you can now choose the best possible path to get there.
+
+You then continue this process: between interchanges, you simply collect all the prizes on your current road. When you meet again at the next common stop, you once again compare totals, pick the best, and continue.
+
+Finally, after the last interchange, you just collect all the remaining prizes on the road you are on. The answer is the maximum total you can accumulate.
+
+
+
+
+The code simulates this two-highway journey using two pointers, one for each array (highway). It maintains two running sums (sum1 and sum2) for the total prizes collected on each highway since the last interchange.
+
+The logic works by step-by-step comparison:
+
+If the next prize on Highway 1 is smaller than the next prize on Highway 2, you add that prize to sum1 and move forward on Highway 1.
+
+Conversely, if the next prize on Highway 2 is smaller, you add it to sum2 and move on Highway 2.
+
+The crucial part is when the next prizes on both highways are equal (an interchange). Here, the code adds the best of the two running sums (sum1 or sum2) plus the value of the interchange itself to the final result. It then resets both sum1 and sum2 to this new maximum value, representing that both highways now effectively start from this best possible point.
+
+This process continues until both highways have been fully traveled. The result is the maximum score achievable by choosing the optimal path at every interchange.
+
+
+
+
+
+
+
+
+
+
+
+1793: Maximum Score of a Good Subarray
+
+
+
+
+Imagine a skyline of buildings with different heights. You are tasked with finding a contiguous block of buildings that must include a specific, marked building (building k). The "score" of this block is calculated as the height of the shortest building in the block multiplied by the total number of buildings in the block.
+
+Your goal is to select the block that yields the highest possible score.
+
+The Core Idea: Start with the smallest possible block: just the single building k. The score is its height. To increase the score, you must expand the block to include more buildings. However, when you expand, the height of the shortest building might decrease if you include a shorter building.
+
+Therefore, the smart way to expand is to always grow your block towards the side that has the taller neighboring building. Why? Because by choosing the taller neighbor, you are less likely to reduce the current minimum height drastically. You are trying to maintain as high a "minimum height" as possible while increasing the width of the block.
+
+You start with your left and right pointers both at index k. You then repeatedly check the building immediately to the left and immediately to the right of your current block. You choose to expand in the direction of the larger building, update the current minimum height of the block to be the smaller value between the current minimum and the new building's height, and then calculate the new score (min height × width). You keep track of the highest score you see during this entire expansion process.
+
+You stop expanding when you have covered the entire row of buildings from the first to the last.
+
+
+
+
+The code brings this idea to life. It starts by defining the initial block as just the building at index k. The minVal is set to the height of this building, and the maxScore is initialized to this value.
+
+The main logic is a loop that runs as long as there is room to expand either to the left or to the right.
+
+Inside the loop, it first checks if it can only expand in one direction (e.g., if the left side has been fully expanded, it must expand to the right).
+
+If expansion is possible in both directions, it compares the height of the left neighbor and the right neighbor. It chooses to expand towards the taller building to protect the minVal.
+
+After expanding, it updates the minVal to be the minimum of its current value and the height of the newly included building.
+
+It then calculates the score for this new, wider block (minVal multiplied by the new width) and updates maxScore if this new score is larger.
+
+This process ensures that every possible contiguous block containing building k is considered in an efficient way, and the best score is found.
