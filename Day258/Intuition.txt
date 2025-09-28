@@ -1,0 +1,26 @@
+Largest Perimeter Triangle
+
+
+
+
+The intuition for finding the largest perimeter triangle is based on a simple geometric rule about triangles. For any three lengths to form a valid triangle, the sum of the two smaller sides must be greater than the largest side. This is known as the triangle inequality theorem. If you have three sticks and you want to make a triangle with them, the two shorter sticks placed end to end must be longer than the longest stick. Otherwise, when you try to connect them, the two shorter sticks won't reach across the gap created by the longest stick.
+
+Now, to find the largest possible perimeter, we need to look for the three largest numbers in the array that satisfy this triangle condition. The clever approach is to sort the array in descending order, which means we arrange the numbers from largest to smallest. This way, we can start checking from the biggest numbers first. We look at groups of three consecutive numbers in this sorted list. If the two smaller numbers in a group of three add up to more than the largest number, then we have found a valid triangle. Since we sorted from largest to smallest, the first valid triangle we find will automatically have the largest possible perimeter. If we go through all possible groups and don't find any valid triangle, then we return zero.
+
+The code uses sorting to arrange the numbers in descending order. Then it checks each set of three consecutive numbers in this sorted order. For each set of three numbers where the first is the largest, it checks if the second and third numbers add up to more than the first number. If this condition is true, it immediately returns the sum of all three numbers as the answer. If no such set is found after checking all possibilities, it returns zero.
+
+
+
+
+
+
+
+Trapping Rain Water II
+
+The intuition for the 2D trapping rain water problem is like imagining a landscape with hills and valleys after rainfall. Water can collect in the low areas, but only if those low areas are surrounded by higher ground on all sides. Think of a bowl-shaped area - water can fill up the bowl until it reaches the height of the lowest point in the bowl's rim. If there's any gap in the rim that's lower, water will flow out through that gap.
+
+The algorithm works by starting from the boundaries of the map and moving inward. We use a priority queue, which is like having a sorted list that always gives us the smallest height to process next. We begin by putting all the boundary cells into this queue. Then we process cells from lowest to highest height. As we process each cell, we look at its neighbors. If a neighbor hasn't been visited yet and is lower than the current maximum boundary height we've encountered, then water can be trapped there. The amount of water trapped equals the difference between the current maximum boundary height and the neighbor's height.
+
+The key insight is that water level at any cell is determined by the lowest height along any path to the boundary. By always processing the smallest heights first from our queue, we're effectively finding the "leak points" where water could potentially escape. The maximum boundary height represents the current water level that's being contained by the surrounding higher ground.
+
+The code uses a min-heap priority queue to always process the smallest heights first. It marks visited cells to avoid processing them multiple times. It starts with all boundary cells because water near the edges can always flow out. Then it processes each cell, updating the maximum boundary height when it encounters higher ground. For each neighbor, if it's unvisited and lower than the current maximum boundary height, it calculates how much water can be trapped there and adds the neighbor to the queue for further processing. This continues until all cells have been processed, ensuring we account for all trapped water in the entire map.
