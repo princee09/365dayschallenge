@@ -1,0 +1,72 @@
+278: First Bad Version
+
+
+
+
+Imagine you have a long row of books on a shelf, all in order from the first one to the last one. One day, a pipe bursts and water soaks into the shelf from one side. All the books from the point where the water started and all the books to the right of it are now ruined. The books to the left of that point are still dry and perfect. Your job is to find the very first book that got wet. You can only check if a specific book is wet or dry by touching it.
+
+Checking every single book one by one from the start would take a very long time if the shelf is huge. Instead, you can use a much smarter method. You start by looking at the book right in the middle of the shelf. If that book is wet, you know the leak started somewhere to the left, including that middle book. So, you can completely ignore all the books to the right of this middle point. If the middle book is dry, you know the leak must have started somewhere to the right of it, so you can ignore all the books to the left.
+
+You repeat this process. You keep picking the book in the middle of the section you are still unsure about and checking it. Each time you check a book, you cut the number of books you have to worry about in half. You keep narrowing down the search until you are left with just one book. This one book must be the first wet one. This method is extremely efficient and is called a binary search.
+
+
+
+
+
+The code starts by setting up two markers, left and right. The left marker points to the first book (version 1) and the right marker points to the last book (version n).
+
+The while loop continues as long as left is less than right. This means it keeps going until the two markers meet at the same single book.
+
+Inside the loop, it calculates the mid point between left and right. It uses a special formula left + (right - left) / 2 to do this. This formula is used to prevent a potential error that can happen with very large numbers, ensuring the calculation stays within safe limits.
+
+It then calls the isBadVersion(mid) API. This is like checking if the middle book is wet.
+
+If the API returns true (the book is wet), it means the first bad version is at this mid point or somewhere before it. So, the code moves the right marker to this mid point. This effectively discards all versions to the right of mid from the search.
+
+If the API returns false (the book is dry), it means the first bad version must be after this mid point. So, the code moves the left marker to mid + 1. This discards the mid version and all versions to its left.
+
+The loop continues, repeatedly halving the search space. Finally, when left and right point to the same version, the loop stops. This version is guaranteed to be the first bad version, and the function returns it.
+
+
+
+
+
+
+
+
+
+
+
+
+374: Guess Number Higher or Lower
+
+
+
+
+
+This is like the classic game where one person thinks of a number between 1 and 100, and the other person tries to guess it. After each guess, the first person says whether the guess was too high, too low, or correct. A bad strategy is to guess 1, then 2, then 3, and so on. This is very slow.
+
+The best strategy is to always guess the number in the very middle of the current range of possibilities. For example, if the number is between 1 and 100, you start by guessing 50. If you are told "too high," you instantly know the number is between 1 and 49. If you are told "too low," you know it's between 51 and 100. You have just eliminated half of the possibilities with a single guess.
+
+You then repeat this process with your new, smaller range. You keep guessing the middle number, and each time you do, you cut the number of possible answers in half. You very quickly narrow it down to the correct number. This is, again, the binary search method, and it is the most efficient way to solve this puzzle.
+
+
+
+
+The code sets up two markers, left (starting at 1) and right (starting at n), which represent the current range of numbers where the answer could be.
+
+The while loop runs as long as left is less than or equal to right. This condition ensures that we keep searching as long as there is a valid range to check.
+
+Inside the loop, it calculates the mid point between left and right, using the same safe formula left + (right - left) / 2 to avoid number overflow issues.
+
+It then calls the guess(mid) API. This is like asking the game "Is my guess correct?"
+
+The return value of the API is stored in result. The code then checks this result.
+
+If result is 0, it means the guess was perfect. The function immediately returns mid as the answer.
+
+If result is -1, it means the guess was too high. The number we are looking for must be smaller than mid. Therefore, we adjust our search range by moving the right marker to mid - 1. This removes mid and all larger numbers from the next round of searching.
+
+If result is 1, it means the guess was too low. The number must be larger than mid. So, we move the left marker to mid + 1, eliminating mid and all smaller numbers from consideration.
+
+The loop continues this process of guessing the middle and adjusting the range based on the feedback until it finds the correct number. The constraints guarantee that the number will be found, so the function will always return an answer.
