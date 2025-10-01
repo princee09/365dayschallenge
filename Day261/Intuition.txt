@@ -1,0 +1,45 @@
+1413: Minimum Value to Get Positive Step by Step Sum
+
+
+
+Imagine you are walking along a path, and with each step, you gain or lose some energy based on the terrain. You start with a certain amount of energy in your backpack. The goal is to find the smallest possible amount of starting energy so that after every single step, your total energy never drops below 1. If it goes to zero or below at any point, you lose.
+
+The numbers in the array are like the energy changes at each step: a positive number means you find some energy (like a snack), and a negative number means you use energy (like climbing a hill).
+
+To solve this, you don't need to guess every possible starting value. Instead, you can simulate the entire journey once, keeping track of your energy level as you go, but without any starting energy boost. You just add up the numbers from the array one by one. During this simulation, you carefully note the lowest point your energy level ever reaches.
+
+The logic is this: if the lowest point you hit during your simulation was, for example, -4, that means you were 4 units below zero at your worst moment. To ensure you never go below 1, you need to start with enough extra energy to lift that worst moment up to at least 1. So, you need to start with 1 - (-4) = 5 energy. If the lowest point was already positive, like 2, then you only need to start with the minimum required energy, which is 1.
+
+
+
+The code works by first setting up two trackers. One tracker adds up all the numbers in the array sequentially, which is like watching your energy level change with each step. The other tracker is a watchdog that only remembers the most negative, or the lowest, value that the first tracker ever reports.
+
+After going through the entire list of numbers, the code looks at the lowest value recorded by the watchdog. It then calculates the required starting energy using the formula 1 - lowest_value. This calculation figures out how much you need to add to your worst moment to bring it up to 1. Finally, the code uses the max function to ensure the answer is at least 1, because the rules say you must start with a positive value.
+
+
+
+
+
+
+
+
+
+
+1518: Water Bottles
+
+
+
+Imagine you have a certain number of full water bottles. You drink them all, and now you have a pile of empty bottles. The shop has a special offer: if you bring them a specific number of empty bottles, they will give you one new, full bottle in return.
+
+The goal is to figure out the total number of bottles you can drink by repeatedly using this exchange system until you can no longer trade.
+
+You start by drinking all the full bottles you initially have. This gives you a pile of empty bottles equal to the number you just drank. You then take as many groups of empty bottles as the shop requires and trade each group for one new full bottle. You drink these new full bottles immediately, which turns them into empty bottles and adds them to your pile. You keep repeating this process—collecting empty bottles, trading them for new full ones, and drinking them—until you have fewer empty bottles than the number needed for a single trade.
+
+
+
+
+The code simulates this entire process of drinking and exchanging. It starts by declaring that the total bottles drunk is equal to all the initial full bottles. The empty bottles count is also set to this number because you've just drunk them all.
+
+Then, a loop runs as long as the number of empty bottles is greater than or equal to the numExchange needed for one trade. Inside the loop, it calculates how many new full bottles you can get by doing an integer division of empty / numExchange. For example, with 9 empties and an exchange rate of 3, you get 3 new bottles.
+
+This number of new bottles is added to the total drinks. Then, the empty bottle count is updated. It keeps the empty bottles that were left over from the trade (calculated by empty % numExchange, which is the remainder) and then adds the new empty bottles created from drinking the new full bottles you just got. The loop continues until you can't form a complete set for a trade anymore, and then the final total is returned.
