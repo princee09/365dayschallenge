@@ -1,0 +1,86 @@
+3100: Water Bottles II
+
+
+
+
+Imagine you have a certain number of full water bottles. You can drink them, which turns them into empty bottles. You have a special rule 
+for trading in your empty bottles. You can trade a specific number of empty bottles to get one new, full bottle back. The trick is, every 
+time you make a trade, the number of empty bottles required for the next trade goes up by one.
+
+The goal is to drink as many bottles as possible. The strategy is straightforward. You start by drinking all the full bottles you have. 
+This gives you a bunch of empty bottles. Then, you check if you have enough empty bottles to make a trade. If you do, you trade them in for 
+as many new full bottles as you can get. Because the trade-in rate increases after each trade, you can only perform one trade at a time with 
+the current rate before it changes. After the trade, you are left with some new full bottles and some leftover empty bottles. You then 
+repeat the process: you drink all your new full bottles, which adds to your total drink count and also adds to your pool of empty bottles. 
+You check again if you can trade with the new, higher exchange rate. You keep doing this loop of drinking and then trading until you no 
+longer have enough empty bottles to make a trade. The final total number of bottles you drank is your answer.
+
+
+
+
+
+The code uses a simple loop to mimic this process of drinking and trading. It keeps track of three main things: the number of full bottles 
+you currently have, the number of empty bottles you have, and the current exchange rate.
+
+Inside the loop, the first action is to drink all the full bottles you have. This increases your total drink count and converts all those 
+full bottles into empty bottles. Now you have zero full bottles and a large number of empty ones.
+
+Next, the code checks if your empty bottles are enough for at least one trade at the current exchange rate. If they are, it performs exactly 
+one trade. It calculates how many new full bottles you get from this single trade, which is always just one. It then subtracts the 
+required number of empty bottles from your total. Finally, it increases the exchange rate by one for the next potential trade. The loop 
+then continues, and if you have any new full bottles, you will drink them in the next cycle. The loop stops when you have no full bottles 
+left and cannot perform a trade to get any new ones.
+
+
+
+
+
+
+
+
+
+
+
+
+901: Online Stock Span
+
+
+
+
+
+
+Imagine you are looking at the stock market price for a company every day. You want to know, for today's price, for how many consecutive days 
+in a row, starting from today and going backwards, the stock price has been less than or equal to today's price. This number of days is 
+called the "span".
+
+A simple way would be to look back day by day until you find a price higher than today's. But this can be slow if you have to check many 
+years of data. The clever method used here is like having a smart assistant who remembers previous days for you in a compressed way.
+
+Think of it like this. You have a stack of cards. Each card has two numbers written on it: a stock price and a "count" of how many 
+previous consecutive days that price was the highest for. When a new day's price comes in, you look at the top card on your stack. If 
+that card's price is less than or equal to today's price, it means that today's price is even higher, so all the days that were covered by 
+that card should also be part of today's span. You take that card's count and add it to your own span. Then you throw that card away and look 
+at the next card down. You keep doing this, pulling cards and adding their counts, until you find a card with a price that is higher 
+than today's price. This means you have found a day that breaks the chain. Now, you make a new card for today's price, with the total span 
+you calculated, and place it on top of the stack. This new card now represents the fact that today's price is the highest for this new, 
+longer span of days.
+
+
+
+
+
+
+
+
+The code uses a "stack", which is like a pile of plates where you can only add or remove from the top. Each "plate" in this stack is a pair 
+of numbers: the stock price and its calculated span.
+
+When a new price is given, the code starts by assuming the span is 1, which represents the current day itself. Then, it looks at the top of 
+the stack. If the price on that top plate is less than or equal to the new price, it means the new price is higher, so the current day's 
+span should include the span of that previous day. The code adds the span from that plate to its own total span. Then, it removes that 
+plate from the stack, effectively "jumping over" all those days. It repeats this process, checking the new top plate, adding its span, 
+and removing it, until the stack is empty or it finds a plate with a price that is strictly greater than the new price. This greater price 
+acts as a wall, stopping the chain. Finally, the code adds a new plate to the top of the stack for the current day, containing the new price 
+and the total span it just calculated. This method efficiently collapses many days of history into single entries, making the calculation 
+very fast.
+
