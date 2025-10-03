@@ -1,0 +1,91 @@
+40: Combination Sum II
+
+
+
+
+Imagine you are at a fruit market with a fixed budget (the target) and you want to buy a basket of fruits that costs exactly that amount. The catch is that each type of fruit is limited in quantity, and you cannot buy the same fruit twice from the same pile. Also, there are multiple piles of the same fruit type, and you want to avoid creating the exact same basket combination more than once.
+
+The problem is to find all the unique baskets of fruit that cost exactly your budget.
+
+To solve this without repeating work, we use a method called backtracking, which is like exploring all possible paths in a maze but with a smart map that helps us avoid dead ends and duplicate paths.
+
+First, we sort the list of fruit prices. This is our smart map. Sorting groups identical fruits together. This allows us to easily see duplicates. If we have two apples that cost the same, we need to be careful not to create two identical baskets just by picking one apple from the first pile and then later picking an identical apple from the second pile.
+
+We start with an empty basket and a full budget. We look at the first fruit. We have a choice: we can either put it in our basket or skip it.
+
+If we decide to put it in our basket, we reduce our budget by the fruit's price, and then we move to the next fruit. We cannot use the same fruit again, so we move our index forward.
+
+After we explore what happens when we include that fruit, we take it out of the basket (this is the "backtrack" part) and then we decide to skip it. However, when we skip a fruit, we must also skip all other fruits that have the exact same price that come immediately after it. This is the key to avoiding duplicate combinations. By skipping all identical fruits at this decision point, we ensure that we only create unique sequences.
+
+We stop exploring a path if our budget becomes negative, meaning we have overspent. We successfully record a basket if our budget becomes exactly zero.
+
+
+The code starts by sorting the list of candidate numbers. This is the most important first step because it brings all identical numbers next to each other.
+
+The main function combinationSum2 sets up the process. It initializes an empty list to store the final answer and an empty temporary list to build the current combination. It then calls the helper function, often called dfs (Depth-First Search) or backtrack.
+
+The helper function is where the logic happens. It takes the current position in the sorted list and the remaining target sum.
+
+Inside the helper function, the first check is for success: if the remaining target is zero, it means the numbers in the current temporary list add up to the original target. This list is saved to the answer.
+
+If we have gone through all numbers or if the remaining target is negative, we stop and return, as this path is invalid.
+
+Then comes the core loop. We iterate through the numbers starting from the given index. Before processing a number, we check if it is a duplicate of the previous number and if we are at a new decision level. If it is a duplicate, we skip it to prevent duplicate combinations.
+
+If the current number itself is larger than the remaining target, we break out of the loop immediately. Since the list is sorted, all subsequent numbers will be even larger, so it is pointless to continue.
+
+If the number passes these checks, we add it to the current temporary list. We then recursively call the helper function with the new, reduced target and, crucially, with the next index i + 1 to show that this number has been used and cannot be reused.
+
+After the recursive call returns, we remove the number we just added from the temporary list. This is the backtracking step. It allows us to "undo" our choice and then explore the possibility of skipping this number and moving on to the next one.
+
+
+
+
+
+
+
+
+
+
+
+452: Minimum Number of Arrows to Burst Balloons
+
+
+
+
+
+Imagine the balloons are painted on a very long horizontal number line. Each balloon is a horizontal line segment from its start to its end. You are standing below this line and can shoot arrows straight up. An arrow will burst every balloon that is directly above it, meaning every balloon whose segment covers that point on the number line.
+
+Your goal is to burst all the balloons using the fewest number of arrows.
+
+The key insight is to find groups of balloons that overlap each other. If several balloons overlap, you can burst them all with a single, well-placed arrow. The challenge is to find the largest possible groups.
+
+A very effective strategy is to sort the balloons based on where they end. Think of it as lining up the balloons by their rightmost edge.
+
+Now, we shoot our first arrow. Where should we shoot it? The most efficient place to shoot the first arrow is at the end point of the first balloon in our sorted list. Why? Because this balloon ends sooner than all others. By shooting at its end, we give ourselves the best chance to also hit other balloons that started before this point.
+
+After shooting the first arrow, we check the next balloon. If the next balloon starts after the point where we shot our arrow, it means our arrow missed it. The previous arrow was too far to the left to hit this new balloon. So, we need a new arrow. We place this new arrow at the end point of this new balloon.
+
+If, however, the next balloon starts before or exactly at our arrow's position, it means our current arrow also burst this balloon. We do nothing and move on to the next balloon.
+
+We repeat this process for every balloon. Every time we find a balloon that starts after our current arrow's position, we need a new arrow, and we place it at that balloon's end.
+
+This greedy method works because by always shooting at the earliest ending point of the current group, we maximize the number of balloons we can take out with one shot before we are forced to use a new one.
+
+
+
+
+
+The code first checks if the list of balloons is empty. If it is, the answer is zero arrows.
+
+The most crucial step is sorting. The balloons are sorted based on their second value, which is their end coordinate. This lines them up from the one that ends the earliest to the one that ends the latest.
+
+The code then initializes an arrow counter to one. We will always need at least one arrow. It also records the position of the first arrow, which is set to the end of the very first balloon.
+
+Then, a loop starts from the second balloon. For each balloon, the code checks a simple condition: does this balloon start after the current arrow's position?
+
+If the answer is yes, it means the current arrow cannot burst this balloon. Therefore, we need a new arrow. We increase the arrow count by one, and we update the current arrow's position to be the end of this new balloon we just encountered.
+
+If the answer is no, it means the balloon's start is to the left of or equal to the arrow's position. This balloon is already burst by the arrow we shot, so we simply move on to the next balloon without doing anything. The current arrow position remains the same.
+
+This process continues until all balloons have been checked. The final value of the arrow counter is the minimum number of arrows needed.
