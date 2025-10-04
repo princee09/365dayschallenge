@@ -1,0 +1,58 @@
+412: Fizz Buzz
+
+
+
+Imagine you are counting numbers from 1 up to a specific number, let us say 15. As you count out loud, you have a special rule to follow. For every number, you first check if it is a special number. The first special rule is for numbers that are multiples of both 3 and 5. Since 3 and 5 are both prime numbers, a number that is a multiple of both is automatically a multiple of 15. So, if the number can be divided evenly by 15, you do not say the number, you say the word FizzBuzz instead.
+
+If the number is not a multiple of 15, you then check the next rule. You check if the number is a multiple of just 3. If it can be divided evenly by 3, you say the word Fizz. If it is not a multiple of 3, you then check the final special rule, which is for multiples of 5. If the number can be divided evenly by 5, you say the word Buzz.
+
+Now, if the number fails all these special checks, meaning it is not a multiple of 3, nor 5, nor 15, then it is just a normal number. For a normal number, you simply say the number itself. The goal of the program is to create a list of these responses for every number from 1 up to the given number. So, for the number 15, the list would start with 1, 2, Fizz, 4, Buzz, and so on, ending with FizzBuzz.
+
+
+
+
+The code starts by creating an empty list, which is like a container to hold all our answers. To make this process efficient, the code tells the computer to prepare this container in advance to hold exactly the number of items we need, which is a small optimization.
+
+Then, the code begins a loop, which is like a counter that goes from 1 all the way up to the given number. For each number the counter is on, the code performs the checks we talked about. It uses the percentage sign operator to check for divisibility, which calculates the remainder after division. A remainder of zero means the number divides evenly.
+
+It first checks if the current number is divisible by both 3 and 5. It does this by using two simple true or false flags. It checks the remainder when divided by 3 and the remainder when divided by 5. If both remainders are zero, it means the number is divisible by both, so it puts the word FizzBuzz into our answer list.
+
+If that is not true, it checks if it is divisible only by 3. If yes, it puts the word Fizz into the list. If that is also not true, it checks if it is divisible only by 5. If yes, it puts the word Buzz into the list.
+
+Finally, if all the above checks fail, the number is not special. So, the code converts the current number into its written word form, like turning the digit 4 into the string 4, and puts that string into the list.
+
+After the loop has finished counting through all the numbers, the code returns the complete list of answers, which is the final result.
+
+451: Sort Characters By Frequency
+
+
+
+
+
+Imagine you have a word, like tree. Your task is to re-arrange the letters in this word so that the letters that appear most frequently come first, followed by the next most frequent, and so on. If two letters appear the same number of times, their order does not matter much, but the code we are looking at has a specific way to handle this.
+
+The first step is to figure out how many times each letter appears. It is like going through the word with a highlighter and making a tally mark for each letter. For tree, you would see that e appears twice, and r and t each appear once. This tally is stored in a frequency table.
+
+Now, you have the original word and you know how many times each of its letters appears. The clever part of this method is that it does not create a new list from scratch. Instead, it takes the original word and sorts the letters within it, but it does not sort them in the normal alphabetical order.
+
+It uses a custom sorting rule. The rule says: when comparing two letters from the word, look them up in your frequency table. The letter that has a higher tally count should be considered smaller in value for the sort, which forces it to be moved towards the front of the word. This is the reverse of normal sorting.
+
+If two letters have the exact same frequency, the code uses a tie-breaker. It compares the letters themselves. In this case, it sorts them in descending order. This means that for two letters with the same frequency, the one which comes later in the alphabet will be placed before the one that comes earlier. This tie-breaker ensures the sort is consistent and predictable.
+
+Once all the letters are compared and rearranged based on this custom rule, the word is now sorted by frequency, from most frequent to least frequent, with the tie-breaker rule applied for letters of equal frequency.
+
+
+
+
+
+The code begins by creating a frequency map. This is like an empty notebook where it will write down how many times each character is seen. It goes through each character in the input string one by one. For each character, it finds its page in the notebook and adds one to its count. If it is the first time seeing the character, it starts the count at one.
+
+Next, the code uses a powerful built-in function to sort the original string. However, it does not use the normal sort. It provides its own set of instructions for how to compare any two characters. This set of instructions is called a lambda function.
+
+Inside this custom comparison function, it takes two characters, let us call them a and b. The first thing it does is it looks up the frequency of a and the frequency of b in our notebook, the frequency map.
+
+It then checks if the frequencies are the same. If they are, it applies the tie-breaker. It returns whether character a is greater than character b. In computer terms, characters have underlying numbers, so this compares their numeric values, which for letters means it checks if a comes after b in the alphabet. If a has a higher value, it is considered smaller for the sort, moving it forward.
+
+If the frequencies are not the same, the comparison is simpler. It just checks if the frequency of a is greater than the frequency of b. If it is, then a is considered smaller for the sort, which will place it before b in the final string.
+
+This custom sort rearranges all the characters in the original string based on these rules. Finally, the now-sorted string is returned as the result.
