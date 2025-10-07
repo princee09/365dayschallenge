@@ -1,0 +1,67 @@
+1047. Remove All Adjacent Duplicates In String
+
+
+Imagine you have a row of toy blocks, and each block has a single letter on it. The rule of the game is that if two identical blocks are next 
+to each other, you must remove them both. After you remove them, the blocks on either side might come together, and if those new adjacent 
+blocks are also identical, you have to remove them too. You keep doing this until no two adjacent blocks are the same.
+
+Doing this by repeatedly scanning the entire row of blocks would be very slow, especially if the row is long. A much smarter way is to use 
+a simple, one-pass process. Think of it as having a new, separate pile where you place blocks one by one from the original row. Before you 
+place a new block on your new pile, you check the top block of that pile. If the new block you are about to place is exactly the same as the 
+top block on your pile, you don't place it. Instead, you take that top block off your pile (because they are a matching pair and both 
+get removed). If it's not the same, you simply add the new block to the top of your pile. This method perfectly simulates the removal 
+of all adjacent duplicates in a single, efficient scan.
+
+
+
+
+The code uses a string variable, which we can call our "result pile," to build the final answer. It starts by looking at each letter in 
+the original string, one by one. For each letter, it performs a check. It looks to see if our "result pile" is not empty and if the very 
+last letter in that pile is the same as the current letter we are looking at. If both conditions are true, it means we have found two 
+adjacent duplicates (the last one in the pile and the current one). So, the code removes that last letter from the pile, effectively 
+canceling both duplicates out. If the pile is empty or the last letter is different, the code simply adds the current letter to the end 
+of the pile. After going through all the letters in the original string, the "result pile" contains the final string with all 
+adjacent duplicates removed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1475: Final Prices With a Special Discount in a Shop
+
+
+Imagine you are in a shop looking at a list of prices for items. The shop has a special discount rule. For any item you look at, you get 
+a discount equal to the price of the next item in the list that has a price less than or equal to the current item's price. If there is
+no such cheaper or equally priced item later in the list, you pay the full price.
+
+A slow way to solve this would be to, for every single item, look at every single item after it until you find one that qualifies for 
+the discount. This can take a very long time if the list is long. A much faster and clever method uses a "stack," which is like a pile of 
+items where you can only add or remove from the top. We use this stack to remember the items for which we haven't yet found their discount. 
+We go through the list of prices from left to right. For the current item, we check if its price is a valid discount for any of the items
+we have remembered in our stack. Specifically, if the current item's price is less than or equal to the price of an item on top of our stack, 
+it means we have found the discount for that remembered item. So, we apply the discount to that remembered item (by subtracting the 
+current price from it) and remove that remembered item from the stack because its discount has been resolved. We then add the current 
+item's index to the stack so that we can later find its discount. This process ensures we find the discount for each item in a single, 
+efficient pass through the list.
+
+
+
+The code starts by creating a copy of the original prices list to store the final results. It also creates an empty stack, which will be used 
+to store the indices (positions) of items, not their actual prices. The code then goes through each price in the list. The main logic is 
+inside a loop that checks the stack. While the stack is not empty, and the price of the current item is less than or equal to the price of 
+the item whose index is on the top of the stack, it means the current item is the discount for that remembered item. The code takes that 
+index from the top of the stack, removes it from the stack, and subtracts the current item's price from the result at that remembered 
+index. This loop continues until the condition is false, applying the discount to all eligible items in the stack. Finally, the code adds 
+the index of the current item to the stack, so we can later find a discount for it. After processing all items, any indices left in the 
+stack are for items that never found a discount, so their price remains unchanged in the result array.
+
