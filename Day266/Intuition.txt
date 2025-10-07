@@ -1,0 +1,59 @@
+1893: Check if All the Integers in a Range Are Covered
+
+
+
+
+The problem is like being given a list of several short ropes of different lengths, each with a start and end number marked on them. You are also given one long rope with its own start and end number. The question is: does the long rope get completely covered, piece by piece, by the shorter ropes? Every single number on the long rope must be touched by at least one of the short ropes.
+
+Since the numbers involved are very small (only up to 50), we can use a very straightforward method. Imagine you have a checklist with numbers from 1 to 50. You go through your collection of short ropes. For each short rope, you look at every single number between its start and end, and you put a checkmark on your checklist for that number.
+
+After you have processed all the short ropes, you then look at the section of the checklist that corresponds to your long rope (from left to right). You check every single number in that range. If even one number is missing a checkmark, it means that part of the long rope was not covered by any short rope, so the answer is false. If every number has at least one checkmark, the answer is true.
+
+
+
+
+The code brings this checklist idea to life. It first creates a covered array of 51 false values. This is our digital checklist, initially blank with no checkmarks.
+
+Then, it goes through each range in the ranges list. For each range, it uses a loop to go through every integer from the range's start to its end. For each of these integers, it sets the corresponding position in the covered array to true. This is the equivalent of putting a checkmark on our list.
+
+Finally, it performs the verification. It loops through every integer from left to right. For each integer, it checks the covered array. If it finds any integer where the value in the array is still false, it immediately returns false because that number was not covered. If the loop finishes without finding any uncovered numbers, it returns true.
+
+
+
+
+
+
+
+
+
+
+
+
+
+2055: Plates Between Candles
+
+
+
+
+
+This problem describes a row of plates (*) and candles (|). For different sections (queries) of this row, you need to count how many plates are "between candles". A plate is "between candles" if, within that specific section, there is at least one candle to its left and at least one candle to its right. The plates directly next to a candle or outside the candles do not count if they don't have a candle on both sides within the query boundaries.
+
+The key is to realize that for any given query, you only care about the plates that lie between the first candle and the last candle that appear within the query's start and end points. All plates outside this inner candle-bound region do not count.
+
+To solve this efficiently, we do some preparation. First, we note down the positions of every single candle in the entire row. This gives us a sorted list of where all the candles are. Second, we create a running total (a prefix sum) of plates. This means for any position in the row, we can instantly know how many total plates have appeared from the very start up to that point.
+
+Now, for each query, we do not need to look at every single character. We use the list of candle positions. We find the very first candle that appears at or after the query's start index. This will be our left boundary. We also find the very last candle that appears at or before the query's end index. This will be our right boundary. If these two boundaries are valid and the left boundary is to the left of the right boundary, it means we have a valid region between candles.
+
+To find the number of plates in this region, we simply use our running total of plates. We subtract the number of plates up to the left boundary from the number of plates up to the right boundary. The result is the number of plates that are safely nestled between the two candles within the query. If we cannot find two valid candles in the query, the answer is zero.
+
+
+
+
+
+The code first initializes an empty list candlePos to store the index positions of every candle (|) it finds in the string s. It also creates a platePrefix array of the same length as the string. This array will hold the cumulative count of plates encountered so far.
+
+It then loops through every character in the string s. Whenever it finds a candle, it records that character's position in the candlePos list. For every character, it also updates the platesSoFar counter if the character is a plate (*), and it stores this running total in the platePrefix array at the current index.
+
+For each query, the code extracts the left and right indices. It then performs two searches on the candlePos list. The first search, using lower_bound, finds the first candle that is not less than the left index. The second search, using upper_bound and then moving one step back, finds the last candle that is not greater than the right index.
+
+If either of these candles cannot be found, or if the left candle is not actually to the left of the right candle, the answer for that query is zero. Otherwise, it calculates the answer by subtracting the plate count at the left candle's index from the plate count at the right candle's index using the precomputed platePrefix array. This difference gives the exact number of plates between those two candles. All these answers are collected and returned at the end.
