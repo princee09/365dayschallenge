@@ -1,0 +1,113 @@
+2073: Time Needed to Buy Tickets
+
+
+
+Imagine you are standing in a line to buy tickets from a counter. The person at the very front of the line gets to buy one ticket, and then 
+they immediately go to the back of the line to wait for their next turn. This process continues until a person has bought all the tickets 
+they need, at which point they leave the line.
+
+Our goal is to figure out the exact total time, in seconds, it will take for one specific person (let's call him "Person K") to finish 
+buying all of his tickets. Each ticket purchase takes exactly one second.
+
+The key observation is that we do not need to simulate every single person moving to the back of the line. That would be slow and 
+complicated. Instead, we can think about how many times Person K will get to buy a ticket, and how many times the people in front of and 
+behind him will get to buy tickets before he is done.
+
+Person K will keep going through the line until he buys all his tickets. The number of tickets he needs is the maximum number of turns he 
+will take. The people standing in front of him in the line will get a chance to buy tickets before him on every cycle. The people 
+standing behind him will get a chance to buy tickets after him on every cycle.
+
+Crucially, once Person K buys his very last ticket, the process for him is over. This means that for the people behind him in the line, 
+they will get one fewer opportunity to buy tickets compared to him. They will not get that final turn after Person K has left.
+
+So, the calculation breaks down into two simple groups:
+
+For every person in the line, we ask: "How many times will this person buy a ticket before Person K is finished?"
+
+If the person is in front of Person K (or is Person K himself), they will get to buy tickets on every cycle until Person K is done. 
+However, if this person needs fewer tickets than Person K, they will leave the line early. So, we only count the minimum of the tickets 
+they need or the tickets Person K needs.
+
+If the person is behind Person K, they will get one fewer cycle than Person K. This is because after Person K buys his last ticket, he 
+leaves, and the people behind him do not get an extra turn. So, we count the minimum of the tickets they need or (the tickets Person 
+K needs minus one).
+
+By adding up these counts for every single person in the line, we get the total number of seconds, which is the total number of 
+ticket-buying actions that happened until Person K finished.
+
+
+
+
+The code uses a single loop that goes through each person in the ticket line.
+
+It first stores the number of tickets the target person (k) wants to buy in a variable called target.
+
+Then, for each person at position i:
+
+If the person is at or before position k in the line, the code adds the smaller number between that person's desired tickets and the target value to the total time.
+
+If the person is after position k in the line, the code adds the smaller number between that person's desired tickets and target - 1 to the total time.
+
+Finally, the code returns the accumulated total time.
+
+
+
+
+
+
+
+
+
+
+
+2526: Find Consecutive Integers from a Data Stream
+
+
+
+
+Imagine a machine that is receiving a continuous stream of numbers, one by one. We want this machine to tell us a very specific thing: "Are 
+the last K numbers you received all equal to a certain special value?"
+
+For example, if the special value is 4 and K is 3, we want to know if the last three numbers were all 4.
+
+A simple but inefficient way would be to remember the last K numbers and check them every time. However, if K is very large and we get 
+many numbers, this uses a lot of memory and time.
+
+The clever insight is that we don't actually need to remember all the numbers. We only care about the most recent sequence of the special 
+value. What breaks this sequence? Any number that is not the special `value*.
+
+We can use a counter. This counter tracks the length of the current, unbroken streak of the special value at the end of the 
+stream.
+
+Here is how it works step-by-step:
+
+Start with the counter at zero.
+
+When a new number arrives, we check it.
+
+If the new number is equal to our special value, it extends the current streak. We increase the counter by one.
+
+If the new number is any other number, it completely breaks the streak. We must reset the counter back to zero because the last number 
+received is not the special value, so there is no consecutive sequence of the special value ending now.
+
+After updating the counter, we check its value. If our counter is greater than or equal to K, it means the last K numbers 
+(and possibly more) have all been the special value. So, we return true. Otherwise, we return false.
+
+This method is very efficient because for every new number, we are just doing a simple comparison, one addition, or one reset, 
+and then one check.
+
+
+
+
+The code defines a class DataStream. When an object of this class is created, it is initialized with the special value to look for, 
+the number k that defines how many consecutive numbers we need, and a count variable that starts at zero.
+
+The main function consec is called for every new number (num).
+
+First, it checks if the new num is equal to the special value.
+
+If it is, the count is increased by one.
+
+If it is not, the count is reset to zero, destroying any previous streak.
+
+Then, the function returns the result of checking if the current count is now at least equal to k. If it is, the condition is met.
