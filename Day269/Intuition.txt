@@ -1,0 +1,43 @@
+1332: Remove Palindromic Subsequences
+
+The intuition for this problem is built on a very important observation about the composition of the string. Since the string contains only 
+two letters 'a' and 'b', we can think about this problem in a simplified way.
+
+A palindrome is a word that reads the same forwards and backwards. The key insight here is that any sequence containing only one type 
+of character is automatically a palindrome. For example, "aaa" is a palindrome and "bbb" is also a palindrome.
+
+Now, if the entire string is already a palindrome, we can remove it completely in just one single operation. We simply identify that the 
+whole string reads the same forwards and backwards, so we can remove it all at once.
+
+However, if the string is not a palindrome, we can still solve this efficiently. We can remove all the 'a' characters in one operation 
+because they form a palindromic subsequence. Then in a second operation, we remove all the 'b' characters because they also form a 
+palindromic subsequence. This means the maximum number of operations needed is always two.
+
+The code implements this logic by first checking if the string is empty, in which case zero steps are needed. Then it uses two pointers, 
+one starting from the left end and one from the right end, moving towards the center while comparing characters. If at any point the 
+characters don't match, we know it's not a palindrome and return two. If all characters match throughout the entire check, we return one.
+
+
+
+
+
+
+
+2824: Count Pairs Whose Sum is Less than Target
+
+The intuition for this problem involves systematically checking all possible pairs of numbers in the list to see if their sum is less than 
+the given target value. Since we're looking for pairs where the first index is less than the second index, we need to consider every 
+combination of two different positions in the array.
+
+The straightforward approach is to use two loops. The outer loop goes through each element in the array, and for each element, the inner 
+loop goes through all the elements that come after it in the array. This ensures that we only consider pairs where the first index is less 
+than the second index, which matches our requirement.
+
+For each pair of numbers we check, we simply add their values together and compare this sum with the target. If the sum is strictly less 
+than the target, we count this pair as valid. We maintain a counter that increments every time we find such a valid pair.
+
+The code implements this by initializing a count variable to zero. Then it uses nested loops where the outer loop variable i goes from the 
+first element to the second last element, and the inner loop variable j goes from i+1 to the last element. This pairing ensures i is always 
+less than j. For each pair nums[i] and nums[j], if their sum is less than target, we increase our count. Finally, we return the total count 
+of valid pairs.
+
