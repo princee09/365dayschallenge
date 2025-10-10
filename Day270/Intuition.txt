@@ -1,0 +1,115 @@
+1508: Range Sum of Sorted Subarray Sums
+
+
+Imagine you have a list of numbers. You take every possible continuous piece of that list—like the first number alone, the first two 
+numbers together, the first three, and so on, and then you do the same starting from the second number, and the third, until the end. 
+For each of these pieces, you calculate its sum. Now, you take all these sums and arrange them from smallest to largest in one giant new list.
+
+Your final task is to find the total of all the numbers from a specific starting position to a specific ending position in this new, 
+giant, sorted list.
+
+The challenge is that the giant list can be enormous. For a list of 1000 numbers, the giant list will have over 500,000 sums. Creating 
+and sorting such a giant list would be very slow. We need a smarter way to find the sum of a range within it without actually building the 4
+entire list.
+
+
+The main idea of this solution is to use a detective-style approach. Instead of building the entire sorted list of sums, we will answer 
+two key questions using a guessing game (binary search):
+
+What is the value of the k-th smallest sum? (For example, what is the 1st smallest, the 5th smallest, or the 100th smallest sum in our 
+giant sorted list?)
+
+What is the combined total of the first k smallest sums?
+
+Once we can answer these two questions, our main problem becomes easy. The sum of numbers from position left to right is simply:
+
+(Sum of the first 'right' smallest sums) - (Sum of the first 'left-1' smallest sums)
+
+Let's break down how we answer those two questions.
+
+Step 1: The Prefix Sum Shortcut
+Before we start, we do a simple preparation. We create a helper list called a "prefix sum" array.
+
+Why? Calculating the sum of a subarray from index i to j normally requires a loop to add all numbers between i and j. This can be slow if we 
+do it thousands of times.
+
+How it works: The prefix sum array is built so that the value at position j+1 is the total of all numbers from the start of the list up to 
+j. Therefore, the sum of the subarray from i to j is simply prefix[j+1] - prefix[i]. This calculation is instant.
+
+This prefix array is our secret weapon for quickly calculating any subarray sum later on.
+
+Step 2: The Counting Function - Our Detective's Tool
+This is the most crucial part of the intuition. We create a helper function that, given a hypothetical number target, can tell us two 
+things:
+
+How many subarray sums are less than or equal to this target value? (Let's call this count)
+
+What is the combined total of all those subarray sums that are less than or equal to target? (Let's call this total_sum)
+
+How does this function work?
+It goes through every possible starting point i in the original list. For each start point, it looks at the subarray starting at i and 
+keeps extending it (increasing the end point j) as long as the sum of that subarray is less than or equal to our target. For each valid 
+subarray it finds, it increases the count by 1 and adds the subarray's sum to the total_sum.
+
+This function effectively scans through all possible subarrays, but it does so intelligently, stopping early for each starting point once the sums get too large.
+
+Step 3: The Guessing Game (Binary Search) to Find the k-th Smallest Sum
+Now, we want to find the exact value of the k-th smallest sum in our giant sorted list. How do we find it without having the list?
+
+We play a guessing game called Binary Search.
+
+We know the smallest possible sum is 1 (since all numbers are positive) and the largest possible sum is the sum of the entire list.
+
+We start by guessing a middle value between the smallest and largest.
+
+We use our Counting Function from Step 2 to check our guess. We ask: "How many sums are less than or equal to my guess?"
+
+If the count is less than k, it means our guess is too small. The k-th smallest sum must be larger than our current guess. So, we adjust 
+our search to look only at numbers larger than our guess.
+
+If the count is greater than or equal to k, it means our guess is either exactly the k-th sum or, more likely, a number that is larger than 
+the k-th sum but still captures it. We adjust our search to look at numbers smaller than or equal to our guess to see if we can find a 
+smaller number that still has a count of at least k.
+
+We keep repeating this process, cutting our search range in half each time, until we zero in on the smallest number for which the count of 
+sums less than or equal to it is at least k. This number is the k-th smallest sum.
+
+Step 4: Calculating the Sum of the First k Smallest Sums
+Finding the k-th smallest sum is not enough. We need the total of the first k sums.
+
+We use our detective tools again for this:
+
+First, we find the value of the k-th smallest sum itself (let's call it KthValue) using the binary search from Step 3.
+
+Now, we use our Counting Function one more time, but this time with a target of KthValue - 1. This tells us:
+
+count_smaller: How many sums are strictly smaller than KthValue.
+
+sum_smaller: The combined total of all those sums that are strictly smaller than KthValue.
+
+We are missing some sums. We have all the sums that are smaller than KthValue, but we need to include KthValue itself. And we might need to include it multiple times if there are duplicates! The number of times we need to add KthValue is exactly (k - count_smaller).
+
+So, the final formula for the sum of the first k smallest sums is:
+sum_smaller + (k - count_smaller) * KthValue
+
+Step 5: Solving the Original Problem
+We have now built a powerful function: sumOfFirstK(k), which can give us the total of the first k smallest subarray sums.
+
+The original problem asks for the sum from index left to right. This is now very simple:
+
+Answer = sumOfFirstK(right) - sumOfFirstK(left - 1)
+
+We calculate the total of the first right sums, subtract the total of the first left-1 sums, and what remains is exactly the sum of the left-th to the right-th sums.
+
+
+The code uses several lambda functions, which are like small, inline helper functions defined inside the main function.
+
+The first helper uses the prefix sum array to instantly calculate any subarray sum. It is the foundation for the counting function.
+
+The counting function is the workhorse. It loops through each starting index and then has an inner loop that extends the subarray until the 
+sum exceeds the target. For each valid subarray found during this process, it increments a counter and adds the subarray's sum to a 
+running total. This function efficiently collects information about all sums below a certain threshold without generating all sums first.
+
+The binary search logic is used to implement the guessing game. It starts with a low guess of 1 and a high guess of the total sum of the entire array. It repeatedly calculates a middle guess and uses the counting function to decide whether to search in the lower or upper half of the range next. This process narrows down the search space logarithmically until it finds the precise k-th smallest value.
+
+Finally, the main logic combines these pieces. It uses the sumOfFirstK helper to get the cumulative sums for right and for left-1, and then subtracts them to get the final answer for the requested range, making sure to apply the modulo operation to handle large numbers as required by the problem.
