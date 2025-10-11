@@ -1,0 +1,115 @@
+1094: Car Pooling
+
+
+Imagine you are the driver of a car with a limited number of empty seats. Your job is to pick up and drop off passengers at various points 
+along a straight road. The main rule is simple: at no point during your journey can the number of people in your car exceed its capacity.
+
+Now, you are given a list of trips. Each trip tells you how many passengers to pick up, at which kilometer marker you pick them up, and at 
+which kilometer marker you drop them off.
+
+The straightforward way to solve this would be to simulate the entire journey. You would start at kilometer 0 and drive to the farthest 
+drop-off point. At every single kilometer, you would check: are there any pickups here? If yes, add those passengers to the car. Are there 
+any drop-offs here? If yes, remove those passengers. Then, immediately check if the current number of passengers is more than the 
+car's capacity. If it ever is, you know it's impossible.
+
+However, driving and checking every single kilometer, especially if the road is very long, is slow and inefficient. There is a much smarter way.
+
+The clever insight is that you don't need to check every kilometer. You only need to pay attention to the points where something 
+actually happens—that is, the pickup and drop-off points. The number of passengers in the car only changes at these specific locations. 
+The rest of the time, between these points, the passenger count stays the same.
+
+So, here is the efficient plan:
+
+First, you create a logbook for every possible kilometer, but you start with all entries at zero, meaning no passengers.
+
+For every trip on your list, you do only two things:
+
+At the pickup kilometer, you make a note in your logbook to add that many passengers.
+
+At the drop-off kilometer, you make a note in your logbook to subtract that many passengers.
+
+Once you have processed all trips and made all your notes, you start your simulation from kilometer 0. You go through your logbook in order. 
+At each kilometer, you look at your note. If it says to add passengers, you add them to your current total. If it says to subtract, 
+you subtract. After adjusting the count at each step, you immediately check if you have exceeded the car's capacity.
+
+If you finish going through the entire logbook without ever exceeding capacity, then all the trips were possible. If at any point the 
+passenger count goes over the limit, you stop immediately because it is impossible.
+
+
+
+The code implements this smart logbook method. It uses a simple list, called an array, to represent the logbook for all kilometers. The key 
+part is the loop that goes through each trip. For a trip, it doesn't add passengers to every single kilometer between the pickup and 
+drop-off. Instead, it only updates two places in the logbook: it adds the passenger count at the start of the trip and subtracts the same 
+count right after the trip ends.
+
+Then, a second loop goes through this logbook from the beginning to the end. This loop acts out the journey, calculating the running total 
+of passengers in the car at each point. It does this by adding the value in the current logbook entry to the running total. This works 
+because the earlier additions and subtractions in the logbook now naturally apply to the running total as we move forward. A simple check 
+is performed at every step to see if this running total has become too large.
+
+
+
+
+
+
+
+
+
+
+
+
+1109: Corporate Flight Bookings
+
+
+
+
+Imagine you are managing seat reservations for an airline with several flights numbered from 1 to N. You receive a stack of booking orders. 
+Each order is for a block of consecutive flights and reserves a certain number of seats on each of those flights.
+
+For example, one booking might say "Reserve 10 seats on flights 1 through 2." This means flight 1 gets 10 more seats reserved, and flight 2 
+also gets 10 more seats reserved.
+
+The simple, brute-force way to handle this is to take each booking order and, for every single flight in its range, go and add the seat count 
+to that flight's total. Once you've done this for all orders, you will have the final count for each flight.
+
+The problem with this method is that it is very slow if you have many bookings and many flights. You end up doing a lot of repetitive 
+work, adding numbers to the same flights over and over again.
+
+There is a much more efficient technique, often called the "difference array" method. The core idea is that you don't need to update 
+every single flight in a range immediately. You can just mark the boundaries of the range, and then later, in a single pass, you can figure 
+out everything that happened in between.
+
+Here is how it works:
+
+You start with an empty tally sheet for all flights, initially set to zero.
+
+For each booking that says "Add X seats to all flights from A to B," you do only two things:
+
+You add X to the tally of the first flight in the range (Flight A).
+
+You subtract X from the tally of the flight that comes immediately after the last flight in the range (Flight B+1). If B is the last flight, 
+you can skip this.
+
+Why do this? Think of it as leaving instructions. By adding X at the start, you are saying, "From this point onward, we need to account 
+for X more seats." By subtracting X at the end, you are saying, "But please stop accounting for these X seats after this point."
+
+After you have processed all bookings and left all these instructions on your tally sheet, you then calculate the final answer. You start 
+with the first flight. Its final seat count is simply whatever value is on its tally. For the second flight, you take its own tally and add 
+to it the final count from the first flight. For the third flight, you take its tally and add the final count from the second flight, and so on.
+
+This process of passing the count forward works perfectly. The addition at the start of a range means every subsequent flight gets that 
+value added to it. The subtraction after the end of the range cancels out that effect, so flights beyond the range are not affected. 
+In the end, you get the correct total number of reserved seats for every flight, but you did the work in a much faster way.
+
+
+
+
+The code uses a list, or a vector, to act as the tally sheet. The first loop is where it processes all the booking orders. For each order, 
+it finds the starting flight index and adds the seat count. Then, it finds the flight index right after the ending flight and subtracts the 
+seat count. This is the step that marks the boundaries without updating the entire range.
+
+The second loop is where the magic happens. It goes through the list of flights from the beginning to the end. For each flight, it 
+calculates its total reservations by taking the total from the previous flight and adding its own "tally" value. This single 
+operation efficiently applies all the range additions from the first step, because the additions and subtractions placed at the 
+boundaries correctly propagate through the list, affecting only the intended flights. The result is a complete and accurate list 
+of reserved seats for every flight.
