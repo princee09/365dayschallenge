@@ -1,0 +1,56 @@
+Sliding Subarray Beauty 
+
+
+
+
+
+The problem requires us to look at every possible group of k consecutive numbers in the list. For each of these groups, we need to find a specific negative number. Specifically, we need to find the x-th smallest negative number in that group. If there are not enough negative numbers in the group, we simply return zero.
+
+The main challenge is doing this efficiently without having to sort each group from scratch every time, which would be very slow for a large list.
+
+The core idea is to use a "sliding window". Imagine a window of size k that slides over the list, one number at a time. When the window moves, one old number leaves from the left, and one new number enters from the right. Instead of analyzing the entire new window from scratch, we just update our knowledge by removing the influence of the old number and adding the influence of the new one.
+
+To track the negative numbers efficiently, we use a "frequency array". Since the problem tells us that numbers are only between -50 and 50, we can create a small list of 101 slots (from -50 to 50). Each slot counts how many times that particular number appears in our current window.
+
+For example, the slot for number -3 will store how many times -3 is present in the current window. To find the x-th smallest negative number, we start from the smallest number (-50) and walk upwards, adding up the counts until the running total reaches or passes x. The number where this happens is our answer for that window.
+
+
+
+The code uses a fixed-size list called freq to act as the frequency counter. The line freq[nums[i] + 50]++ is a clever trick to map the actual number (like -50) to an index in the list (index 0). When the window slides, it decreases the count of the number that is leaving and increases the count of the new number entering.
+
+A separate helper function is used to scan through the frequency list. It starts from the smallest number (-50) and counts upwards, adding the frequencies. The moment the cumulative count meets or exceeds x, it returns that number. If it goes through all negative numbers without the count reaching x, it returns 0.
+
+This method is fast because the window update is instant, and scanning 50 negative numbers to find the x-th smallest is a fixed, small operation, making the whole process very efficient.
+
+
+
+
+
+
+
+
+
+Continuous Subarrays 
+
+
+
+
+
+
+This problem asks us to count all contiguous groups (subarrays) of the list where the difference between the largest and smallest number in that group is at most 2. In other words, all numbers in a valid group must be very close to each other; no number is more than 2 units away from any other number in the same group.
+
+The brute-force method of checking every possible group would be far too slow. The efficient solution uses a "sliding window" technique with two special data structures called "deques" (double-ended queues) to keep track of the minimum and maximum values in the current window.
+
+The idea is to maintain a window that always satisfies the condition (max - min <= 2). We start with an empty window and expand it from the right by adding one new number at a time. After adding a new number, the window might become invalid (the range might exceed 2). When this happens, we shrink the window from the left by removing numbers until the condition is satisfied again.
+
+The key insight is that for any valid window [left...right], every smaller group inside it that ends at right is also valid. So, if the current valid window has 4 numbers, it means there are 4 new valid subarrays to count: [right], [right-1, right], [right-2, right-1, right], and so on, up to the entire window.
+
+
+
+The code uses two deques, minDeque and maxDeque. These are not used to store all the numbers, but rather the indices of numbers in a way that the front of the maxDeque always points to the current maximum in the window, and the front of the minDeque always points to the current minimum.
+
+When a new number enters the window from the right, the code updates these deques. It removes indices from the back of the maxDeque if their values are smaller than or equal to the new number, ensuring the deque stays in decreasing order. Similarly, it removes indices from the back of the minDeque if their values are larger than or equal to the new number, ensuring it stays in increasing order. This way, the fronts always hold the current max and min.
+
+After adding the new number, the code checks if the window is invalid (max - min > 2). If it is, it moves the left pointer forward. As left moves, it checks if the number being left behind was the current max or min. If it was, it removes that index from the front of the respective deque.
+
+Finally, for every position of the right pointer, the line result += (right - left + 1) counts all the valid subarrays that end exactly at right. This works because the window from left to right is valid, and therefore all subarrays starting from any index between left and right and ending at right are also valid. This elegant trick allows us to count all possible subarrays in a single, efficient pass.
