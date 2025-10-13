@@ -1,0 +1,112 @@
+2000: Reverse Prefix of Word
+
+
+
+You are given a word and a specific letter. Your task is to find the very first time this letter appears in the word. Once you find it, you must take the entire section of the word from the very beginning up to and including that letter, and reverse that section. The rest of the word after that letter stays exactly the same. If the letter does not appear in the word at all, you leave the word unchanged.
+
+
+
+
+The process is like reading a sentence and finding the first period. Once you find it, you reverse the order of all the words from the start of the sentence up to that period. The words after the period remain in their original order.
+
+
+
+
+Search for the Letter: The first and most important step is to look through the word, one character at a time, from left to right. We are searching for the very first occurrence of the given letter. Its position is our target.
+
+The Reversal Segment: Once we know the position of the target letter, we define the segment that needs to be reversed. This segment always starts at index 0 (the very first letter) and ends at the index where we found the target letter. It is crucial that we include the target letter itself in the segment to be reversed.
+
+The Reversal Action: Reversing a segment means to flip it backwards. The first character becomes the last, the second becomes the second last, and so on. The character we were looking for will now be the first character of the new word.
+
+Handling the Absence of the Letter: If we go through the entire word and never find the target letter, we do nothing. The word remains as it is.
+
+
+
+The provided code uses a stack to accomplish the reversal. A stack is a data structure that follows a "Last-In, First-Out" rule, like a pile of plates. The last plate you put on top is the first one you take off.
+
+Pushing onto the Stack (The Search and Collection Phase): The code goes through the word from the start, pushing each character it encounters onto the stack. It continues doing this until it finds the target character. When it finds the target character, it also pushes that character onto the stack. At this moment, the stack contains all the characters from the prefix we want to reverse, with the target character sitting on top.
+
+The Role of the Index Variable: The code keeps track of the position where it found the target character. This index is vital because it tells us exactly how many characters we need to pop from the stack later.
+
+Checking for the Letter's Absence: If the code finishes going through the word and the index variable was never set (meaning the target letter was never found), it simply returns the original word without any changes.
+
+Popping from the Stack (The Reversal Phase): Now, the code goes back to the beginning of the word, from position 0 up to the index where the target was found. In this loop, it takes the current character in the word and replaces it with the character from the top of the stack. Because the stack gives us characters in the reverse order we put them in, this action perfectly reverses the prefix segment. The first character in the word becomes the character that was on top of the stack (the target letter), and so on.
+
+After popping all the characters from the stack back into the word, the prefix segment has been reversed in place, and the code returns the newly modified word.
+ 
+
+
+
+
+
+1504: Count Submatrices With All Ones
+
+
+You are given a grid that is filled with ones and zeros. Your task is to count every single rectangle that can be drawn on this grid that is completely filled with ones. A rectangle can be any size, from a single cell (a 1x1 square) to a large block that covers multiple rows and columns, as long as every cell inside its boundaries is a one.
+
+
+
+The most efficient way to solve this is to build our answer from the bottom up, one row at a time. We will transform our grid into a "height map." For each cell, we calculate how many consecutive ones are directly above it, including the cell itself. This height represents the tallest possible rectangle that can be drawn downwards, ending at that cell.
+
+
+Understanding the Height: Imagine each column in the grid is a building. The number of consecutive ones from the top of the grid down to the current row is the "height" of that building at that specific row. If a cell is a zero, the building height resets to zero at that point.
+
+Why the Height Map is Useful: This height tells us the maximum height of any rectangle that can have its bottom-right corner at this cell. If a cell has a height of 3, it means we can potentially make rectangles of height 1, 2, or 3 that end at this cell.
+
+
+The Magic of the Stack Counting Rectangles Row by Row
+Now, for each individual row in our height map, we process it from left to right, like looking at a city skyline. The challenge is to quickly count all the new rectangles that end at the current cell.
+
+
+
+Let's say we are moving along a row and we have buildings of different heights. When we come to a new building, we need to figure out all the rectangles that end here. A rectangle's width can extend to the left, but its height is always limited by the shortest building within its width.
+
+How the Stack Works - An Analogy:
+
+Think of the stack as a pile of building blocks. Each block has two properties:
+
+Height: The height of a rectangle pattern we are tracking.
+
+Width: How many columns in a row can form a rectangle of at least that height.
+
+The Step-by-Step Process for Each Row:
+
+Initialize: We start with an empty stack and a running total of rectangles for the current row.
+
+For Each New Cell (New Building in the Skyline):
+
+We look at the height of the current building (cell).
+
+Cleaning the Stack (The Key Step): We look at the top block in our pile. If that block is taller than the current building, it means that block's height is now too tall to continue into the current column. The new, shorter building is the limiting factor.
+
+We remove that tall block from the pile.
+
+We reduce our running total of rectangles because we can no longer use that excessive height for the wider rectangle.
+
+We take the width of that tall block and add it to the count for the new, shorter block we are about to add. This "inherits" the width.
+
+We repeat this process until the top block is shorter than or equal to our current building. This ensures our stack always has blocks of increasing height.
+
+Adding the Current Building: We now add a new block to the stack. Its height is the current cell's height. Its width is 1 (for the current column) plus the total width of all the taller blocks we just removed.
+
+Counting the Rectangles: We add the current cell's height to our running total for this row. But wait, we also add all the possible rectangles that end at this cell by considering the different heights we can use. The brilliant part of this algorithm is that the running total (total) already encompasses this. Every time we process a cell, we add this running total to our final answer. This running total represents the number of submatrices that have their bottom-right corner at the current cell.
+
+
+
+Instead of looking backwards and checking every possible width and height combination for every cell (which is very slow), the stack remembers the important previous information in a compressed way. We only process each column a few times, making the solution very efficient.
+
+
+Let's look at the specific parts of the stack-based code and see how they match our intuition.
+
+The height matrix: This is the first step we discussed. The code calculates this by looking at the cell above. If the current cell is a 1, its height is one more than the height of the cell directly above it. If it's a 0, the height is reset to 0.
+
+The stack<pair<int, int>> st: This is our pile of blocks. The pair<int, int> stores the height and the count (which is the width) of each block.
+
+The total variable: This is the running total for the current row. It keeps track of the number of submatrices that end in the current row up to the column we are processing.
+
+The while loop: This is the "cleaning" phase. It continuously checks if the top of the stack has a greater height than the current cell's height. If it does, it removes that block, adjusts the total, and collects the width (count).
+
+Pushing to the stack: After cleaning, it pushes a new block onto the stack with the current cell's height and the calculated width (1 + the collected width from taller blocks).
+
+
+The line result += total; is where the actual counting happens. For every cell (i, j), it adds all the submatrices that end at that exact cell to the final answer.
