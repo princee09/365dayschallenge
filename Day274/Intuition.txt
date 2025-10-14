@@ -1,0 +1,37 @@
+Maximum Length Substring With Two Occurrences
+
+
+
+Imagine you are reading a string of letters, one letter at a time, from left to right. Your goal is to find the longest continuous segment of this string where no single letter appears more than two times. Think of it like having a limited allowance for each letter: you can use any letter you want, but you can only use it twice at most within your current segment.
+
+To solve this, we use a method called the "sliding window." Imagine you have two pointers, a left one and a right one, that define the current segment of the string you are looking at. You start by moving the right pointer to include new letters in your segment. Every time you include a new letter, you check your count for that letter. If adding this new letter causes its count to exceed two (meaning it now appears three times), it means your current segment has broken the rule.
+
+When the rule is broken, you must fix your segment. You do this by moving the left pointer forward, which shrinks the segment from the left. You keep moving the left pointer and removing letters from the left side of your segment until the count of the problematic letter drops back down to two. This ensures that your segment once again follows the rule of having no more than two of any letter.
+
+After every time you adjust your segment by moving the right pointer (and sometimes the left), you check the length of your current valid segment. If it is the longest valid segment you have found so far, you remember its length. By the time you finish reading the entire string, you will have found the maximum possible length of such a valid segment.
+
+
+
+
+The code uses an array to act as a counter, keeping track of how many times each letter has appeared in the current segment. The left variable marks the start of the segment. A loop moves the right pointer through each character in the string. For each new character, its count is increased. If that count becomes more than two, a while-loop activates. This while-loop moves the left pointer forward, decreasing the count of the characters it moves past, until the rule is no longer broken. After ensuring the segment is valid, the code calculates the length of the segment and updates the maximum length if this segment is the longest found so far.
+
+
+
+
+
+
+
+Alternating Groups (Circular Check)
+
+
+
+This problem involves tiles arranged in a circle, each painted either red or blue. We are looking for specific groups of three tiles in a row that form a pattern. The pattern we want is where the middle tile is a different color than both of its neighbors. It does not matter if the two outer tiles are the same color or not; the only requirement is that the middle one stands out as different from both.
+
+Because the tiles are in a circle, the sequence wraps around. This means the tile at the very end is considered to be next to the tile at the very beginning. So, we have to check every possible group of three consecutive tiles in this circular arrangement.
+
+To find all these groups, we simply go to every tile in the circle and look at it, along with the next two tiles in sequence (using the circle's wrap-around property). For each of these triplets, we check the simple condition: is the second tile different from the first, and is the second tile also different from the third? If both these conditions are true, then we have found one valid alternating group. We count this group and then move on to the next starting position until we have checked every single possible triplet in the circle.
+
+
+
+
+The code loops through each tile, treating it as the start of a potential group of three. For each starting index i, it identifies the next two tiles using modulo arithmetic (i+1) % n and (i+2) % n. This modulo operation is what handles the wrap-around, ensuring that after the last tile, we go back to the first tile. For each triplet of tiles (a, b, c), the code checks if b is different from both a and c. If this condition is met, it increases the count. After the loop finishes, the total count represents the number of all such valid alternating groups in the circular arrangement.
