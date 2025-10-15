@@ -1,0 +1,59 @@
+1705. Maximum Number of Eaten Apples
+
+
+
+Imagine you have an apple tree that gives you a certain number of apples each day for a limited number of days. However, these apples don't last forever; they have an expiration date printed on them. Your goal is to eat one apple every day to stay healthy, and you want to do this for as many days as possible.
+
+The challenge is that you cannot eat rotten apples. So, you need a strategy to always eat the apple that is going to go bad the soonest. If you don't do this, you might end up with a bunch of rotten apples that you could have eaten earlier.
+
+Think of it like managing the inventory of a fruit shop. A smart shopkeeper will always sell the fruit that is closest to its expiry date first, to avoid wastage. That is exactly the strategy we use here.
+
+We use a special "min-heap" data structure, which acts like a smart sorting system. It automatically keeps the apples with the nearest expiration date at the top, ready for us to pick. Every day, we do three things:
+
+First, if the tree produced new apples that day, we take them, calculate their expiration date, and add them to our smart pile.
+
+Second, we check the top of our pile. If any apples there have already expired (their expiry date is today or in the past), we throw them away because they are rotten.
+
+Third, if there is any good apple left in the pile, we take the one that expires the very soonest, eat it, and then put the rest of that batch back into the pile. If that was the last apple from that batch, we don't put anything back.
+
+We keep doing this day after day, even after the tree has stopped producing new apples, until our entire pile is empty. The total number of apples we eat is our answer.
+
+
+
+The code uses a "priority queue" configured as a "min-heap" to store pairs of numbers. The first number in the pair is the expiration day, and the second is the count of apples from that batch.
+
+The loop runs for as long as we have apples in our pile or the tree is still producing. Inside the loop, if it's a day when the tree gives apples, we push a new pair into the heap. The expiration day is calculated as the current day plus the number of days the apples stay fresh.
+
+Then, we clean the top of the heap by removing all pairs where the expiration day has passed. This is our "rotten apple check".
+
+Finally, if the heap is not empty, we take the top element (the batch with the closest expiry), eat one apple from it (increment the count), and if any apples are left in that batch, we put the batch back into the heap with one less apple. This process ensures we always consume the most urgent apple first, maximizing the total number we can eat.
+
+2233. Maximum Product After K Increments
+
+
+
+You are given a list of numbers and a certain number of "increment tickets" (k). Each ticket allows you to increase any one of the numbers in the list by 1. Your goal is to use these tickets to make the overall product of all the numbers as large as possible.
+
+The most important rule to understand here is that to get the biggest product, you should always use your ticket on the smallest number currently in the list.
+
+Why is that? Imagine you have two numbers, 2 and 10. Their product is 20. If you have one ticket, should you give it to 2 or to 10?
+
+If you give it to 2, it becomes 3, and the new product is 3 * 10 = 30.
+If you give it to 10, it becomes 11, and the new product is 2 * 11 = 22.
+
+Increasing the smaller number (from 2 to 3) gave a much bigger boost to the product. This is because the gain from increasing a small number is proportionally much larger. This principle holds true no matter how many numbers you have.
+
+Therefore, our strategy is simple and repetitive: again, we use a "min-heap". We put all the numbers into this heap. The heap will always give us the smallest number instantly.
+
+We then use our k tickets one by one. For each ticket, we take the smallest number out of the heap, add 1 to it, and put it back in. This ensures that every single ticket is always spent on the current smallest number.
+
+After we have used all k tickets, we take all the numbers from the heap and multiply them together. Because the final number can be huge, we take the remainder when divided by a large number (1,000,000,007) as the final answer.
+
+
+
+
+The code starts by putting all the numbers from the input list into a min-heap. This data structure is perfect because it lets us efficiently find and remove the smallest element again and again.
+
+The loop runs exactly 'k' times, once for each increment ticket. In each iteration, the smallest element is retrieved from the heap, increased by one, and pushed back in. This constant maintenance of the heap ensures our greedy strategy is executed perfectly.
+
+After the loop, all numbers in the heap are multiplied together. The code uses a long integer to hold the product to avoid overflow during calculation. Finally, the result is taken modulo 1,000,000,007 to comply with the problem's requirement for handling very large numbers.
