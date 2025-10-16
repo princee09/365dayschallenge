@@ -1,0 +1,42 @@
+2500: Delete Greatest Value in Each Row
+
+
+
+Imagine you have a grid of numbers, like a small spreadsheet with rows and columns. Your task is to repeatedly perform the same set of actions until the spreadsheet is empty.
+
+In each round, you will look at each row individually. From every single row, you find and remove the largest number present in that row. If a row has the same largest number in multiple cells, you can just pick any one of them to remove. Once you have collected the largest number from each row, you look at all these collected numbers and pick the single biggest one among them. You then add this biggest number to your running total score.
+
+After this, you move to the next round. The key is that after each round, one entire column disappears from the grid because you have taken one number from each row. You keep doing this until there are no numbers left.
+
+The smart way to do this without physically removing numbers is to first prepare the data. You sort each row of the grid from the smallest to the largest number. Now, the largest numbers in each row are all neatly lined up in the rightmost column. So, in the first round, the "maximum of deleted elements" is simply the largest number from the rightmost column. In the next round, you look at the new rightmost column (which now has the second-largest numbers from each row), find the maximum there, and add it to your score. You repeat this, moving leftwards column by column.
+
+
+
+
+The code first sorts every single row within the grid. This organizes the numbers so that the smallest are on the left and the largest are on the right. Then, it starts from the rightmost column and moves towards the left. For each column, it looks at all the rows and finds the biggest number in that column. This biggest number is exactly the value that gets added to the answer in that round. By doing this for all columns from right to left, the code efficiently simulates all the operations without the need to actually delete elements and rearrange the grid every time.
+
+
+
+
+
+
+
+
+
+
+
+3264: Final Array State After K Multiplication Operations I
+
+
+
+
+You have a list of numbers. You need to perform a specific action not once, but exactly 'k' number of times. The action is straightforward: each time, you must find the smallest number in the entire list. If there is a tie and multiple numbers are equally the smallest, you have a rule to follow: you pick the one that appears first in the list, meaning the one with the lowest index position.
+
+Once you have identified this specific smallest number, you change it. You multiply it by a given multiplier value and put the result back into the list in the same position. This changes the list. The next time you perform the action, you will be looking at this updated list to find the new smallest number.
+
+You repeat this process of find-smallest, multiply, and replace for 'k' times. The final list you have after doing this 'k' times is your answer.
+
+
+
+
+The code works by directly simulating the process described. It runs a loop for 'k' operations. In each operation, it starts by assuming the first number in the list is the smallest. It then checks every other number in the list to see if it finds a smaller one. It carefully notes the position of the first occurrence of this smallest value. Once the entire list has been checked, the code takes the number at that noted position and replaces it with its value multiplied by the multiplier. After 'k' such replacements, the code returns the final, modified list.
