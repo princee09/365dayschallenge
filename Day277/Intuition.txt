@@ -1,0 +1,43 @@
+463: Island Perimeter
+
+
+
+Imagine you have a grid, like a piece of graph paper. Some squares are filled in with land, and the rest are water. Your job is to measure the total length of the coastline of this single island. The coastline is every outer edge of a land square that is touching the water.
+
+The simplest way to think about it is this: every single land square starts with a potential coastline of 4 sides. However, if this land square has a neighbor to its right that is also land, the line between them is not a coastline—it's an inland border. So, for every land neighbor a square has, you lose two sides from the total coastline. You lose one side from the first square and one side from the neighboring square because that shared edge is no longer an outer edge for either of them.
+
+To avoid counting things twice, we can be smart. We look at each land square one by one, from the top-left corner, moving right, and then down to the next row. For each land square, we immediately add 4 to our total perimeter count. Then, we only check two of its four possible neighbors: the one directly above it and the one directly to its left.
+
+Why only those two? Because we are scanning from top-left to bottom-right. By the time we get to a square, we have already processed the square above it and to the left of it. So, if the current square is land and the square above it is also land, we know they are connected. This connection means they share one edge. Since we added 4 sides for both squares, that shared edge was counted twice (once for each square). So, we subtract 2 to correct for this double-counted, non-coastline edge. The exact same logic applies if the square to the left is land. We don't need to check the bottom or right neighbors because we haven't processed them yet; they will check their connection to us when it's their turn, ensuring every shared edge is subtracted exactly once.
+
+
+
+
+The code uses a simple loop to go through every single cell in the grid. For each cell, if it is land, it adds 4 to the running total of the perimeter. Then, it looks upwards. If the cell above exists and is also land, it subtracts 2 from the total. Next, it looks to the left. If the cell to the left exists and is also land, it subtracts 2 from the total. After checking every cell, the final total is the correct perimeter. The key is that by only checking top and left, every shared edge between two land cells is found and subtracted exactly one time.
+
+
+
+
+
+
+
+
+
+
+542: 01 Matrix
+
+
+
+
+Imagine you are in a large, dark room with several lit candles (the zeros). Your job is to, for every spot in the room (the ones), figure out the distance to the nearest candle. The distance is measured in steps; you can only step up, down, left, or right to an adjacent spot.
+
+The most efficient way to solve this is to start from all the candles at the same time. Think of the light from the candles spreading outwards at the same speed, one step per "wave". The first wave of light illuminates all the spots that are exactly one step away from any candle. The next wave illuminates all spots that are two steps away, and so on. A spot will be claimed by the first wave of light that reaches it, which guarantees it has found the shortest distance.
+
+This is a classic "multi-source" search. We begin by marking all the candle positions (the zeros) as having a distance of zero, and we put them all in a line to be processed first. Then, we process them one by one. When we process a cell, we look at its four neighbors. If a neighbor has not been visited yet (meaning it's still in the dark), we know its distance is just one more than the current cell's distance. We mark it with that distance and add it to the end of the line so that its own neighbors can be checked later. This process continues until every spot in the room has been visited and assigned a distance.
+
+
+
+
+The code first creates a new grid of the same size to store the answers, initially marking every cell as unvisited with a value of -1. It then goes through the original grid. Every time it finds a zero, it sets the corresponding cell in the answer grid to 0 (the distance from a zero to itself is zero) and adds that cell's location to a processing queue.
+
+Then, the main loop begins. It takes cells from the front of the queue. For each cell, it checks its four immediate neighbors: up, down, left, and right. If a neighbor is within the grid boundaries and has not been visited (still marked -1), it calculates the neighbor's distance. The neighbor's distance is simply the current cell's distance plus one. It updates the answer grid for that neighbor and adds the neighbor to the queue so that its own neighbors can be processed later. This continues until the queue is empty, meaning every cell has been assigned its shortest distance to a zero.
