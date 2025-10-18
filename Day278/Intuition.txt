@@ -1,0 +1,68 @@
+Top K Frequent Words
+
+
+
+The goal of this problem is to find the most common words, but with a specific sorting rule. We do not just want the most frequent words; we want them sorted by how often they appear, from most to least. However, if two words appear the exact same number of times, we must sort them alphabetically from A to Z.
+
+Imagine you have a list of words from a book. First, you would go through the entire book and count how many times each word appears. You write this down in a frequency list. Now, you need to pick the top 'K' words from this list.
+
+The challenge is the two-layer sorting: first by frequency (highest first), and if the frequency is tied, then by dictionary order (A comes before Z).
+
+To solve this efficiently, we use a special kind of list called a "Min-Heap." Think of it as a constantly self-sorting list that always keeps the smallest item at the top. In our case, "smallest" is defined by our custom rules: the word with the lower frequency is smaller, and if frequencies are equal, the word that comes later in the alphabet is considered "smaller."
+
+We go through our frequency list word by word. We put each word into our special min-heap list. This list can only hold 'K' items at a time. If adding a new word makes the list have more than K items, the list automatically gets rid of the "smallest" item at the top (the one with the lowest frequency, or the worst alphabetically if tied).
+
+By the end of this process, our min-heap list contains exactly the K most frequent words. However, because it's a min-heap, the "smallest" of these top K is at the top. So, when we take them out one by one, we get them in ascending order. To fix this and get the highest frequency first, we simply reverse the final list.
+
+
+
+The code first creates a frequency counter, which is like a tally sheet for each word. Then, it defines the rules for the min-heap. The rule says: "When comparing two words, first look at their frequency count. The word with the lower count is considered smaller. If the counts are the same, the word that is lexicographically larger (meaning it would come later in a dictionary) is considered smaller." This second part is a bit tricky; it ensures that when we have ties, the word we want to keep (the better alphabetical one) stays in the heap longer.
+
+We then create the min-heap with these rules and start adding words from our frequency list. We always maintain only K elements in the heap. If the heap grows beyond K, we remove the top element, which is, by our rules, the least desirable word among the current top candidates. Finally, we extract all words from the heap into a result list. Since the heap gives us the words from least frequent to most frequent, we reverse the list to get the final answer in the correct order from most to least frequent.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Reorganize String
+
+
+
+
+
+The goal here is to take a string and rearrange its letters so that no two identical letters are next to each other. If it's impossible, we should return an empty string.
+
+The first and most critical step is to check for impossibility. Think of it like trying to arrange a line of people where no two people with the same shirt color can stand together. If one color has too many people, it's impossible to separate them. Mathematically, if any single letter appears more than half the length of the string (rounded up), it is impossible to rearrange. For example, in "aaab", 'a' appears 3 times in a 4-letter string. Since 3 > (4+1)/2 (which is 2.5), it's impossible.
+
+If it is possible, we need a strategy. The most effective strategy is to use a "greedy" approach, always placing the most frequent letter that is different from the previously placed letter.
+
+We use a "Max-Heap" for this. Imagine it as a list that always keeps the most frequent letter readily available at the top. We start by counting all the letters and putting them into this max-heap.
+
+Now, we start building the new string. We take the most frequent letter from the top of the heap. If this letter is different from the last letter we placed (or if the string is empty), we can safely add it. We then reduce its count and, if it still has occurrences left, we put it back into the heap.
+
+What if the most frequent letter is the same as the last one we placed? We cannot use it twice in a row. So, we temporarily set it aside. We then take the second most frequent letter from the heap. We use this different letter for the current position. After using it, we put both the first letter we set aside and the second letter (with their counts reduced) back into the heap.
+
+This process ensures that we are always using the most frequent available letter that is different from the previous one, which optimally spaces out the letters to avoid collisions.
+
+
+
+
+
+The code begins by counting the frequency of each character in the string. It then builds a max-heap where the element with the highest frequency is always at the top.
+
+The algorithm then enters a loop to build the result string. In each step, it looks at the top of the heap (the most frequent remaining character). If this character is different from the last character in our result string, it is safe to use it. The character is appended to the result, its count is decreased, and if it still has counts left, it is pushed back into the heap.
+
+If the top character is the same as the last one, we cannot use it. The code checks if there is another character available in the heap. If the heap is empty at this point, it means we have no alternative, and the reorganization is impossible, so we return an empty string. If there is a second character, we use that one instead. We then put both the first and the second character back into the heap with their updated counts.
+
+This careful process of always having a backup character ensures that we never place two identical characters next to each other, as long as it was possible to begin with.
