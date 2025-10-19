@@ -1,0 +1,77 @@
+36: Valid Sudoku
+
+
+
+
+Imagine you have a partially filled Sudoku puzzle on a piece of paper. Your job is not to solve it, but simply to check if what is already written down follows the basic rules of the game. The rules are simple: no number from 1 to 9 can repeat in any single row, in any single column, or in any of the nine smaller 3x3 boxes that make up the big grid.
+
+To verify this manually, you would probably scan each row from left to right, making sure no number is duplicated. Then you would scan each column from top to bottom. Finally, you would draw imaginary lines to separate the nine 3x3 boxes and check each small box for duplicates. This is a straightforward but potentially slow process if you do each check separately.
+
+The clever computer way to do this is to check all three rules at the same time as you look at each number, in just one complete scan of the board. Think of it like this: as you land on a number, you immediately ask three questions. Has this number already appeared in this row? Has it already appeared in this column? Has it already appeared in this specific 3x3 box?
+
+To answer these questions instantly, you need a way to remember which numbers you have seen in which rows, columns, and boxes. The solution uses three separate "note sheets" or "tracking grids": one for rows, one for columns, and one for the 3x3 boxes. Every time you see a number in a cell, you mark it on the corresponding row's note sheet, the corresponding column's note sheet, and the corresponding box's note sheet. If you ever go to mark a number and find it is already marked on one of those sheets, you know you have found a duplicate, and the board is invalid.
+
+The only tricky part is figuring out which "box note sheet" to use for a given cell. The boxes are numbered 0 to 8 from top-left to bottom-right. A simple formula calculates this: you take the row number, divide it by 3 (using integer division, which ignores the remainder), and multiply by 3. Then you add the column number divided by 3. This neatly maps every (row, column) coordinate to one of the nine boxes.
+
+
+
+
+The code uses three two-dimensional arrays, which are like grids of true/false flags. The first grid, rowSeen, has 9 rows and 9 columns. rowSeen[5][2] being true would mean that in the 6th row (index 5), the number 3 (digit 2, since we count from 0 for '1') has been seen.
+
+It loops through every single cell in the 9x9 board. If the cell is empty, it just moves on. If it finds a number, it converts the character (like '5') to a zero-based integer (like 4). Then it calculates which of the nine boxes this cell belongs to using the formula.
+
+Next, it performs the crucial check. It looks into the rowSeen grid for the current row and current digit. It looks into the colSeen grid for the current column and current digit. It looks into the boxSeen grid for the calculated box and current digit. If the digit is found in any of these three places, it means a rule has been broken, and the function immediately returns false.
+
+If the digit is not found, it means this is the first time we are seeing it in this row, column, and box. So, the code proceeds to mark it as seen in all three tracking grids by setting the corresponding flags to true. If it completes the entire board without finding any duplicates, it returns true.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sudoku Solver
+
+
+
+
+
+
+Now, the task is harder. You are given a puzzle with empty cells, and you must fill it in completely. This is like solving the puzzle yourself. The strategy a person often uses is to pick an empty cell, try putting a number in it that seems to fit the rules, and then moving on to the next empty cell. If you eventually reach a point where no number can legally fit in an empty cell, you know one of your earlier guesses was wrong. So you erase back to that last guess, try a different number, and proceed again. This method of trying possibilities and backing up when you hit a dead end is called "backtracking".
+
+The computer program does exactly this, but very systematically and quickly. It starts at the top-left cell and scans the board, row by row, until it finds the first empty cell. When it finds an empty cell, it doesn't guess randomly; it tries every number from 1 to 9 in sequence.
+
+For each number, it first checks if placing that number in the empty cell would break any Sudoku rules, using the same logic from the first problem. If the number is valid, the program writes it into the cell. This is like making a pencil mark on your paper.
+
+Now, with that number in place, the program does a very clever thing: it calls itself, asking "Okay, with this number placed here, can you now solve the rest of the puzzle?" This is a recursive call, meaning the function starts its scanning process all over again, but now with one more cell filled in.
+
+This new instance of the function will find the next empty cell and repeat the process. This creates a chain of guesses. If this chain of guesses eventually leads to the entire board being filled, the puzzle is solved, and the answer propagates all the way back up the chain with a "true" signal.
+
+However, if at some deeper level, an empty cell is found where none of the numbers 1 through 9 are valid, that function instance returns "false". This false signal travels back up to the previous function instance, which interprets it as "The guess I made led to a dead end." So, it erases its guess (by setting the cell back to empty) and tries the next number in sequence.
+
+This process continues, methodically trying all combinations, backtracking from dead ends, until the correct solution is found. The key is that the board is modified in place, so when the first function call finally returns true, the board object holds the complete solution.
+
+
+
+
+The solveSudoku function is just a starter; it calls the main recursive solve function, passing it the board.
+
+The core solve function uses two nested loops to scan the entire board for an empty cell (represented by a '.' character). When it finds one, it enters a loop to try every digit from '1' to '9'.
+
+For each digit, it calls the isValid helper function. This function checks the three Sudoku rules for the proposed digit at the current cell's location. It checks the entire row and the entire column to see if that digit already exists. To check the 3x3 box, it cleverly calculates the top-left corner of the box that the cell belongs to and then checks all nine cells within that box.
+
+If the digit is valid, the code places it in the empty cell on the board. This is the "making a guess" step.
+
+Then comes the most important part: the recursive call to solve(board). This is the program asking, "Can the rest of the puzzle be solved with my current guess in place?" If this call returns true, it means the guess was correct and led to a full solution, so the current function also returns true, propagating the success back up.
+
+If the recursive call returns false, it means the guess was bad. The code then backtracks by erasing the digit it just placed, setting the cell back to empty, and then it tries the next digit in the sequence.
+
+If all digits from 1 to 9 have been tried for that empty cell and none of them led to a solution (all recursive calls returned false), then the function itself returns false. This tells the previous level of the recursion that it needs to backtrack and change one of its earlier guesses.
+
+If the scanning loops finish without finding any empty cells, it means the entire board is filled. This is the success condition, so the function returns true.
