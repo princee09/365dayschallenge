@@ -1,0 +1,43 @@
+897: Increasing Order Search Tree
+
+
+
+Imagine you have a family tree, but it's a special kind where every parent has a small child on the left and a big child on the right. Your goal is to take this entire family and rearrange them into a single-file line, like people standing in a queue from the shortest to the tallest. In this new line, no one has a small child on their left anymore; everyone only points to the next taller person on their right. The person at the very front of the line, the shortest one, becomes the new head of the family.
+
+The trick to doing this is to visit everyone in the family in a specific order: you always visit the smallest child first, then the parent, and then the bigger child. This is like reading a list of numbers from smallest to largest. As you visit each person in this sorted order, you take them and start building your new single-file line. You use a helper person, a "dummy" leader, to start the line. Every time you visit a new person in the sorted order, you tell the current last person in the line to point to this new person. Then, you make this new person the new last in line. You also have to make sure this new person severs their tie to their old left child because in the new line, they should not have one.
+
+
+
+
+
+The code uses a helper function to perform this special sorted-order visit, which is called an "in-order traversal". Before starting, it creates a dummy starting point for the new line. A curr pointer is like the last person currently in the line. The helper function is called with the original head of the family and this curr pointer. Inside the helper function, it first goes all the way to the smallest child (the far left). It then processes that person by cutting their link to the left, having the curr person point to them, and then moving the curr pointer to this new last person. It then goes to the right child and repeats the process. Once the entire family has been processed and the new line is built, the code returns the person right after the dummy starter, who is the actual smallest person and the new head of the single-file line.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2487: Remove Nodes From Linked List
+
+
+
+
+Imagine you have a line of people, each holding a sign with a number. You are told to remove any person from the line if there is anyone to their right who has a bigger number on their sign. So, a person gets to stay only if they have the biggest number from their position all the way to the end of the line.
+
+The most straightforward way to solve this is to work from the end of the line towards the front. It is much easier this way because when you are at the end of the line, you know for sure that the last person has no one to their right, so they can never be removed. As you move backwards towards the front, you can keep track of the biggest number you have seen so far. If the person you are currently looking at has a smaller number than the biggest number you've seen to their right, you remove them. If their number is bigger or equal, they get to stay, and you update your record of the biggest number.
+
+To work from the end, the code first reverses the entire line. Now, the last person becomes the first. Now, you can walk from this new front (which was the original end) to the new end (which was the original front). As you walk, you keep a record of the maximum value. For each next person, you check if their number is less than the current maximum. If it is, you skip them by not linking to them. If it is not, you link to them and update the maximum value. After you have filtered everyone in this reversed order, you have a new list, but it is still reversed. So, as a final step, you reverse the list again to put it back in the original order, but now with all the required people removed.
+
+
+
+
+
+The code first calls a reverseList function to flip the entire list around. Now it starts from what was originally the end. It sets up a maxNode pointer to keep track of the person with the highest value seen so far, which starts as the new head. It then starts walking through this reversed list. For each next person, it compares their value to the maxNode's value. If the next person's value is smaller, it is removed by simply making the current person point to the person after the next one, effectively skipping the unwanted person. If the next person's value is bigger or equal, that person is kept, and the maxNode is updated to this new, bigger value. This process continues until the end of the reversed list is reached. Finally, the now-filtered list is still in reversed order, so the code calls reverseList one more time to flip it back to the correct order before returning it as the final
