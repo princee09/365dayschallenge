@@ -1,0 +1,66 @@
+977: Squares of a Sorted Array
+
+
+
+
+The main challenge here is that the input array is sorted, but it can contain both negative and positive numbers. When you square a number, whether it is negative or positive, the result is always positive. However, squaring a large negative number, like -10, gives a large positive number (100), which can be bigger than the square of a small positive number, like 3 (which is 9).
+
+So, if you simply square each number and then sort the new list, it will work, but the sorting step makes it slower. We want to build the final sorted list of squares in a single, efficient pass.
+
+The key observation is that the largest squared value must come from one of the ends of the original sorted array. It will either be the square of the largest positive number (the last element) or the square of the smallest negative number (the first element, which might be very negative).
+
+Therefore, we can use a two-pointer technique. We place one pointer at the start of the array (to catch the large negative numbers) and one at the end (to catch the large positive numbers). We then compare the squares of the numbers at these two pointers. Whichever square is larger is the next largest square for our final answer. We put that largest square at the end of our new result array and then move the corresponding pointer inward. We repeat this process, filling the result array from the back to the front, until we have processed every number.
+
+
+
+
+
+The code starts by creating an empty result array of the same size as the input. It then initializes three pointers. The left pointer starts at the beginning of the input array (index 0), and the right pointer starts at the end. The pos pointer starts at the end of the result array, because we will be placing the largest squares there first.
+
+A loop runs as long as the left pointer has not passed the right pointer. Inside the loop, it calculates the square of the number at the left pointer and the square of the number at the right pointer. It compares these two squares. If the square from the left pointer is bigger, it means that this negative number, when squared, is larger than the square of the current positive number from the right. So, this value is placed into the result array at the current pos index. Then, the left pointer is moved one step to the right to consider the next number.
+
+If the square from the right pointer is bigger or equal, it is placed into the result array, and the right pointer is moved one step to the left. After placing a value, the pos pointer is always decreased by one, moving backwards towards the start of the result array, ready for the next largest square. This process efficiently merges the two ends of the input array into a single sorted array of squares.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1385: Find the Distance Value Between Two Arrays
+
+
+
+
+
+We are given two lists of numbers and a distance d. Our goal is to count how many numbers in the first list (arr1) are "far enough" from every single number in the second list (arr2). A number from arr1 is considered valid if, for every number in arr2, the absolute difference between them is strictly greater than d. In other words, no number in arr2 is within a distance d of this number from arr1.
+
+A simple, brute-force way would be to take every number from the first list and compare it with every number from the second list. If for any number in the second list the distance is less than or equal to d, we discard that number from the first list. This works but is inefficient for large lists.
+
+To optimize, we can sort the second list. Once sorted, for a given number x from the first list, we don't need to check it against every number in the second list. We can use a smart search (binary search) to quickly determine if there is any number in the sorted second list that falls within the range [x - d, x + d]. If we find even one such number, then x is invalid. If our search finds no number in that range, then x is valid, and we add it to our count.
+
+
+
+
+
+The code begins by sorting the second array, arr2. This sorting is a one-time cost that allows for much faster checks later. It then initializes a counter to zero.
+
+The core of the code is a loop that goes through each number in the first array, arr1. For each of these numbers, it calls a helper function, hasCloseElement, to check if there exists any number in the sorted arr2 that is within distance d.
+
+The hasCloseElement function performs a modified binary search on the sorted arr2. The goal of this search is not to find the exact number, but to see if any number in the array is close to the target number from arr1. The loop continues as long as there is a portion of the array left to check. It calculates the middle element. If the absolute difference between this middle element and the target is within the allowed distance d, it immediately returns true, meaning a close element was found.
+
+If not, it decides which half of the array to search next. If the middle element is smaller than the target, it means the close element, if it exists, must be to the right (since the numbers are sorted in increasing order). So, it moves the left pointer. If the middle element is larger, it moves the right pointer. If the entire search concludes without finding any close element, the function returns false.
+
+Back in the main loop, if the helper function returns false (meaning no close element was found in arr2), the counter is incremented. After processing all numbers in arr1, the value of the counter is returned as the final answer.
