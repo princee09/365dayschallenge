@@ -1,0 +1,27 @@
+K Radius Subarray Averages
+
+The first problem is about finding average values around each position in an array. Imagine you're looking at houses on a street, and for each house, you want to know the average price of all houses within a certain distance to the left and right. If there aren't enough houses on either side, you can't calculate a proper average.
+
+The key insight is that we can use a "sliding window" approach. Think of it like this: instead of recalculating the total from scratch for each position, we keep a running total and just adjust it as we move along. When we move from one house to the next, we remove the house that's no longer in our view and add the new house that comes into view.
+
+We start by checking if it's even possible to have enough houses on both sides for any position. If the required neighborhood size is bigger than the entire street, then all averages will be impossible to calculate.
+
+Then we calculate the first valid window manually - this gives us our starting point. After that, we slide this window across the entire array, updating our running total by subtracting the element that leaves the window and adding the new element that enters. This way, we avoid doing repeated calculations and save a lot of time.
+
+The code uses a simple array to store results, initializing everything to "not possible" first. Then it calculates the first valid sum, and finally slides through the array updating the sum efficiently.
+
+Minimum Positive Sum Subarray
+
+The second problem is about finding the smallest positive sum of any contiguous group of elements where the group size is between two given numbers. Think of it like finding the smallest positive total you can get by adding up consecutive items from a list, where you must include between L and R items.
+
+The clever approach here uses "prefix sums" - which is like keeping a running total as we move through the array. If we know the total up to position A and the total up to position B, then the sum of elements between A and B is just the difference between these two totals.
+
+The challenge is finding two positions where their difference is positive but as small as possible, and the distance between them is within our allowed range.
+
+We use a special data structure called a "multiset" which keeps values sorted. As we move through the array, we maintain a collection of possible starting points that could give us valid subarrays. For each new ending position, we add new valid starting points and remove ones that are no longer valid.
+
+Then we look in our sorted collection for the largest value that's still smaller than our current running total. The difference between our current total and this value gives us a candidate sum. We track the smallest positive difference we find throughout the entire process.
+
+The code first builds the prefix sums array, then uses a multiset to efficiently manage valid starting points. For each possible ending position, it updates the valid starters and searches for the best match to minimize the positive difference. If no positive sum is found, it returns -1.
+
+Both solutions focus on efficiency - the first uses sliding window to avoid recalculations, while the second uses prefix sums and sorted data structures to quickly find optimal pairs.
