@@ -1,0 +1,74 @@
+Sum of Absolute Differences in a Sorted Array
+
+
+
+Imagine you have a row of people standing in a line, each holding a sign with a number, and the numbers are in order from smallest to largest. You need to figure out, for each person, the total distance between their number and every other person's number.
+
+Doing this the direct way would mean that for each person, you walk to every other person, calculate the distance, and add it all up. This takes a very long time if the line is long.
+
+There is a smarter way. Because the line is sorted, you can use simple math. For any person in the line, the people to their left have smaller numbers, and the people to their right have larger numbers.
+
+So, for a specific person, the total distance can be split into two simple parts:
+
+The first part is the total distance to all the people on the left. Since your number is bigger than all of theirs, the distance to each of them is your number minus their number. So, if you take the sum of all the numbers to your left, the total left distance is simply: (Your number multiplied by the number of people on your left) minus (the sum of their numbers).
+
+The second part is the total distance to all the people on the right. Since your number is smaller than all of theirs, the distance to each of them is their number minus your number. So, the total right distance is: (The sum of all the numbers to your right) minus (your number multiplied by the number of people on your right).
+
+If you add these two parts together, you get the total distance for that person.
+
+To do this quickly for everyone, you first prepare a list of running totals, called prefix sums. This list helps you instantly know the sum of all numbers from the start up to any point. Then, for each person, you can instantly get the sum of people to the left and the sum of people to the right using this prepared list. This makes the whole process very fast.
+
+
+
+
+
+The code first creates an extra list called prefix to store the running total of the numbers. The first element is zero, and each next element is the previous total plus the next number. This helps us quickly find the sum of any segment of the line.
+
+Then, it creates an empty list called result to store the final answer for each person.
+
+It goes through each person in the line one by one. For each person, it uses the prefix list to find the total sum of all numbers to the left of the current person. It also calculates the total sum of all numbers to the right.
+
+It then counts how many people are on the left and how many are on the right.
+
+Finally, it calculates the total distance for that person using the formula we discussed: (current number times left count minus left sum) plus (right sum minus current number times right count). It puts this result into the answer list.
+
+At the end, it returns the complete answer list.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Count Partitions with Even Sum Difference
+
+
+
+Imagine you have a row of different piles of coins. You want to draw a line between two piles to split all the coins into a left group and a right group. You are only interested in those splits where the difference between the total value of the left coins and the total value of the right coins is an even number.
+
+The key to solving this is a simple mathematical observation. The difference between the left sum and the right sum is the same as the left sum minus the right sum. But the right sum is just the total sum of all coins minus the left sum.
+
+So, the difference becomes: left sum minus (total sum minus left sum), which simplifies to two times the left sum minus the total sum.
+
+Now, two times any number is always an even number. So, for the whole difference to be even, the total sum must also be even. This is because an even number minus an even number is even, but an even number minus an odd number is odd.
+
+Therefore, the entire problem depends on just one thing: is the total sum of all coins even or odd?
+
+If the total sum of all the coins is an odd number, then it is impossible for the difference between the left and right groups to be even. No matter where you draw the line, the difference will always be odd. So the answer is zero.
+
+If the total sum is an even number, then the difference will be even for every single possible place you can draw the line. The number of places you can draw the line is always one less than the number of piles of coins.
+
+
+
+
+The code is very straightforward. It first calculates the total sum of all the numbers in the list by adding them together.
+
+It then checks if this total sum is odd by seeing if dividing it by 2 leaves a remainder of 1. If the total sum is odd, it immediately returns zero, because no valid partition exists.
+
+If the total sum is even, it means every single possible split is valid. The number of possible splits is always the length of the list minus one. So, the code returns that number.
