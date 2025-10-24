@@ -1,0 +1,38 @@
+1422: Maximum Score After Splitting a String
+
+
+
+Imagine you have a string made only of the digits 0 and 1. Your task is to cut this string into two smaller, non-empty pieces: a left piece and a right piece. The score you get is calculated by counting all the zeros in the left piece and adding them to all the ones in the right piece. Your goal is to find the single best cut that gives you the highest possible score.
+
+The straightforward way would be to try every single possible place to cut the string, calculate the score for that cut, and remember the highest score. However, this can be slow for long strings. The smart way is to prepare in advance. First, you count how many ones are in the entire string. Now, as you imagine making a cut and moving from left to right, you keep two running totals. One total counts the zeros you have seen so far on the left side. The other total tracks the number of ones remaining on the right side. Initially, the right side has all the ones. Every time you move your cut point one step to the right, you look at the character you are leaving behind in the left piece. If it was a zero, your left score increases. If it was a one, it means one fewer one remains in the right piece, so your potential right score decreases. At every possible cut point, you add your current left zeros and your current right ones to get a total score, and you just keep the best one you ever see.
+
+
+
+
+
+The code starts by counting all the '1's in the entire string, which tells us the maximum number of ones the right piece could start with. Then, it sets up a loop that goes from the very first character to the second-to-last character, because both pieces must be non-empty, so you cannot cut after the last character. Inside the loop, for each character, it checks if it is a '0'. If it is, it increases the count of zeros in the left piece. If it is a '1', it decreases the count of ones left in the right piece. After processing each character, it calculates the current score by adding the left zeros and the right ones. It continuously updates a variable to remember the maximum score encountered during the entire loop.
+
+
+
+
+
+
+
+
+
+
+1712: Ways to Split Array Into Three Subarrays
+
+
+
+
+
+Here, you are dealing with an array of numbers, and your goal is to split it into three consecutive, non-empty parts: left, middle, and right. The rule is that the sum of the numbers in the left part must be less than or equal to the sum of the numbers in the middle part, which in turn must be less than or equal to the sum of the numbers in the right part. You need to count how many different ways you can make two cuts to achieve this.
+
+Trying all possible pairs of cuts would be too slow for a large array. The efficient strategy uses a concept called a prefix sum. A prefix sum is a running total of the array. For example, the value at prefix sum index 3 is the sum of the first three elements of the array. This allows us to quickly calculate the sum of any subarray by subtracting two prefix sums. For a given end point of the left subarray, there is a valid range of possible end points for the middle subarray. The first condition, that the left sum is less than or equal to the middle sum, sets a minimum boundary for where the middle can end. The second condition, that the middle sum is less than or equal to the right sum, sets a maximum boundary for where the middle can end. For each possible left part, we can use binary search on the prefix sum array to quickly find the lowest and highest valid indices for the end of the middle part. The number of valid splits for that left part is simply the number of positions between this lower and upper bound. We sum these counts for all possible left parts to get the final answer.
+
+
+
+
+
+The code first builds a prefix sum array. This array's first element is 0, and each subsequent element is the sum of all elements up to that point in the original array. It also calculates the total sum of the entire array. Then, it loops through every possible index that could be the end of the left subarray. For each of these, it calculates the sum of the left part. It then uses binary search to find the smallest index where the middle subarray could end. This is the first point where the sum from the start to that point is at least twice the left sum, ensuring the middle part is not smaller than the left. Another binary search finds the largest index where the middle subarray could end. This is the last point where the sum of the first two parts is at most half of the total sum plus the left sum, ensuring the middle part is not larger than the right part. The code then counts all the integer positions between this lower and upper bound and adds that count to the total answer. Finally, it returns the total count modulo a large number to handle the possibility of a very large result.
