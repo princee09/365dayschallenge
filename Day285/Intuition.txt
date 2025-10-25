@@ -1,0 +1,74 @@
+1961: Check If String Is a Prefix of Array
+
+
+
+
+The problem is like building a single, long word by gluing together a sequence of smaller words from a list, in the exact order they are given. You are not allowed to skip any word in the sequence. You start with the first word, then add the second, then the third, and so on. Your goal is to see if, at any point during this gluing process, the combined word you have built perfectly matches the target string.
+
+Imagine you have a target sentence written on a card, and a stack of word cards. You take the first word card from the stack and place it down. You compare it to the beginning of the target sentence. If it matches the first part, you then take the second word card and place it right after the first one. You now compare this longer, combined phrase to the target sentence. You continue this process of taking the next word card, adding it to the end, and checking for a match.
+
+There are two ways you can fail. First, if the combined words ever become longer than the target sentence, you know you have gone too far and it is impossible to match. It is like trying to fit a big book into a small slot; if the book is already taller than the slot, it will never fit. Second, if you use up all your word cards and the combined phrase is still shorter than the target sentence, then you also do not have a match.
+
+The key is to check for a match after adding each new word. The moment the combined phrase matches the target sentence exactly, you can stop and say "yes, it is a match". This is an efficient way to do it because you do not need to glue all the words together if you find a match early.
+
+
+
+
+The code follows this exact gluing and checking process. It starts with an empty string to represent the combined phrase we are building.
+
+It then goes through the list of words, one by one. For each word, it is glued onto the end of the current combined phrase.
+
+Immediately after gluing a new word, the code performs two important checks. First, it checks if the combined phrase has become longer than the target string. If it has, it immediately returns false because it is now impossible for them to be equal.
+
+Second, it checks if the combined phrase is now exactly equal to the target string. If it is, the job is done and it returns true.
+
+If the loop finishes going through all the words and we have not returned true inside the loop, it means one of two things happened. Either the combined phrase never matched the target, or it was always shorter. So, as a final step, the code returns true only if the final combined phrase is equal to the target string. This final check catches the case where the very last word we glued on completed the match.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2105: Watering Plants II
+
+
+
+
+
+
+This problem describes two people, Alice and Bob, watering a row of plants from opposite ends. Alice starts from the far left and moves to the right. Bob starts from the far right and moves to the left. They both water the plant they are currently standing in front of at the same time.
+
+Each of them has a watering can that holds a certain amount of water. If their can does not have enough water for the plant in front of them, they must go back to the tap to refill their can completely. This counts as a "refill". After refilling, they then water that plant.
+
+The special rule is when they both arrive at the same plant at the same time. In this case, the person with the more water in their can will water it. If they have the same amount, Alice gets to water it. This means only one of them will water that middle plant.
+
+The goal is to count the total number of times either person had to refill their can.
+
+To solve this, we can simulate their movement. We imagine one person (a pointer) starting at the beginning of the row and another person (a pointer) starting at the end. They walk towards each other. For each step, Alice waters her current plant on the left, and Bob waters his current plant on the right.
+
+Before watering, each of them checks their can. If their current water is less than what the plant needs, they refill their can, and we add one to our refill counter. Then, they water the plant, which reduces the water in their can.
+
+The most important part is handling the middle plant. When the left and right pointers meet, it means they are both at the same plant. According to the rules, we must decide who waters it. We compare the water left in Alice's can versus Bob's can. The person with more water (or Alice if it is a tie) is responsible for that plant. We then check if that person has enough water. If not, they must refill, and we add one more to the refill counter.
+
+
+
+
+The code uses two index variables, left and right, to represent Alice's and Bob's positions in the row of plants. It also keeps track of how much water is currently in Alice's can (currentA) and Bob's can (currentB).
+
+The main loop continues as long as Alice's position is less than or equal to Bob's position. This means they haven't passed each other yet.
+
+Inside the loop, the first check is to see if they are both at the same plant (left == right). This is the middle plant scenario. The code checks who has more water. If Alice has more or equal water, it checks if she has enough for the plant. If not, she refills (and we count it). Bob does the same if he is the one with more water. After handling this single plant, the loop breaks because they have watered all plants.
+
+If they are not on the same plant, they water their own plants independently. For Alice, the code checks if her current water is less than the plant's need. If yes, she refills her can and we increment the refill counter. Then, she waters the plant, which subtracts the plant's need from her can. The exact same process happens for Bob on his side.
+
+Finally, Alice moves one step to the right (left++), and Bob moves one step to the left (right--), and the process repeats until all plants are watered. The total number of refills is returned as the answer.
