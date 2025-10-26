@@ -1,0 +1,85 @@
+Count Negative Numbers in a Sorted Matrix
+
+
+
+Imagine you have a grid of numbers, like a spreadsheet. This grid is special because the numbers get smaller as you move to the right in any row, and they also get smaller as you move down any column. Our goal is to count how many negative numbers are in this entire grid.
+
+A simple way would be to check every single number, one by one. However, because the grid is sorted in this specific way, we can be much smarter and faster.
+
+Think of the grid as a staircase. The non-negative numbers are at the top-left, and the negative numbers are at the bottom-right. We can start our search from the bottom-left corner. Why? Because from this position, moving up makes the numbers larger (or less negative), and moving right makes the numbers smaller (or more negative).
+
+Here is the step-by-step walking logic: We start at the bottom-left cell. We then ask a simple question: "Is the number in my current cell negative?"
+
+If the answer is YES, that is a great discovery. Because the entire row is sorted from left to right in decreasing order, if this cell is negative, then every single cell to its right in the same row must also be negative. We don't need to check them individually. We can instantly add all the cells from our current position to the end of the row to our count of negative numbers. After doing that, our job in this row is done. We then move up one row to check the row above.
+
+If the answer is NO (the current number is positive or zero), that means we need to look for negative numbers further to the right in this same row. So, we move one step right to check the next number in the same row.
+
+We repeat this process of checking the current number and then moving either up or right until we have walked through all the relevant rows and columns. This method is efficient because with each step we are either eliminating an entire row from further checking or moving closer to the negative numbers, ensuring we don't waste time checking every single cell.
+
+
+
+
+
+The code first finds out the grid's dimensions: m is the number of rows, and n is the number of columns. It then initializes a counter to zero.
+
+The key variables are row and col. They act as our current position pointer. We set row to the last row (m - 1) and col to the first column (0), which places us at the bottom-left corner of the grid.
+
+The code then enters a loop that continues as long as our pointer is within the grid's boundaries. Inside the loop, it checks the value at our current [row][col] position.
+
+If the value is negative, it calculates how many numbers are left in that row from our current column to the end (n - col) and adds this to the total count. It then moves the pointer up to the previous row.
+
+If the value is not negative, it simply moves the pointer right to the next column in the same row. This process repeats, efficiently navigating the "staircase" of numbers until all negative numbers are counted.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Find Target Indices After Sorting Array
+
+
+
+
+
+We are given a list of numbers and a specific target number. We need to find all the positions (indices) where this target number would appear if we sorted the list from smallest to largest. We are not allowed to return the positions from the original, unsorted list, but from the imaginary sorted version.
+
+The most straightforward idea is to actually sort the list and then find the target. However, we can find the answer without doing the work of sorting, which can be slow for large lists.
+
+The clever insight is this: In a sorted list, the position of a number is determined entirely by how many numbers are smaller than it. Let's break it down.
+
+Imagine you take all the numbers and line them up in order from smallest to largest. If you want to know where the first occurrence of your target number will be, you just need to count how many numbers in the entire list are smaller than the target. That count will be the index of the first target number. For example, if there are 3 numbers smaller than the target, the target will first appear at position 3 (since we start counting positions from 0).
+
+Now, to find all the indices, we also need to know how many times the target number appears. If the target appears, say, 4 times, then it will occupy the next four positions consecutively.
+
+So, the plan is simple: We make one pass through the unsorted list and count two things:
+
+countLess: How many numbers are strictly less than the target.
+
+countEqual: How many numbers are exactly equal to the target.
+
+Once we have these two counts, we know everything. The target numbers in the sorted list will start at the index countLess and will occupy the next countEqual positions. So, the indices we need to return are countLess, countLess + 1, countLess + 2, ... up to countLess + countEqual - 1.
+
+
+
+
+
+The code starts by initializing two counters, countLess and countEqual, to zero.
+
+It then goes through each number in the input list one by one. For each number, it checks if it is smaller than the target. If it is, it increases the countLess counter. If the number is exactly equal to the target, it increases the countEqual counter.
+
+After this single loop, the code has gathered all the necessary information. It then creates an empty list called result to store the answer.
+
+It uses a loop that runs exactly countEqual times. In each iteration, it calculates an index by taking countLess and adding the current loop counter i (which starts at 0). So, the first index it adds is countLess + 0, the second is countLess + 1, and so on, until it has added countEqual number of indices.
+
+Finally, it returns this result list, which contains all the positions where the target would be found in the sorted list.
