@@ -1,0 +1,67 @@
+Reverse Nodes in Even Length Groups
+
+
+
+
+Imagine you have a line of people, and you need to group them in a specific way. The first group has 1 person, the second group has 2 people, the third has 3, and so on. Your task is to look at each group. If a group has an even number of people, you must reverse their order within the line. If a group has an odd number of people, you leave them exactly as they are.
+
+The challenge is that you cannot break the chain. You must carefully detach and reconnect the people in the line while performing these reversals, ensuring the entire line stays connected from start to finish.
+
+The core idea is to process the line group by group. For each group, you first count how many people are actually in it. Sometimes, at the end of the line, a group might be shorter than expected. Once you know the actual count, you check if it's an even number. If it is, you perform a reversal of that specific segment. To do this reversal efficiently, you keep track of the person who comes just before the group you are about to reverse, so you can seamlessly stitch the reversed group back into the main line.
+
+
+
+
+The code starts by creating a dummy person at the very start of the line. This is a common trick to make handling the first group easier and avoid special cases.
+
+It uses a pointer called prevGroupEnd which always points to the last person of the previous group. This is crucial because after reversing a group, the last person of that group changes, and we need to know where to start counting for the next group.
+
+A variable groupNum keeps track of the expected size of the current group (1, then 2, then 3, etc.).
+
+The main loop runs as long as there are more people in the line. Inside the loop, it first counts how many people are in the current group. It does this by starting from prevGroupEnd->next (the first person of the current group) and counting up to groupNum people, or until it runs out of people.
+
+After counting, it checks if the count is even. If it is even, it calls a helper function reverseList to reverse that specific segment. This function is clever. It doesn't just reverse the segment in isolation; it reverses it in place by carefully changing the next pointers of each person. It takes the person before the group and the count of people to reverse. It then methodically rearranges the links: it takes the first person of the group and makes it point to the person after the last person in the group, and then it moves the subsequent people to the front of the group, one by one. When it's done, it returns the new "last person" of the just-reversed group, which becomes the prevGroupEnd for the next iteration.
+
+If the group length was odd, the code doesn't reverse it. Instead, it simply moves the prevGroupEnd pointer forward by the number of people in the group, so it now points to the actual end of the current group, ready for the next group.
+
+Finally, it moves to the next group by increasing groupNum. The process repeats until all groups have been processed, and then it returns the start of the modified line, which is the person right after the dummy starter.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Merge Nodes Between Zeros
+
+
+
+Imagine you have a list of numbers where zeros act like bookends or dividers. All the numbers between two zeros need to be added together into a single number, and the zeros themselves need to be removed. The list always starts and ends with a zero.
+
+For example, in the list [0, 3, 1, 0, 4, 5, 2, 0], the numbers 3 and 1 are between the first and second zero, so they become 4. The numbers 4, 5, and 2 are between the second and third zero, so they become 11. The final list should be [4, 11].
+
+The goal is to transform the original list into this new, shorter list without creating an entirely new list from scratch, to save memory. We want to overwrite the original list.
+
+The key idea is to use two pointers. One pointer (curr) is a "reader" that runs ahead to look at all the numbers and find the zeros. The other pointer (modify) is a "writer" that stays behind to record the final summed values in the correct positions.
+
+As the "reader" pointer moves, it adds up all the non-zero numbers it sees. When it finally encounters a zero, it knows it has reached the end of a segment. It then tells the "writer" pointer to write the calculated sum into its current position. The writer then moves forward one spot, ready for the next sum. This process effectively collapses all the numbers between two zeros into a single node where the first zero was, reusing the original list's structure.
+
+
+
+
+The code starts by setting two pointers. The modify pointer starts at the very first node (which is a zero). The curr pointer starts at the second node, right after the first zero, because we know the first node is a zero and we want to start summing from the first number after it.
+
+The main loop runs as long as the curr pointer has a node to look at. Inside the loop, there are two main cases.
+
+First, if the curr pointer sees a node with a value of zero, it means we have reached the end of a segment. The code then checks if there is another node after this zero. If there is, it means this is not the final zero, and there is another segment to process. So, it moves the modify writer pointer forward to the next node. This next node is currently a zero (it's the zero we just found), and it will become the place where we store the sum for the next segment. We pre-emptively set its value to 0, but this is immediately overwritten as soon as we start adding numbers for the next segment. This prepares the ground for the next summation.
+
+The second case is when the curr pointer sees a non-zero number. This number is part of the current segment we are summing. So, the code adds this number's value to the modify node's value. It's continuously accumulating the sum in the location pointed to by the writer.
+
+Finally, after the curr pointer has gone through the entire list, the modify pointer will be at the last node that holds a valid sum. The code then simply sets its next pointer to nullptr. This is a critical step that cuts off all the original nodes that came after the last useful sum, effectively shortening the list and removing the trailing zeros and any leftover nodes. The head of the original list is returned, but it now contains the new, merged values.
