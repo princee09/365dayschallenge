@@ -1,0 +1,71 @@
+786. K-th Smallest Prime Fraction
+
+
+
+
+
+Imagine you have a list of unique numbers, all sorted from smallest to largest. The first number is always 1, and the rest are prime numbers. The problem asks you to consider every possible fraction where the top number (numerator) comes from an earlier position in the list than the bottom number (denominator). You then need to sort all these fractions from smallest to largest and find the k-th one.
+
+Checking every single possible fraction would be like comparing every person to every other person taller than them to find a specific height ratio. This would take a very long time for a large list. So, we need a smarter method.
+
+The clever trick is to use a "guess and check" approach, also known as binary search. We guess a number that might be the value of the k-th smallest fraction. Let's call this guess mid. Our job is then to count how many fractions are less than or equal to our guess.
+
+To count these fractions efficiently without checking all of them, we use a two-pointer method. Think of it this way: for every possible denominator (the bottom number), we find the largest numerator (the top number) that makes the fraction less than or equal to our guess. Because the list is sorted, as we move to a larger denominator, the matching numerator can only get larger or stay the same; it never needs to go backwards. This allows us to count all the valid fractions in a single pass through the list.
+
+If our count of small fractions is less than k, it means our guess mid is too small, and the real k-th fraction is larger, so we adjust our guess higher. If the count is greater than or equal to k, our guess might be too big, or it might be spot on. We adjust our guess lower, but we also remember the largest fraction we saw that was still under our guess, because that is our best candidate for the real answer. We keep narrowing down our guess like this until we find the exact fraction.
+
+
+
+
+The code starts by setting a low guess of 0.0 and a high guess of 1.0, since all our fractions are between 0 and 1. It then enters a loop to keep refining the guess.
+
+Inside the loop, it calculates the midpoint mid. Then, it initializes a counter and variables to track the largest fraction found that is still less than or equal to mid.
+
+The two-pointer logic works by having one pointer j for the denominator and another for the numerator i. For each denominator, it moves the numerator pointer forward until the fraction becomes larger than mid. All fractions with that denominator and a smaller numerator are then counted. This count is accumulated.
+
+Based on whether the total count is less than k or not, the code adjusts the low or high boundaries of the search. When it finds that the count matches or exceeds k, it stores the numerator and denominator of that largest candidate fraction. The loop continues until the search space is exhausted, and the final stored fraction is returned as the answer.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1338. Reduce Array Size to The Half
+
+
+
+
+
+You are given an array of numbers. Your goal is to remove all occurrences of some numbers from the array so that at least half of the original elements are gone. You want to find the smallest number of different types of numbers you need to remove to achieve this.
+
+Think of it like having a bag of colored marbles. You want to remove marbles by color. To remove the most marbles with the fewest color choices, which colors should you pick? The logical choice is to start with the color you have the most of. Then, move to the next most common color, and so on. This greedy strategy ensures you reach your goal of removing half the marbles by choosing the fewest number of colors.
+
+The process is straightforward: First, count how many times each number appears in the array. This tells us the "size" of each color group. Next, we sort these group sizes from largest to smallest. Finally, we start adding these sizes together, one by one, counting how many groups we are taking. We stop as soon as the total number of marbles we have removed reaches or exceeds half of the original total. The number of groups we picked is our answer.
+
+
+
+
+
+The code first calculates the length of the array and figures out the target, which is half of that length.
+
+It then uses an "unordered map" (a efficient dictionary) to count how many times each number appears. This gives us the frequency of each unique number.
+
+Next, it takes all these frequency counts and puts them into a separate list. This list is then sorted in descending order, so the largest frequencies are at the front.
+
+The code then initializes a counter for the total numbers removed and a counter for how many unique numbers have been chosen. It goes through the sorted list of frequencies, starting with the largest. It adds each frequency to the "removed" total and increments the "chosen" counter. The loop checks after each addition if the "removed" total has met or exceeded the target. Once it has, the loop breaks, and the number of unique numbers chosen is returned as the final answer.
