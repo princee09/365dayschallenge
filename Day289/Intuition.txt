@@ -1,0 +1,83 @@
+622. Design Circular Queue
+
+
+
+Imagine a circular queue as a fixed-size, circular track. Unlike a regular line where people stand in a straight line that ends, this track is a loop. You have a fixed number of spots on this track. The key advantage is that when people leave from the front of the line, the empty spots at the beginning can be reused for new people joining at the back, making efficient use of the entire space.
+
+We need to keep track of two main positions: the front of the line (the next person to be served) and the rear of the line (the last person who just joined). Because the track is circular, when we reach the last spot, we wrap around to the first spot again. We also keep a simple counter to know how many people are currently in the line, which makes it very easy to check if the line is empty or full.
+
+
+
+
+1. The Setup (Constructor)
+We start by creating an array (data) with a size k, which is our fixed-size track. We set the front pointer to position 0, indicating the start of the line. The rear pointer is set to -1, which is like saying the line is completely empty and there is no last element yet. The size is set to 0 because there are no elements, and we store the maximum capacity which is k.
+
+2. Adding an Element (enQueue)
+This is like adding a new person to the back of the line. First, we check if the line is full using our size counter. If it's full, we cannot add anyone and return false. If there is space, we need to move the rear pointer to the next available spot. We calculate this next spot using modulo arithmetic: (rear + 1) % capacity. This formula ensures that if rear is at the last index, adding 1 would normally go out of bounds, but the modulo operation wraps it around to index 0, creating the circular behavior. We then place the new value at this new rear position and increase our size counter by one.
+
+3. Removing an Element (deQueue)
+This is like serving the person at the front of the line. First, we check if the line is empty. If it is, we return false as there is no one to serve. To serve the front person, we don't actually erase the data; we simply move the front pointer forward to the next person in line. Again, we use modulo arithmetic (front + 1) % capacity to wrap around to the start if needed. We then decrease the size counter by one.
+
+4. Getting the Front Element
+This operation just tells us who is at the front of the line without serving them. If the line is empty, we return -1. Otherwise, we simply return the value stored at the front index in our array.
+
+5. Getting the Rear Element
+This tells us who was the last person to join the line. If the line is empty, we return -1. Otherwise, we return the value stored at the rear index.
+
+6. Checking if Empty or Full
+This is very straightforward with our size counter. If size is 0, the line is empty. If size is equal to capacity, the line is full.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+641. Design Circular Deque (Double-Ended Queue)
+
+
+
+
+
+
+Now, let's upgrade our circular track to a circular double-ended track. A deque (pronounced "deck") is a line where people can join or leave from either the front or the back. Think of it like a line in a theme park where special guests can be added to the very front, or people can get off from the back if they change their mind.
+
+This requires more flexible pointers. The front pointer still indicates the first element, but the rear pointer now points to the next available spot at the end of the line, not the last element itself. This small difference in the initial setup makes the logic for adding and removing from both ends much cleaner and consistent.
+
+
+
+
+1. The Setup (Constructor)
+Similar to the queue, we create an array of size k. We initialize both front and rear pointers to 0. The size is 0. In this setup, when the deque is empty, front and rear point to the same index.
+
+2. Adding an Element to the Front (insertFront)
+This is like letting a VIP cut in line at the very front. First, we check if the deque is full. If it is, we return false. To make space at the front, we must move the front pointer backwards one spot. We calculate this new front index with (front - 1 + capacity) % capacity. Adding capacity ensures the result is never negative before applying the modulo operation. We then place the new value at this new front index and increase the size.
+
+3. Adding an Element to the Back (insertLast)
+This is the normal operation of joining the back of the line. We check if it's full. If not, we place the new value at the current rear index. Then, we move the rear pointer forward to the next available spot using (rear + 1) % capacity. Finally, we increase the size.
+
+4. Removing an Element from the Front (deleteFront)
+This is like serving the person at the front. We check if it's empty. If not, we simply move the front pointer forward by one spot using (front + 1) % capacity. This effectively forgets about the previous front element. We then decrease the size.
+
+5. Removing an Element from the Back (deleteLast)
+This is like the last person in line deciding to leave. We check if it's empty. If not, we need to make the previous element the new last element. To do this, we move the rear pointer backwards one spot using (rear - 1 + capacity) % capacity. This effectively removes the last element from our logical line. We then decrease the size.
+
+6. Getting the Front Element
+This is simple. If the deque is not empty, we return the value at the front index.
+
+7. Getting the Rear Element
+This is slightly tricky. Because our rear pointer points to the next available spot, the actual last element in the deque is located one spot behind the rear pointer. We calculate this index with (rear - 1 + capacity) % capacity. If the deque is not empty, we return the value at that calculated index.
+
+8. Checking if Empty or Full
+Just like with the simple queue, we use the size counter for a very clear and efficient check. If size is 0, it's empty. If size equals capacity, it's full.
+
+
