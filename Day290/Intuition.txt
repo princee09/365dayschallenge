@@ -1,0 +1,66 @@
+Minimum Time to Fill Cups
+
+
+
+
+Imagine you have three stacks of cups: one for cold, one for warm, and one for hot. Your goal is to fill all the cups in the least amount of time. The special rule is that you can fill two cups of different types in one second, which is faster than filling just one cup per second.
+
+The best strategy is to always try to slow down the largest stack from growing too high. If you only focus on the smaller stacks, the largest stack will take a long time to finish by itself. So, in every second, you should take one cup from the tallest stack and one cup from the second tallest stack. This way, you are constantly reducing the two biggest piles simultaneously.
+
+If you keep doing this, eventually, you might be left with just one stack. At that point, you have no choice but to fill one cup per second from that single remaining stack until it is gone. The total time is the number of times you performed the two-cup operation plus the number of single-cup operations at the end.
+
+
+
+
+
+The code uses a "max heap," which is like a magical container that always keeps the largest number on top, ready to be taken out.
+
+First, it puts the number of cups from each stack into this container, but only if a stack has cups to be filled. Then, it starts a timer at zero.
+
+The main loop runs as long as there are cups left in the container. Inside the loop, it first checks if there is only one type of cup left. If yes, it simply adds all the remaining cups from that single stack to the timer and finishes.
+
+If there are at least two types of cups, it takes the two largest numbers out of the container. These represent the two tallest stacks of cups. It then increases the timer by one second because it filled two cups (one from each stack) in that second. It reduces the count of each of these two stacks by one. If any cups are left in either of these stacks after this, it puts them back into the container.
+
+This process repeats, always pairing the two largest stacks, until all cups are filled. The final value of the timer is the minimum number of seconds required.
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+Make Array Zero by Subtracting Equal Amounts
+
+
+
+
+You have a list of numbers. In one operation, you must pick a positive number x that is no larger than the smallest positive number currently in the list. Then, you subtract this x from every single positive number in the list. The goal is to make all numbers zero with the fewest operations.
+
+The key insight is that each operation will completely wipe out, or eliminate, every number that is equal to the current smallest positive number. Think of the numbers as different levels or tiers. The smallest positive number is the first tier. When you subtract it, all numbers at that tier become zero and disappear.
+
+After that subtraction, what remains are numbers that were originally larger. They are now smaller, and a new smallest positive number emerges, which is the next tier. You then repeat the process: subtract this new smallest number, which wipes out all numbers now at this new tier.
+
+Therefore, the number of operations you need is exactly equal to the number of different or unique positive numbers you started with. Each unique positive number represents a tier that must be eliminated by its own dedicated operation.
+
+
+
+
+
+This code uses a "min heap," which is the opposite of the previous container. It always keeps the smallest number on top.
+
+First, it goes through the list of numbers and puts every positive number it finds into this min heap container. Then, it starts a counter for the number of operations at zero.
+
+The main loop runs as long as the container is not empty. In each loop cycle, it takes out the smallest number from the top of the container. This is the current target number for an operation.
+
+However, there might be many copies of this same number in the container. Since subtracting x will remove all of them at once, the code then checks the container and removes all the other numbers that are exactly equal to this current target number. It throws them away without counting them as separate operations.
+
+After clearing all duplicates of that number, it increases the operation counter by one. This single operation has accounted for removing every instance of that specific positive value.
+
+The loop continues, now with the next smallest unique number at the top of the container, and the process repeats. The final value of the counter is the minimum number of operations needed, which is the total count of unique positive numbers from the original list.
