@@ -1,0 +1,63 @@
+Number of Distinct Averages
+
+
+
+
+The goal of this problem is to find out how many different average values we get by repeatedly pairing the smallest and largest numbers from a list until the list is empty.
+
+Imagine you have a group of people with different heights. You are told to repeatedly pair the shortest person with the tallest person, calculate their average height, and then remove them from the group. You continue this process with the remaining people. The question is, how many unique or different average heights did you calculate? Some averages might be the same even if the pairs were different.
+
+The key insight to solve this efficiently is to first sort the list of numbers. Sorting organizes the numbers from smallest to largest. Once sorted, the smallest number is always at the beginning, and the largest is always at the end. Now, you can use two pointers, one starting at the leftmost (smallest) number and one at the rightmost (largest) number. You calculate the average of these two numbers. Then, you move the left pointer one step to the right (to the next smallest number) and the right pointer one step to the left (to the next largest number), and you calculate their average. You continue this inward movement until the two pointers meet.
+
+To keep track of the distinct averages, you use a special "collection" or "bag" that automatically ignores duplicates. In programming, this is called a "set." Every time you calculate a new average, you put it into this set. If the average is already in the set, it won't be added again. At the end, you simply count how many unique averages are stored in this set, and that is your answer.
+
+
+
+
+The code starts by sorting the input list of numbers. This lines up all the numbers in ascending order. It then creates an empty set, which is like a special list that does not allow duplicate entries. Two variables, left and right, are initialized. left points to the first index (the smallest number) and right points to the last index (the largest number).
+
+A loop runs as long as the left pointer is less than the right pointer, meaning they haven't met or crossed each other. Inside the loop, the average of the numbers at the left and right positions is calculated. This average is inserted into the set. The set automatically handles the task of storing only unique values. After each calculation, the left pointer is moved forward, and the right pointer is moved backward, effectively considering the next smallest and next largest numbers for the next pair. Finally, the function returns the size of the set, which is the count of all distinct averages found.
+
+
+
+
+
+
+
+
+
+
+
+
+Earliest Finish Time for Land and Water Rides
+
+
+
+
+This problem is about finding the earliest possible time a tourist can finish one land ride and one water ride. The tourist can do them in any order: land ride first then water ride, or water ride first then land ride. Each ride has a specific time it opens and a specific duration. The tourist can only start a ride at or after its opening time. After finishing one ride, they can immediately start the next one, but only if it is already open; otherwise, they must wait for it to open.
+
+To solve this, you need to check every possible combination of a single land ride and a single water ride. For each combination, you must calculate the finish time for both possible orders of riding them.
+
+Let's break down the two scenarios for a single land ride (with its open time and duration) and a single water ride (with its open time and duration):
+
+Scenario 1: Land Ride First, Then Water Ride
+First, you calculate when the land ride finishes. This is simply its start time plus its duration. Now, the tourist is ready for the water ride. The water ride can only be started at its opening time or later. So, the actual start time for the water ride is the later of two times: the water ride's own opening time, or the time the tourist finished the land ride. Once you have the water ride's start time, you add its duration to find the total finish time for this sequence.
+
+Scenario 2: Water Ride First, Then Land Ride
+This is the reverse. First, you calculate when the water ride finishes. Then, the start time for the land ride is the later of two times: the land ride's own opening time, or the time the tourist finished the water ride. Adding the land ride's duration to this start time gives you the total finish time for this sequence.
+
+For each pair of rides, you calculate the finish time for both orders and take the smaller one (the earlier finish). Then, you compare this result with all the other results from all the other pairs of rides. Your final answer is the absolute smallest finish time you found among all pairs and all orders.
+
+
+
+
+
+The code starts by initializing a variable minFinish to a very large number, which will be used to track the smallest finish time found. It then uses two nested loops. The outer loop goes through every land ride, and the inner loop goes through every water ride. This ensures that every possible combination of one land ride and one water ride is considered.
+
+For each combination, it calculates two finish times:
+
+finish1: This is the finish time if the tourist takes the land ride first and then the water ride. It first calculates landFinish, the time the land ride ends. Then it calculates waterStartAfterLand, which is the later time between the water ride's opening time and the land ride's finish time. Finally, finish1 is this start time plus the water ride's duration.
+
+finish2: This is the finish time if the tourist takes the water ride first and then the land ride. It calculates waterFinish, then landStartAfterWater (the later time between the land ride's opening time and the water ride's finish time), and finally finish2 by adding the land ride's duration.
+
+After calculating both finish1 and finish2 for the current pair of rides, the code finds the smaller of the two. It then compares this value with the current minFinish. If it's smaller, minFinish is updated. After checking all possible pairs of rides, the value stored in minFinish is the absolute earliest time the tourist can finish both rides, and this value is returned as the answer.
