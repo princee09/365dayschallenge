@@ -1,0 +1,49 @@
+2540: Minimum Common Value
+
+
+
+
+Imagine you have two lists of numbers, and both lists are already sorted from smallest to largest. Your goal is to find the very first number that appears in both lists. Because the lists are sorted, you don't need to check every single combination, which would be slow.
+
+Think of it like two people reading two different sorted lists out loud. You start at the beginning of both lists. If the number from the first list is smaller than the number from the second list, you know you need a bigger number from the first list to hopefully find a match, so you move to the next number in the first list. If the number from the second list is smaller, you move to the next number in the second list for the same reason. The moment you find a number that is the same in both lists, you have found your answer, and because you are moving through the lists in order from smallest to largest, this will be the smallest common number.
+
+If you reach the end of one list without finding a match, it means there is no common number.
+
+
+
+
+The code uses two "pointers," which are like two fingers, one pointing to the current position in the first list (i) and another pointing to the current position in the second list (j). It uses a loop that continues as long as both fingers are still within their respective lists.
+
+Inside the loop, it checks three things. First, if the numbers at both pointers are equal, it immediately returns that number as the answer. Second, if the number from the first list is smaller, it moves the first pointer one step forward. Third, if the number from the second list is smaller, it moves the second pointer one step forward. This process efficiently narrows down the search until it finds a match or concludes there is none.
+
+
+
+
+
+
+
+
+
+
+
+
+2697: Lexicographically Smallest Palindrome
+
+
+
+
+
+
+A palindrome is a word that reads the same forwards and backwards, like "radar." You are allowed to change any letter in the word to another letter, and you want to do this with the fewest changes possible. If there are multiple ways to make it a palindrome with the same number of changes, you must choose the one that is lexicographically smallest, meaning it would come first in a dictionary.
+
+To achieve this with the fewest changes, you look at the word from both ends at the same time. Compare the first letter with the last letter, then the second letter with the second-to-last letter, and so on. If the two letters you are comparing are different, you must change one of them to make them the same. To make the result the lexicographically smallest, you always change the larger letter to match the smaller one. For example, if you compare 'c' and 'a', you change the 'c' to an 'a'. This way, you use only one change per mismatched pair (which is the minimum) and you ensure the resulting word is as small as possible alphabetically.
+
+If the letters are already the same, you leave them alone. You continue this process, moving inward from both ends until you have checked all pairs of letters.
+
+
+
+
+
+The code uses two pointers, one starting at the leftmost index of the string (left) and one at the rightmost index (right). It uses a loop that runs as long as the left pointer is to the left of the right pointer.
+
+Inside the loop, it compares the character at the left index with the character at the right index. If they are not the same, it checks which one is smaller. It then replaces the larger character with the smaller one. This action guarantees a palindrome for that character pair and also ensures the string becomes lexicographically smaller. After processing the pair, both the left pointer is moved one step to the right and the right pointer is moved one step to the left, so the next pair of characters can be checked. This continues until the entire string has been processed into a palindrome.
