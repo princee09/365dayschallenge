@@ -1,0 +1,83 @@
+Longest Subarray of 1's After Deleting One Element
+
+
+
+
+
+Imagine you have a row of light bulbs. Some are ON (represented by 1) and some are OFF (represented by 0). You are allowed to remove just one single bulb from the entire row. After removing it, you want to find the longest possible continuous section of bulbs that are all ON. You need to figure out what that maximum length is.
+
+The Core Idea (Intuition):
+The key is to realize that deleting one element is equivalent to allowing our continuous section of ON bulbs to contain at most one OFF bulb. Why? Because if we find a section with one OFF bulb, we can pretend we deleted that specific OFF bulb, leaving us with a pure section of ON bulbs.
+
+We use a sliding window, which is like using a stretchable rubber band to mark a section of the bulb row. We start with the rubber band covering no bulbs. We then stretch its right end to include more bulbs one by one.
+
+As we include a new bulb on the right, if it is OFF, we make a note that we have found one OFF bulb inside our rubber band. We are allowed to have one OFF bulb. But if we include a second OFF bulb, our rubber band now has two OFF bulbs, which is not allowed (because we can only delete one).
+
+So, when we get a second OFF bulb, we must shrink the rubber band from the left side. We pull the left end forward until one of the OFF bulbs falls out of the band. This way, we always maintain at most one OFF bulb inside our band at any time.
+
+The length of the rubber band (the number of bulbs inside it) is constantly measured. However, since we must delete one element (the OFF bulb inside the band), the final length of the continuous ON bulbs would be the band's length minus one. But in our calculation, the band's length already includes the one OFF bulb we are allowed. So, when we calculate right - left, this gives us the number of bulbs in the band, including the one OFF bulb. The maximum value of this is our answer. If the entire band were ON bulbs, we would still have to delete one, so the answer would be the band length minus one, but our calculation naturally handles this because the band length (right - left) already includes the one "deletion" allowance.
+
+
+
+
+
+
+The code uses two pointers, left and right, to represent the ends of the rubber band. The zeroCount variable counts how many OFF bulbs are inside the band. The maxLen variable remembers the largest band length we ever saw.
+
+The right pointer moves forward to include a new bulb. If it's an OFF bulb, zeroCount increases. If zeroCount becomes 2, it means we have two OFF bulbs, so we enter a loop to move the left pointer forward. We keep moving left until we push an OFF bulb out of the band, which decreases the zeroCount back to 1.
+
+After adjusting the band, we check if the current band length (right - left) is the new longest. The right pointer then moves forward again to repeat the process. At the end, maxLen holds the length of the longest band we found that had at most one OFF bulb, which is our answer.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Maximum White Tiles Covered by a Carpet
+
+
+
+
+
+
+Imagine you have several segments of a white road painted on a long, black road. These white segments are given as intervals, like from mile 1 to mile 5, mile 10 to mile 11, etc. You have a carpet of a fixed length. You can place this carpet anywhere on the road to cover as much white paint as possible. The carpet cannot cover areas beyond the road, and you want to find the maximum length of white road it can cover. It can cover multiple white segments, and it can cover only a part of a segment if it doesn't fit entirely.
+
+The Core Idea (Intuition):
+We first sort all the white segments by their starting position. This lets us look at the segments in order from left to right along the road.
+
+We then use a sliding window over these sorted segments. The idea is to place the left end of the carpet at the start of a white segment and then see how many segments we can cover before the carpet runs out.
+
+We use two pointers, left and right, to track which segments are currently under the carpet. The cover variable adds up the total length of the white segments that are completely under the carpet. The maxCover variable remembers the best coverage we have found so far.
+
+We start with both pointers at the first segment. We imagine the carpet starts at the beginning of the left segment. We then try to extend the right pointer to include more segments as long as the entire segment fits under the carpet. If a segment fits completely, we add its entire length to cover.
+
+Eventually, we will reach a segment that is too long to be fully covered by the remaining carpet. This segment will be only partially covered. We calculate this partial coverage by seeing how much of it fits from its start to the end of the carpet.
+
+We then have a total coverage for this carpet position: the sum of all fully covered segments plus the partially covered segment. We check if this is the new maximum.
+
+Now, to check other positions, we slide the carpet's starting point. This is done by moving the left pointer to the next segment. When we do this, we must subtract the length of the segment we are leaving behind from the cover total. Then we try to extend the right pointer again to see if we can cover more.
+
+
+
+
+
+The code first sorts the tile segments. It then initializes pointers and counters.
+
+In the main loop, for each segment left, it calculates the carpet's end position. It then uses a while loop to extend the right pointer, adding the full length of any segment that ends before the carpet's end to the cover total.
+
+If the next right segment is too long to be fully covered, the code calculates the partial length that can be covered from the start of that segment to the carpet's end.
+
+It then updates the maxCover if the current cover plus the partial length is greater.
+
+Finally, to move the carpet's start, it subtracts the length of the current left segment from cover and increments the left pointer, effectively sliding the window forward.
+
+This process repeats, efficiently checking all optimal starting positions for the carpet, ensuring we find the maximum possible coverage without missing any potential placements.
+
