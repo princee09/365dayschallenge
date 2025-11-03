@@ -1,0 +1,63 @@
+1658: Minimum Operations to Reduce X to Zero
+
+
+
+
+Imagine you have a row of numbered blocks, each with a certain weight. Your goal is to remove some blocks from the left end, some from the right end, and the total weight of the removed blocks should add up to a specific target weight, X. You want to do this by removing the fewest number of blocks possible.
+
+The key insight is to flip the problem around. Instead of focusing on the blocks you remove from the ends, focus on the blocks you leave in the middle. If you remove blocks from the ends that sum to X, it means the blocks remaining in the middle must sum to the Total Weight of All Blocks minus X.
+
+So, the problem becomes: find the longest, continuous section of blocks in the middle whose total weight is exactly Total Sum - X. The number of blocks you remove (your answer) is then simply the total number of blocks minus the length of this middle section. If you can find the longest middle section, you automatically find the minimum number of blocks to remove from the ends.
+
+If the total weight of all blocks is less than X, it's impossible. If the middle section's target weight is zero, it means you must remove all blocks.
+
+
+
+
+The code first calculates the total sum of all elements in the array. It then checks for the two impossible cases: if the total sum is less than X, it immediately returns -1. If the target sum for the middle subarray is zero, it means the only solution is to remove all elements.
+
+The main logic uses a "sliding window" technique. It uses two pointers, left and right, to define a window within the array. The right pointer expands the window by moving to the right, adding the value of each new block to a running total. If this running total exceeds the target sum for the middle section, the left pointer moves to the right, subtracting values from the running total, to shrink the window from the left until the sum is within the target again.
+
+Every time the running total exactly matches the target sum, it checks if the current window is the longest one found so far. Finally, if a valid middle section was found, the answer is the total number of blocks minus the length of that longest middle section. If no such section exists, it returns -1.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3258: Count Substrings That Satisfy K-Constraint
+
+
+
+
+
+
+
+
+Imagine you have a string made only of the digits 0 and 1. You want to count all possible smaller strings (substrings) you can get by cutting a continuous piece from the original string. A valid substring is one where either the number of 0s in it is very small (less than or equal to K), or the number of 1s in it is very small (less than or equal to K).
+
+In other words, a substring is good if one type of character is not too common. Since the string length is small (up to 50), a straightforward approach is feasible. We can check every single possible substring.
+
+To check a substring, we need to know how many zeros and ones it contains. A smart way to do this without manually counting every time is to use "prefix sums." This is like creating a running tally. You create two lists: one that counts the total number of zeros seen up to each point in the string, and another that counts the total number of ones.
+
+Then, for any substring from position L to R, you can quickly find out how many zeros it has by subtracting the tally at the start of the substring (L) from the tally at the end of the substring (R+1). The same is done for ones. This allows us to check the condition for any substring instantly.
+
+
+
+
+
+The code starts by building two helper arrays, prefix0 and prefix1. As it reads through the string character by character, it fills these arrays. prefix0[i] holds the total number of '0's from the start of the string up to, but not including, position i.
+
+Then, it uses two nested loops. The outer loop (l) sets the starting point of the substring. The inner loop (r) sets the ending point, creating every possible substring.
+
+For each substring from l to r, it calculates the number of zeros and ones by looking at the difference in the prefix arrays. It then checks the condition: if either the count of zeros or the count of ones is less than or equal to K. If this is true, it increments the valid substring counter.
+
+Finally, after checking all possible substrings, it returns the total count.
