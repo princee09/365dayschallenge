@@ -1,0 +1,68 @@
+Online Election (Problem 911)
+
+
+
+
+Imagine an election where people are voting one by one at different times. For each vote, you record two things: who received the vote and at what time it happened. Later, someone may ask, “Who was leading at time t?” This means that at that specific time, if we pause the election, which candidate had the most votes up to that moment. There is an additional rule to handle ties: if two candidates have the same number of votes, the candidate who received the most recent vote becomes the leader.
+
+The challenge here is efficiency. If we were to calculate the leader from scratch every time a query comes in, it would take too long because we would have to count all votes again for each query. Instead, we can preprocess the data once and record who is leading after each vote. This way, we know exactly who the leader was at every point in time. When a query asks for the leader at time t, we can quickly find the most recent recorded time less than or equal to t and return the leader from that point.
+
+This idea leads to two simple data structures: one array that stores all the vote times and another that stores the leader at each of those times. When a new vote comes in, we increase that person’s vote count and check whether they have tied or overtaken the previous leader. If so, that person becomes the new leader. This ensures that when two candidates have the same number of votes, the most recent one automatically becomes the leader. After processing all votes, we have a timeline of leaders, one for each time in the election.
+
+When someone queries a time t, we can find the last vote that occurred at or before t using binary search. Binary search is an efficient way to locate a value in a sorted list. It allows us to find the correct index in logarithmic time, which is much faster than searching through the entire list. Once we find the correct time index, we simply return the leader recorded at that position.
+
+The overall logic is simple but powerful. We prepare the results in advance and use binary search to answer each question quickly. This approach allows the program to handle thousands of queries efficiently, even when the total number of votes is large.
+
+
+
+
+
+In the code, two vectors are used: times to store the timestamps of votes and leaders to store the leading candidate after each vote. A map named voteCount is used to count votes per candidate. While iterating through all votes, we update the vote count for each person and check if this person’s votes are greater than or equal to the current maximum. If they are, that person becomes the new leader. We then store that leader in the leaders vector.
+
+When the query function q(int t) is called, we perform a binary search using upper_bound to find the last index where the vote time is less than or equal to t. The leader at that index is returned as the answer. This ensures that the query is handled in O(log n) time, where n is the number of votes.
+
+This preprocessing approach ensures that initialization takes linear time, and each query is extremely fast. The algorithm balances memory usage and efficiency, making it ideal for scenarios where multiple queries need to be answered in real-time.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Snapshot Array (Problem 1146)
+
+
+
+
+
+
+
+This problem can be thought of as managing a digital whiteboard. You can change the value at any position, and at any point, you can take a “snapshot” or a photograph of the whiteboard. Each snapshot records how the whiteboard looks at that exact moment. Later, you may want to see what the whiteboard looked like at a specific snapshot number. The key challenge is that we cannot afford to store the entire array every time we take a snapshot because that would consume too much memory and make the program slow.
+
+To solve this, instead of storing the entire array, we only store the positions that were actually changed and the snapshot in which they were changed. For each index, we maintain a list of pairs where each pair contains a snapshot number and the corresponding value of that index at that snapshot. When we take a new snapshot, we simply increase a counter called snap_id without actually copying the array. This is an efficient way to remember what changed without duplicating data unnecessarily.
+
+When we call set(index, val), we check if the last recorded change for that index was made in the current snapshot. If it was, we update the value. If not, we add a new record with the current snapshot number and the new value. When we call snap(), we simply return the current snapshot ID and increment it by one, meaning a new photo has been taken. The operation get(index, snap_id) retrieves what value was stored at a specific index at the time of a given snapshot. To do this efficiently, we use binary search to find the most recent snapshot less than or equal to the requested one. This avoids scanning through all records.
+
+The beauty of this method is that we are not storing redundant information. If an index has not changed in a particular snapshot, there is no need to store anything for it. As a result, the memory usage depends only on the number of changes, not on the total number of snapshots or array size. This makes it very scalable.
+
+
+
+
+The code uses a vector of vectors called history, where each index in the main vector represents an element in the array, and each sub-vector stores pairs of {snapshot_id, value}. Initially, all indices have one entry {0, 0}, meaning at snapshot 0, all values are zero. The variable snap_id keeps track of the current snapshot number.
+
+When set(index, val) is called, the program checks if the most recent record for that index belongs to the current snapshot. If it does, it updates that value. Otherwise, it appends a new pair with the current snapshot ID and value. This ensures that each change is correctly recorded for the snapshot in which it occurred.
+
+When snap() is called, the program returns the current snapshot ID and then increments it, effectively labeling each new snapshot uniquely. This operation is O(1) because it does not involve any complex computation or data movement.
+
+The get(index, snap_id) function performs a binary search over the history of that index. It finds the latest record whose snapshot ID is less than or equal to the requested one. This allows us to retrieve the correct value as it was during that snapshot in O(log n) time. The use of binary search ensures both speed and accuracy, even when there are many changes stored.
+
+This design makes the system efficient and clean. It avoids wasteful copying, allows instant snapshot creation, and ensures quick retrieval of any past state. By using binary search and careful data organization, the Snapshot Array can handle thousands of operations smoothly without slowing down or consuming excessive memory.
