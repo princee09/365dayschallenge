@@ -1,0 +1,93 @@
+Combinations
+
+
+
+
+The goal is to find all possible teams of size k you can make from n players numbered from 1 to n. The order of players in a team does not matter. A team [1, 2] is the same as [2, 1], so we only list it once.
+
+Imagine you are picking players one by one to form a team. You start by choosing the first player. You have a choice between players 1 through n. Once you pick a player, you move on to pick the next player, but you can only pick from the players who have a higher number than the first one. This rule ensures you never create duplicate teams in a different order.
+
+For example, if you pick player 1 first, your next choices are 2, 3, and 4. If you pick player 2 first, your next choices are only 3 and 4. You would never pick player 1 after player 2 because that would create [2, 1], which is the same as the [1, 2] you already created.
+
+A key optimization is to stop picking players early if there are not enough players left to complete the team. If you need 2 more players for your team, but only 1 player is left in the list to choose from, it is impossible to complete the team. So, you can skip even starting down that path.
+
+This entire process is like exploring a tree of decisions, where each branch represents choosing a different player. You go down a branch (pick a player), explore all teams that can be formed from that point, and then step back (remove the player) to try a different branch.
+
+
+
+
+
+
+The code uses a technique called backtracking, which is a systematic way to try all possibilities.
+
+The main function combine simply sets up the process. It creates an empty container result to store all the final teams and an empty container current to represent the team we are currently building. It then calls the backtrack helper function to start the search from player number 1.
+
+The backtrack function is where the real work happens.
+
+First, it checks if the current team we are building has reached the required size k. If it has, we add this team to our result collection and stop building this team further.
+
+If the team is not yet complete, we need to add a new player. We do this with a for loop. The loop doesn't start from 1 every time; it starts from the start number. This ensures we only pick players with higher numbers than the ones already chosen, preventing duplicate teams.
+
+The loop's end condition i <= n - (k - current.size()) + 1 is the optimization. It calculates the highest number we can start with and still have enough players left to finish the team. For instance, if we need 2 more players (k - current.size() is 2), we cannot start with the last player (n), because there is no one left after them. So we stop the loop earlier.
+
+Inside the loop, we try a player i. We add them to our current team. Then, we call backtrack again, but now we tell it to start from i + 1. This is like saying, "Okay, I've chosen player i, now find all the players who can join them from the ones after them."
+
+After this recursive call returns, we remove player i from the current team using pop_back(). This is the "backtracking" step. It undoes our last choice so we can try the next player in the for loop. For example, after exploring all teams that start with [1, 2], we remove the 2 to try [1, 3] next.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Non-decreasing Subsequences
+
+
+
+
+
+This problem is about finding all possible sequences you can get from an array by deleting some (or no) elements, with two strict rules. First, the sequence must have at least two elements. Second, the sequence must be non-decreasing, meaning each next element must be equal to or greater than the previous one (it can stay the same or go up, but never down).
+
+Unlike the first problem, the input numbers are not unique and are not in a sorted order. This introduces two big challenges. First, we must ensure the sequence never decreases. Second, we must avoid listing the exact same sequence multiple times, which can happen if the input has duplicate numbers.
+
+The approach is again to build sequences one element at a time. We start from the beginning of the array and decide for each element: should we add it to our current sequence or not?
+
+If we decide to add an element, we must check a rule: it must be greater than or equal to the last element in our current sequence. If our sequence is empty, we can always add the first element. This rule guarantees that every sequence we build is non-decreasing.
+
+To prevent duplicates, we need another rule at each step of selection. Imagine the array is [4, 6, 7, 7]. When we are building a sequence and are ready to pick the next element, we might have several identical numbers to choose from (like the two 7s). If we don't control this, we could create the sequence [6, 7] in two different ways: by picking the first 7 or the second 7. They result in the same sequence, which is a duplicate.
+
+The solution is that at any given point where we are choosing the next element, we never pick the same number value twice. So, when we are looking at positions i, i+1, i+2... and we see the same number twice, we only pick it for the first occurrence and skip all its duplicates for that specific choice. This cleverly avoids creating duplicate sequences.
+
+
+
+
+
+
+This code also uses the backtracking pattern to explore all valid sequences.
+
+The main function findSubsequences initializes the result and current containers and starts the backtracking process from index 0 of the input array.
+
+The backtrack function first checks if the current sequence has at least two elements. If it does, it saves a copy of this sequence to the result. Notice that it does not stop here; it allows the sequence to grow further if possible.
+
+Then, it prepares to choose the next element to add to the sequence. It creates an unordered_set<int> used. This set is very important and its purpose is local. It is created anew at the start of each function call. Its job is to remember which number values we have already considered adding at this specific position in the sequence we are building.
+
+The for loop goes through the array starting from the start index. For each number nums[i], it performs two checks.
+
+The first check is if (used.count(nums[i])) continue;. This asks, "Have I already tried to add this exact number value at this specific step in building my sequence?" If yes, it skips this number. This is what prevents duplicate sequences. For example, with [4, 7, 7], when building from [4], the first 7 gets added. The set used now contains 7. When the loop sees the second 7, it finds 7 is already in the used set, so it skips it, preventing a second [4, 7] sequence from being created.
+
+The second check is if (!current.empty() && nums[i] < current.back()) continue;. This asks, "If I add this number, will it break the non-decreasing rule?" It checks if our current sequence is not empty and if the new number is smaller than the last number in the sequence. If it is smaller, the sequence would become decreasing, so we skip this number.
+
+If a number passes both checks, it is a valid candidate. We record its value in the used set so we don't use the same value again in this loop. Then, we add it to the current sequence. We call backtrack with the next index i + 1 to find all sequences that can be built from this new, longer starting point.
+
+Finally, after the recursive call returns, we remove the number we just added from the current sequence with pop_back(). This backtracks our choice, allowing us to try a different number in the next iteration of the for loop. The used set remains, ensuring we don't accidentally pick a duplicate number value for this step.
