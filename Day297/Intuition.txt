@@ -1,0 +1,69 @@
+Minimum Cost Climbing Stairs
+
+
+
+
+Imagine you are climbing a staircase. Each step has a toll cost you must pay to step on it. Your goal is to reach the top of the staircase, which is one step beyond the last step, and you want to do this by spending the least amount of money possible.
+
+The special rule is that from any step, you are allowed to climb either one step forward or two steps forward. This gives you a choice at every point. Even better, you are allowed to start your journey from either the first step (index 0) or the second step (index 1), whichever gives you a cheaper overall path.
+
+The core idea to solve this is to think backwards from the top. Instead of wondering where to go from the start, we ask: "What is the cheapest way to get to the final step?" To get to a particular step, you could have jumped onto it from the step immediately before it, or from the step two steps before it. Therefore, the minimum cost to reach a step is the cost of the step itself, plus the cheaper of the two costs to reach the step you jumped from.
+
+We solve this by calculating the cost to reach every step, one by one, starting from the bottom. We only need to remember the cost of the last two steps we calculated because they are the only ones that influence the next step's cost. By the time we finish, we have the cost to reach the last step and the second-to-last step. Since we can take a final one-step or two-step jump to the top from either of these, the final answer is simply the cheaper of these two final costs.
+
+
+
+
+
+The code uses two variables, prev2 and prev1, to keep track of our calculations.
+
+First, we initialize prev2 to the cost of the first step. This represents the minimum cost to reach step 0. Then we initialize prev1 to the cost of the second step. This represents the minimum cost to reach step 1.
+
+Then, we start a loop from the third step (index 2) onwards. For each step i in the loop, we calculate the cost to reach it. This cost is the toll of the current step itself, plus the minimum cost between reaching the previous step (prev1) or the step before that (prev2). The result is stored in a temporary variable called current.
+
+Now, to prepare for the next step in the loop, we move our window forward. The value that was the cost for the previous step (prev1) now becomes the cost for "two steps back" (prev2). The new current cost we just calculated becomes the new "previous step" cost (prev1).
+
+After the loop has processed all steps, prev1 holds the cost to reach the very last step, and prev2 holds the cost to reach the second-to-last step. The function returns the smaller of these two values, because we can jump to the top from either of them, completing our journey with the minimum total cost.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Maximum Repeating Substring
+
+
+
+
+
+Imagine you have a long string of letters, which we'll call the sequence. You also have a smaller string of letters, the word. Your task is to find out how many times you can repeat this word back-to-back so that this long, repeated string still appears entirely within the main sequence.
+
+For example, if the word is "ab", we check: does "ab" exist in the sequence? If yes, we check "abab". Does that exist? If yes, we check "ababab", and so on. We are looking for the highest number of consecutive repeats, which we call k, that can be found.
+
+The efficient way to solve this is by scanning the main sequence from left to right. As we move through the sequence, we check if the last few characters we've seen match our word. If they do, it means we have found one occurrence of the word. The clever part is that if this occurrence appears immediately after a previous occurrence of the word, then we are building a chain of repeats.
+
+We use a dynamic programming array, dp, where the value at any position i in this array represents the count of consecutive word repeats that end exactly at that position i in the sequence. So, if we find the word at a certain spot, we look back in the sequence by the length of the word. If that previous position also had a repeat count, it means we are continuing a chain. We then set the current repeat count to be one more than that previous count. While we do this, we constantly track the highest repeat count we have ever seen.
+
+
+
+
+
+The code first gets the lengths of the sequence (n) and the word (m). It then creates a dp array of size n+1, initialized with zeros. This array will store the consecutive repeat count that ends at each position. maxK is a variable to track the highest count we find.
+
+The loop starts from index m (the length of the word) because you cannot have a complete word match before this point. For each position i in the sequence, the code checks the substring that ends at i and has a length equal to the word. It does this using sequence.substr(i - m, m) and checks if it matches our word.
+
+If a match is found, the magic happens. The code looks at the value in the dp array at the position i - m. This is the position right before the current word started. The value stored there tells us how many consecutive repeats ended at that spot. We set dp[i] to be that value plus one, meaning we are extending that chain of repeats by one more word.
+
+For example, if dp[i - m] was 2, it means the segment ending at i-m was "wordword". Now we found another "word" right after it, so the segment ending at i is "wordwordword", giving us a count of 3.
+
+After updating dp[i], we check if this new count is greater than our current maxK and update maxK if it is. Once the loop has checked all possible positions in the sequence, maxK holds the highest number of consecutive repeats of the word found, which is returned as the answer.
+
