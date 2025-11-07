@@ -1,0 +1,103 @@
+Count Number of Teams
+
+
+
+
+
+Imagine you have a line of soldiers, each with a unique rating number. You need to form teams of three soldiers. The rule is simple: their ratings must be in either strictly increasing order (small, medium, large) or strictly decreasing order (large, medium, small). The soldiers must be chosen in order from left to right in the line.
+
+The brute-force way would be to check every possible combination of three soldiers. But that is very slow for a long line. The key to the efficient solution is to change your perspective. Instead of looking for three soldiers at once, you focus on the middle soldier first.
+
+
+
+
+
+The core idea is to pick each soldier, one by one, and pretend they are the middle soldier in the team of three. For a soldier to be a valid middle soldier, we need to find one soldier to their left and one to their right that fit the pattern.
+
+There are two valid patterns:
+
+Increasing Team: The left soldier's rating is lower than the middle, and the right soldier's rating is higher than the middle.
+
+Decreasing Team: The left soldier's rating is higher than the middle, and the right soldier's rating is lower than the middle.
+
+So, for the soldier we have chosen as the middle, we do two counts:
+
+We look at all soldiers to his left. We count how many have a smaller rating and how many have a larger rating.
+
+We look at all soldiers to his right. We count how many have a smaller rating and how many have a larger rating.
+
+Now, the magic happens with multiplication:
+
+The number of increasing teams with this soldier as the middle is: (number of smaller soldiers on the left) * (number of larger soldiers on the right). For each small-left soldier, you can pair them with every large-right soldier.
+
+The number of decreasing teams with this soldier as the middle is: (number of larger soldiers on the left) * (number of smaller soldiers on the right). For each large-left soldier, you can pair them with every small-right soldier.
+
+By doing this for every soldier as the potential middle, and adding up all the results, you get the total number of valid teams without ever having to check triple combinations directly.
+
+
+
+
+The code uses two loops inside a main loop. The main loop goes through each soldier, treating them as the middle soldier j.
+
+The first inner loop scans all soldiers from the start up to j (the left side). It simply counts how many have a rating less than j and how many have a rating greater than j, storing them in leftSmaller and leftLarger.
+
+The second inner loop scans all soldiers from j+1 to the end (the right side). It counts how many have a rating less than j and how many have a rating greater than j, storing them in rightSmaller and rightLarger.
+
+Finally, it calculates the teams for this middle soldier j using the formula (leftSmaller * rightLarger) + (leftLarger * rightSmaller) and adds this to the total count. After every soldier has been the middle, the total count is returned as the answer.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Count Number of Rectangles Containing Each Point
+
+
+
+You have many rectangles that all start at the origin (0,0). Each rectangle is defined by its length (how far it goes along the x-axis) and its height (how far it goes along the y-axis). You also have many points. For each point, you need to count how many rectangles contain it. A rectangle contains a point if the point's x-coordinate is less than or equal to the rectangle's length, and the point's y-coordinate is less than or equal to the rectangle's height.
+
+The brute-force method would be to take each point and check every single rectangle to see if it fits. This is very slow when there are tens of thousands of points and rectangles. The optimization comes from a critical observation: while the lengths can be very large (up to a billion), the heights are limited to a maximum of 100.
+
+
+
+
+
+
+We can use the constraint on height to our advantage. The plan is to organize the rectangles not as a flat list, but into groups based on their height.
+
+We create 100 buckets (from height 1 to 100). For each rectangle, we put it into the bucket corresponding to its height. Inside each bucket, we store all the lengths of the rectangles that have that specific height.
+
+Next, we sort the list of lengths in each bucket. Why? Because if the lengths are sorted, we can very quickly find out how many rectangles in that bucket are long enough to contain a point.
+
+Now, for a given point (x, y), how do we count the rectangles that contain it?
+The point will be contained by a rectangle if the rectangle's height is at least y and the rectangle's length is at least x.
+
+So, we start from the point's y-coordinate and look at all height buckets from y up to 100. For each of these height buckets, we need to count how many rectangles in that bucket have a length of at least x.
+
+Since the lengths in the bucket are sorted, we can use a powerful technique called binary search to find this count instantly instead of scanning the whole list. Binary search efficiently finds the first length in the sorted list that is greater than or equal to x. Once we find that position, we know that all rectangles from that position to the end of the list have sufficient length. The number of such rectangles is simply the total number in the list minus the position we found.
+
+We repeat this for every relevant height bucket and add up the counts to get the total number of rectangles containing that point. We then do this for every point.
+
+
+
+
+
+The code first creates a vector heights with 101 empty lists (index 0 is ignored, we use 1 to 100). It then loops through all rectangles. For a rectangle [l, h], it pushes the length l into the list at index h of the heights vector. This groups all rectangles by their height.
+
+It then sorts every single list inside the heights vector. Now, for each point [x, y], it initializes a counter to zero. It then starts a loop from h = y to h = 100. For each height h, it checks the corresponding list of lengths.
+
+If the list is not empty, it performs a binary search on that sorted list of lengths. The goal of the binary search is to find the index of the first element that is greater than or equal to x. The search works by repeatedly dividing the list in half, adjusting the search range until it pinpoints the correct first position.
+
+The variable idx is set to this found position. The number of valid rectangles in this bucket is then the total size of the list minus idx. This count is added to the point's total. After checking all heights from y to 100, the total count is saved as the result for that point, and the process repeats for the next point.
