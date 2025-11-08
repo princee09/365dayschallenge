@@ -1,0 +1,114 @@
+85: Maximal Rectangle
+
+
+
+
+
+Imagine you have a grid, like a sheet of graph paper, where each cell is either filled (a 1) or empty (a 0). Your goal is to find the largest rectangle you can draw on this paper that is completely filled with 1s. The rectangle's sides must be straight; it can't be an L-shape or any other irregular form.
+
+The clever way to solve this is to look at the problem row by row. Think of each row as the base or the ground floor of a building. For every row in the grid, we will build a "skyline" of bars, much like a city skyline.
+
+The height of each bar in this skyline at a given column is determined by how many consecutive 1s are stacked on top of each other, starting from the current row and going upwards. If the current cell is a 1, we add one more floor to the building in that column. If it's a 0, we completely demolish the building in that column, resetting its height to zero because a 0 breaks the chain of consecutive 1s above it.
+
+Once we have this skyline of bar heights for a specific row, our problem magically transforms into a different, simpler problem: "Find the largest rectangle in a histogram." A histogram is just a bar chart. So, for the skyline we just built, we figure out what is the biggest rectangle that can fit inside that bar chart.
+
+We repeat this process for every single row, treating each one as a new potential ground floor and building a new skyline. After checking all rows, the largest rectangle we found in any of these skylines is our final answer.
+
+
+
+
+
+We process the grid one row at a time.
+
+For each row, we calculate a heights array. Each entry in this array tells us the height of a "building" of 1s at that column position.
+
+We then use a special, efficient method (using a stack) to find the largest rectangle that can be formed in this bar chart of heights.
+
+We keep track of the largest rectangle we've seen across all rows.
+
+
+
+
+The code has two main parts.
+
+The first part, maximalRectangle, handles the main grid. It starts by checking if the grid is empty. Then, for each row, it updates the heights array. If it finds a 1, it increases the height for that column. If it finds a 0, it resets the height to zero. After preparing the heights for the current row, it calls a helper function to find the largest rectangle in this new histogram.
+
+The second part, largestRectangleArea, is the helper function that solves the histogram problem. It uses a stack, which is like a pile of plates where you can only add or remove from the top. It goes through each bar in the histogram. The stack is used to remember the indices of bars that are potential starting points for large rectangles.
+
+When it sees a bar that is shorter than the bar at the top of the stack, it knows that the taller bar can no longer extend to the right. So, it calculates the area of the rectangle that the taller bar can form. It does this by popping the bar from the stack, using its height, and calculating the width as the distance from its position to the current, shorter bar. It cleverly processes all bars, including a fake bar of zero height at the end, to ensure all possible rectangles are calculated. The largest area found during this process is returned.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+591: Tag Validator
+
+
+
+
+
+
+This problem is about checking if a string of code follows very specific grammar rules, similar to how a sentence must follow the rules of English to be correct. The code is made up of tags and content, and we need to validate all of it.
+
+The code must be wrapped inside one main tag, like a book must be inside a cover. Inside this main tag, there can be text, more nested tags (like chapters inside a book), or special "CDATA" sections.
+
+A tag looks like <TAG_NAME> for opening and </TAG_NAME> for closing. The tag name must be in all capital letters and be between 1 and 9 letters long. Most importantly, tags must be properly nested and closed. This means if you open a tag <A>, you must later close it with </A>, and if you open another tag <B> inside it, you must close </B> before you close </A>. You cannot have overlapping tags.
+
+Then there are CDATA sections. They look like <![CDATA[ ... ]]>. Everything between <![CDATA[ and the first ]]> that follows is treated as plain text. The validator should not try to interpret any tags or special symbols inside a CDATA section; it's all just regular content.
+
+To validate this, we read the code string from left to right, character by character. We use a stack, which is like a pile of open folders, to keep track of which tags we have opened but not yet closed.
+
+When we find an opening tag <TAG_NAME>, we check if the tag name is valid (all caps, correct length). If it is, we put it on top of our stack of open tags.
+
+When we find a closing tag </TAG_NAME>, we check if it correctly matches the last opened tag that is still open (the one on top of our stack). If it matches, we remove that tag from the stack, meaning we've closed it properly. If it doesn't match, or if there is no open tag to close, the code is invalid.
+
+When we find a CDATA section <![CDATA[ ... ]]>, we first check that we are inside at least one open tag (our stack is not empty). Then, we simply skip over the entire CDATA content until we find the closing ]]>. We don't process anything inside it.
+
+For any other regular text characters, we simply ensure that we are inside at least one open tag. If our stack is empty, it means this text is not inside any tag, which is invalid.
+
+Finally, after we have read the entire code string, we must ensure that all opened tags have been closed. This means our stack of open tags should be empty. If it's not, the code is invalid.
+
+
+
+
+
+
+The entire code must be wrapped in one valid outer tag.
+
+We use a stack to keep track of opened tags and ensure proper nesting.
+
+Tag names must be all uppercase and 1-9 characters long.
+
+CDATA sections are treated as plain text and are only valid inside a tag.
+
+All regular text must be inside a tag.
+
+At the end, all tags must be closed (the stack must be empty).
+
+
+
+
+
+
+The code, isValid, reads the string one character at a time. It uses a stack called tags to remember the names of the tags that are currently open.
+
+The main logic is inside a loop that goes through the string. The first thing it checks is if the current character is a <, because that signals the start of a tag or a CDATA section.
+
+If the characters after the < are !, it means we've found a CDATA section. The code checks if we are inside a tag (stack not empty) and if the start is exactly <![CDATA[. Then, it searches for the first occurrence of ]]> to mark the end of the CDATA section and jumps the reading position i to after this ending.
+
+If the character after < is /, it means we've found a closing tag. The code finds the next > character, extracts the tag name, and checks if it matches the last opened tag (the one on top of the stack). If it matches, that tag is popped from the stack. A special check is done here: if the stack becomes empty but we haven't finished reading the string, it's an error because all content must be inside the main outer tag.
+
+If the character after < is a normal letter, it's an opening tag. The code finds the next >, extracts the tag name, and checks if it's valid using the isValidTag helper function. If it is valid, the tag name is pushed onto the stack.
+
+For any other character (regular text), the code just checks that the stack is not empty, meaning we are inside a tag.
+
+Finally, after the loop finishes, the code returns true only if the stack is completely empty, confirming that all opened tags were properly closed
