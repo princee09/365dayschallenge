@@ -1,0 +1,97 @@
+395: Longest Substring with At Least K Repeating Characters
+
+
+
+
+The core challenge of this problem is to find the longest part of a string where every single letter that appears in that part does so a minimum number of times, k. You cannot have any letter in your chosen substring that appears fewer than k times.
+
+A brute-force method would be to check every possible substring, but that is very slow. The key insight to optimize this is to break the problem down based on the number of unique letters the substring can contain.
+
+Imagine you are told, "Find the longest valid substring, but it can only contain exactly 1 type of unique letter." This is easier. Then you try, "Find the longest valid substring with exactly 2 unique letters," and so on, up to the maximum number of unique letters in the entire string.
+
+Why does this work? Because it transforms a vague search into a controlled, measurable one. For each specific number of unique letters (currUnique), we use a sliding window.
+
+The sliding window is like a flexible frame that moves across the string. We maintain this frame such that the number of unique letters inside it never exceeds our current target (numUnique). As we slide the window to the right, we add letters. If we have too many unique letters, we shrink the window from the left until we are back under the limit.
+
+The magic happens when we check the condition for a valid substring. We not only track how many unique letters are in the window (unique), but also how many of those unique letters have met the k-repetition requirement (countAtLeastK). The window is perfectly valid at the exact moment when the number of unique letters equals the number of "k-qualified" letters. This means every single letter in the window appears at least k times. We then note the length of this window.
+
+By doing this for every possible count of unique letters (from 1 up to 26, since there are only 26 lowercase letters), we are guaranteed to find the longest possible valid substring.
+
+
+
+
+The code has three main parts.
+
+First, the getMaxUniqueLetters function simply counts how many different letters are in the entire string. It goes through the string, keeps track of which letters it has seen, and returns the total count.
+
+Second, the main longestSubstring function sets up the master plan. It gets the maximum number of unique letters. Then, it starts a loop, trying every possible number of unique letters from 1 up to that maximum. For each try, it calls the third function and keeps the best result.
+
+Third, the longestSubstringWithNUnique function does the real work using the sliding window. It uses two pointers, start and end, to represent the current window. It has counters to track the number of unique letters in the window and how many of them have a count of at least k.
+
+The main loop continues as long as the end pointer hasn't gone through the whole string. If the current number of unique letters is within our limit, we expand the window to the right by moving end. We add the new letter to our count, and update our unique and countAtLeastK trackers.
+
+If we have too many unique letters, we shrink the window from the left by moving start. We remove the leftmost letter from our count and update our trackers accordingly.
+
+After every adjustment to the window, we check if it's a valid substring (number of unique letters equals the number of k-qualified letters). If it is, we see if this window is the longest we've found so far for this unique-letter count.
+
+Finally, the result from all these loops is combined to give the final answer.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1040: Moving Stones Until Consecutive II
+
+
+
+
+
+This problem involves stones on a number line. You can only move the leftmost or rightmost stone, and you must move it to a new, empty position that is between the other stones, so it is no longer an endpoint. The game ends when the stones are in consecutive positions (like 3, 4, 5).
+
+We need to find the minimum and maximum number of moves to finish the game.
+
+Let's start with the maximum moves. The maximum number of moves is essentially the total number of empty spaces we have to fill between the stones. However, there's a catch. The first move you make determines which endpoint stone you "sacrifice" and creates a new gap.
+
+Imagine the stones are sorted. You have two main strategies:
+
+Move the leftmost stone first: In this case, you will eventually use all the empty spaces between the second stone (stones[1]) and the last stone (stones[n-1]).
+
+Move the rightmost stone first: In this case, you will eventually use all the empty spaces between the first stone (stones[0]) and the second-to-last stone (stones[n-2]).
+
+The calculation stones[n-1] - stones[1] - (n - 2) finds the number of empty slots in the first scenario. We take the total space from the second stone to the last, and subtract the (n-2) stones that are already sitting in that range, leaving only the empty slots. We do the same for the second scenario and take the maximum of the two. This gives us the maximum number of moves, as each move can fill one empty slot.
+
+Now, for the minimum moves. This is trickier. We want to find the smallest number of moves to get all n stones into a consecutive block. Think of it as finding a "target" segment of the number line of length n that can contain as many of our current stones as possible. The number of moves needed will be the number of stones missing from this ideal segment.
+
+We use a sliding window over the sorted stones. For each stone at position i, we try to see how many stones are already within a segment of length n that starts at i. The pointer j expands until the gap between stones[i] and stones[j] is less than n. The number of stones in this window is j - i.
+
+If we have a window that contains stones_in_window stones, then we need to move n - stones_in_window stones into this window to fill it up. However, we must be careful. There is a special case: if the window has n-1 stones and these stones are already perfectly consecutive (the gap between the first and last stone in the window is exactly n-2), then we cannot just move one stone in. The stone we would move in would have to come from outside, and placing it would require 2 moves to maintain consecutiveness. So in this specific scenario, the minimum moves for that window is 2.
+
+By checking every possible starting stone i and its corresponding window, we find the absolute minimum number of moves required across all possible final positions for the consecutive stones.
+
+
+
+
+
+The code first sorts the stone positions because we need to work with them in order.
+
+For the maximum moves, it calculates the two scenarios described. It calculates the empty spaces if we move the left endpoint first (stones[n-1] - stones[1] - (n - 2)) and if we move the right endpoint first (stones[n-2] - stones[0] - (n - 2)). The final max_moves is the larger of these two values.
+
+For the minimum moves, it initializes min_moves to the worst-case scenario, n. Then it uses a sliding window with two pointers, i and j. The outer loop moves i from the start to the end. The inner while loop moves j forward as long as the stones from i to j can fit within a segment of length n. This tells us how many stones are already in a potential consecutive block.
+
+stones_in_window is set to j - i. Then, it checks for the special case: if there are n-1 stones in the window and they are already consecutive (the gap from the first to the last is n-2). If this special case is true, it takes a minimum of 2 moves. For all other windows, the number of moves needed is simply the number of missing stones, which is n - stones_in_window.
+
+The code keeps updating min_moves to be the smallest value found during this entire process.
+
+Finally, it returns the pair {min_moves, max_moves} as the answer.
