@@ -1,0 +1,75 @@
+Minimum Depth of Binary Tree
+
+
+
+
+
+Imagine you are standing at the entrance (the root) of a very large, branching cave system. Your goal is to find the nearest dead-end room (a leaf node) that has no connecting passages ahead. The depth is the number of rooms you pass through from the entrance to get to that nearest dead-end, counting both the start and end rooms.
+
+The most efficient way to find the nearest dead-end is to explore the cave level by level. You don't want to go all the way down one long tunnel first, because a dead-end might be just one step away on a different path. So, you start at the entrance (level 1). You look at all the rooms you can reach from your current position. You check each one. If any of them is a dead-end, you are done. Your current level is the answer. If none of them are dead-ends, you then make a list of all the rooms you can get to from those rooms. This is the next level. You then go to all those rooms and check again for a dead-end. You repeat this process, moving one level deeper each time, until you finally find a dead-end room. Because you checked all possibilities on level 1 before moving to level 2, and all of level 2 before moving to level 3, the first dead-end you find is guaranteed to be the closest one to the entrance.
+
+
+
+
+
+The code uses a queue, which is like a "First-In, First-Out" line, to manage this level-by-level search.
+
+First, it checks if the tree is empty. If it is, the depth is zero.
+
+It starts by putting the root node into the queue. The depth is set to 1 because we are starting at the first level.
+
+The main loop runs as long as there are nodes left in the queue to process. At the beginning of each loop, we note how many nodes are currently in the queue. This number represents all the nodes at our current depth level. We then process each of these nodes one by one.
+
+For each node, we remove it from the front of the queue and examine it. We check if this node is a leaf (a dead-end) by seeing if it has no left or right child. If it is a leaf, our search is over, and we immediately return the current depth.
+
+If it is not a leaf, we look at its children. If a left child exists, we add it to the back of the queue. If a right child exists, we also add it to the back of the queue. These children represent the nodes we will explore at the next level.
+
+After we have finished processing every single node from the current level, we increase the depth counter by one. This means we are now moving down to the next level of the tree to continue our search for a leaf node. The process repeats until a leaf is found.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Minimum Absolute Difference in BST
+
+
+
+
+
+
+
+Imagine you have a bookshelf where all books are sorted in increasing order from left to right. Your task is to find the two books that have the closest publication years. The most straightforward way to do this is not to compare every book with every other book, which would take a very long time. Instead, you simply walk along the shelf from left to right and, for each book, check the publication year difference with the book immediately to its left. Since the shelf is sorted, the two closest books must be next to each other in this sequence. The smallest difference you find during this single pass is your answer.
+
+A Binary Search Tree (BST) has a special property: if you perform an "in-order" traversal (which means: visit the left subtree first, then the current node, then the right subtree), you will visit all the nodes in ascending order, just like reading the sorted books on the shelf. Therefore, the minimum absolute difference between any two nodes must be the smallest difference between two consecutive nodes during this in-order traversal.
+
+
+
+
+
+
+
+The code uses a stack to perform this in-order traversal without recursion, simulating the process of walking through the sorted list.
+
+It starts at the root node. The main goal of the first inner while loop is to go as far left as possible from the current node, pushing every node it passes onto the stack. Think of the stack as a "to-do" list that remembers where we need to go back to. This action is equivalent to walking to the very left end of our sorted bookshelf to find the smallest value.
+
+Once it cannot go left any further, it backtracks by popping the top node from the stack. This node is the next node in our sorted sequence. It is now processed.
+
+We have a prev variable that always remembers the node we processed just before the current one. For the very first node we process, there is no previous node, so we skip the comparison. For every subsequent node, we calculate the difference between the current node's value and the previous node's value. We then update our minDiff variable if this new difference is smaller than any we have seen before.
+
+After processing the current node, we set prev to this current node so it will be the "previous" node for the next one. Finally, we move our focus to the right subtree of the current node. The entire process then repeats for this right subtree: we go as far left as we can within it, pushing nodes onto the stack, and then popping and processing them. This ensures we visit all nodes in the correct ascending order.
+
+The loop continues until there are no more nodes in the stack and the current node pointer is also null, meaning we have traversed the entire tree. The minDiff variable will then hold the smallest difference found between any two consecutive nodes in the sorted order.
+
