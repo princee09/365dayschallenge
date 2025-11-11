@@ -1,0 +1,76 @@
+Maximum Number of Robots Within Budget
+
+
+
+Imagine you have a lineup of robots. Each robot has a one-time "charging cost" and a "running cost" that you pay every minute it operates. You have a fixed amount of money (your budget). You want to find the longest consecutive group of robots you can run without going over your budget. The total cost for a group is calculated as the highest charging cost in that group, plus the number of robots multiplied by the sum of all their running costs.
+
+The tricky part is that as you consider a longer group of robots, two things happen that increase the cost: 1) The highest charging cost might go up if you include a more expensive robot, and 2) The term (number of robots * sum of running costs) gets much larger. We need a smart way to slide through the list of robots, adjusting our group to stay within budget.
+
+
+
+We use a "window" that defines our current group of robots, starting from the left robot and ending at the right robot. We start with an empty window.
+
+We will move the right pointer one robot at a time to the right, effectively adding a new robot to our group. Every time we add a new robot, we do three main things.
+
+First, we update the total running cost of the group by adding the new robot's running cost.
+
+Second, we need to know the highest charging cost in our current window. To do this efficiently, we use a special list called a deque. This list is kept in such a way that the robot at the front always has the highest charging cost in the current window. When we add a new robot, we remove any robots from the end of this list that have a lower or equal charging cost. This ensures that the list remains sorted with the most powerful robot at the front. Then we add the new robot's position to the end of the list.
+
+Third, we calculate the total cost of our current group: it's the charging cost of the robot at the front of our special list (the maximum), plus the number of robots in the window multiplied by their total running cost.
+
+Now, we check if this total cost has exceeded our budget. If it has, our group is too expensive. To fix this, we must shrink the group from the left side. We move the left pointer to the right, which removes a robot from the group. We subtract that robot's running cost from our total. We also check if the robot we just removed from the group was the one at the front of our special list (the one with the highest charging cost). If it was, we must also remove it from the front of the list because it is no longer in our window. After shrinking the window, we recalculate the cost.
+
+Finally, after ensuring our window's cost is within budget, we check if this window is the largest we have seen so far and record its size. We repeat this process of expanding and shrinking the window until we have checked all robots. The largest window size we recorded is our answer.
+
+Why the Special List (Deque) is Crucial: Without this list, finding the maximum charging cost in the current window every time we move a pointer would be very slow. This list allows us to know the maximum instantly and to update it efficiently when we add or remove a robot.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Count Subarrays With Fixed Bounds
+
+
+
+
+You are given a list of numbers and two special values: a minimum (minK) and a maximum (maxK). Your task is to count every contiguous sub-list (a smaller section of the original list) that meets two strict conditions: the smallest number in that sub-list must be exactly minK, and the largest number must be exactly maxK.
+
+
+
+
+A valid sub-list must contain at least one minK, at least one maxK, and absolutely no numbers that are smaller than minK or larger than maxK. Checking every possible sub-list individually would be incredibly slow for a long list.
+
+
+
+
+
+We will walk through the list from left to right, treating each position as the potential end of many valid sub-lists. For the sub-lists ending at our current position, we need to figure out where they can start.
+
+We keep track of three important positions as we move.
+
+The first is the leftBound. This is the position of the last "bad" element we saw—an element that was smaller than minK or larger than maxK. Any valid sub-list cannot include a bad element. Therefore, the start of any valid sub-list ending at our current position must be to the right of this leftBound. This leftBound acts as a wall; no sub-list can start before it.
+
+The other two positions we track are the last seen occurrences of the two special values: the last time we saw minK (lastMin) and the last time we saw maxK (lastMax). These are the essential ingredients for a valid sub-list.
+
+Now, the key insight: For a sub-list ending at our current position to be valid, it must contain both a minK and a maxK. The very last occurrence of minK and maxK within our current segment tells us the earliest point where both ingredients are present.
+
+Imagine you are making a sandwich and you need both bread and cheese. You look in your kitchen and find the last slice of bread you used was at position 3, and the last piece of cheese was at position 5. To make a sandwich that includes both, you must start your sandwich no earlier than position 3 (the later of the two ingredients you found). If you start earlier, you might miss the cheese.
+
+In our problem, the "starting point" for a valid sub-list is determined by the later of the two essential ingredients. Specifically, it is the more recent (or "rightmost") of the two pillars, lastMin and lastMax. However, to find the number of valid starting points, we need the leftmost possible start. The leftmost possible start for any sub-list is just to the right of the leftBound. The rightmost possible start for a valid sub-list is the earlier (or "leftmost") of lastMin and lastMax, because that is the last position where both ingredients became available.
+
+Therefore, for a sub-list ending at position i, all starting points from (leftBound + 1) up to min(lastMin, lastMax) are valid. The number of such starting points is min(lastMin, lastMax) - leftBound.
+
+If we have not seen both minK and maxK yet, we cannot form any valid sub-lists ending here, so we add zero. If we encounter a "bad" number, we reset everything. We move the leftBound to this bad position, and we reset our lastMin and lastMax because this bad number breaks all sequences, and we must start looking for new minK and maxK values after it.
+
+By repeating this process for every ending position in the list and adding up all the valid starting points, we efficiently count every single valid sub-list without having to check each one manually.
