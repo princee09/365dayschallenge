@@ -1,0 +1,82 @@
+72: Edit Distance Intuition
+
+
+Imagine you have two words, and you want to make them identical. You are only allowed three operations: you can insert a new character, delete an existing character, or replace one character with another. The goal is to find the absolute minimum number of these edits required.
+
+The smart way to solve this is by breaking the big problem down into many tiny sub-problems. Think of it as comparing the words not all at once, but one letter at a time, starting from the very beginning.
+
+We create a mental table. The rows represent how many letters we have considered from the first word, and the columns represent how many letters we have considered from the second word. Each cell in this table will store the minimum number of edits needed to make the first part of the first word identical to the first part of the second word.
+
+Now, we fill this table step by step. There are only a few simple rules to follow. If the two letters we are currently looking at are the same, that is great news. It means we do not need to perform an edit for these two letters. The cost for this position is simply the cost from the previous position, when both words were one letter shorter.
+
+However, if the two letters are different, we have a choice to make. We must perform one of the three operations, and we want to choose the cheapest one. The first option is deletion. This is like pretending the current letter in the first word does not exist, so we look at the cost for the first word without this letter and then add one for the delete operation. The second option is insertion. This is like pretending we have already inserted the required letter from the second word into the first word, so we look at the cost for the second word without this letter and add one for the insert operation. The third option is replacement. This is like pretending we have made the two current letters match by changing one of them, so we look at the cost from when both words were one letter shorter and then add one for the replace operation.
+
+We always pick the cheapest of these three options. By systematically filling out this table for all combinations of letter prefixes, the final answer will be in the very last cell, representing the cost to transform the entire first word into the entire second word.
+
+
+
+
+The code implements the intuition above but in a very memory-efficient way. Instead of storing the entire table, which would be large, it only keeps two rows in memory at any time: the previous row and the current row being calculated.
+
+First, it initializes the prev row. This row represents the scenario where the first word is completely empty. To make an empty word match the second word, we would have to insert every single letter of the second word. So, the cost at each position in this initial row is just the number of letters inserted so far, which is equal to the column index.
+
+Then, it starts a loop for each letter in the first word. For each new letter, it sets up the curr row. The first element of this current row represents the scenario where the second word is empty. To make the first word match an empty word, we would have to delete all its letters. So, the cost here is the number of letters deleted so far, which is equal to the row index.
+
+Next, it loops through each letter of the second word to fill the rest of the curr row. For each pair of letters, it checks if they match. If they match, it simply copies the value from the diagonal previous cell, meaning no new edit is needed. If they do not match, it calculates the cost for the three operations. It looks at the value above for deletion, the value to the left for insertion, and the diagonal value for replacement. It takes the minimum of these three values and adds one for the edit itself.
+
+After completely filling the curr row for the current letter of the first word, it moves on. The curr row becomes the new prev row for the next iteration. Once all letters of the first word have been processed, the answer is found in the last element of the prev array, which now holds the minimum edit distance between the two full words.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+300: Longest Increasing Subsequence Intuition
+
+
+
+
+
+We are given a list of numbers, and we want to find the length of the longest subsequence where the numbers are strictly increasing. A subsequence means we can skip some numbers in between, but we cannot change the order of the numbers that we pick.
+
+The efficient solution uses a clever strategy with a list we will call tails. The tails list does not store the actual longest subsequence, but it is a tool to help us find its length. The core idea is that we want to be as greedy as possible to allow the subsequence to be extended easily in the future.
+
+Here is the rule: the tails list is built so that at any point, the element at position i is the smallest possible ending number for all increasing subsequences we have found that have a length of i+1.
+
+We go through each number in the original list one by one. For each new number, we ask: where does this number belong in our tails list? We use a binary search, which is like looking for a name in a phone book by repeatedly splitting the book in half, to quickly find the correct position for this number in the tails list.
+
+There are two outcomes for each number. If the number is larger than every element currently in the tails list, it means we can extend our longest subsequence. So, we append this number to the end of the tails list, effectively creating a new, longer subsequence.
+
+If the number is not the largest, we find the first number in the tails list that is greater than or equal to our current number, and we replace that number with our current, smaller number. This is the key insight. By replacing a larger ending number with a smaller one, we are not changing the length of any existing subsequence, but we are making it easier to find even longer subsequences in the future because we have a smaller number to build upon.
+
+When we finish processing all numbers, the length of the tails list is the length of the longest increasing subsequence. The list itself may not be a valid subsequence, but its length accurately represents the answer.
+
+
+
+
+The code brings the intuition to life. It starts by declaring an empty vector called tails.
+
+Then, it loops through every number in the input list. For each number, it needs to find its position in the tails list. It does this using a binary search. It defines a left pointer at the start of the list and a right pointer at the end of the list.
+
+The while loop continues as long as left is less than right. It calculates the middle index. If the number in the tails list at this middle index is smaller than our current number, it means our current number belongs in the right half, so it moves the left pointer to just after the middle. If the number at the middle is greater than or equal to our current number, it means our current number belongs in the left half, including the middle, so it moves the right pointer to the middle. This process narrows down the search until left points to the correct position.
+
+Once the position left is found, the code checks if this position is at the very end of the tails list. If it is, it means the current number is larger than all existing numbers, so it appends the number to tails, increasing the potential subsequence length.
+
+If the position left is not at the end, it means the code found a number in tails that is larger than or equal to the current number. The code then replaces that existing number in tails with the current, smaller number. This strategic replacement keeps the subsequence endings as small as possible, making it easier to find longer sequences later without changing the current recorded lengths.
+
+After processing all numbers, the code simply returns the size of the tails vector. This size represents the length of the longest strictly increasing subsequence.
