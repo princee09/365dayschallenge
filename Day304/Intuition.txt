@@ -1,0 +1,76 @@
+1343: Number of Sub-arrays of Size K and Average Greater than or Equal to Threshold
+
+
+
+Imagine you have a line of people, each holding a card with a number. Your task is to find groups of exactly K people standing next to each other where the average of the numbers on their cards is at least a certain value, called the threshold.
+
+The straightforward way would be to look at the first K people, calculate their average, and see if it's high enough. Then you would move one person to the right, include that new person, exclude the first person, and calculate the average again. Doing this from scratch every single time would be very slow and repetitive, like counting the total value of the cards from the beginning for every new group.
+
+A much smarter and faster way exists. Think of it like using a sliding window. You first calculate the total sum of the first K cards. Instead of calculating the average, you realize a simple trick: if the sum of the cards is at least (K multiplied by the threshold), then the average will automatically be at least the threshold. This is because average is just the total sum divided by K.
+
+So, you note down this required sum. Now, you have the sum for your first window. You check if it meets the requirement and count it if it does.
+
+Here is the clever sliding part: To move to the next group, you don't need to add up all K numbers again. The new group is almost the same as the old one, except the first person left and a new person joined at the end. So, you simply take your current total, subtract the number of the person who just left, and add the number of the new person who just joined. This gives you the new total instantly. You check this new total against your requirement and count if it passes. You keep sliding this window one person at a time until you have checked all possible groups of K people in the line.
+
+This method is efficient because you only do a small, constant amount of work for each new group instead of a lot of repetitive work.
+
+
+
+
+The code uses this exact sliding window idea. It starts by calculating the required sum, which is k * threshold. It then sets up a currentSum variable to hold the sum of the current window of K elements.
+
+It uses a loop to add up the first K numbers into currentSum. It then checks this first window to see if it meets the requirement and initializes a counter if it does.
+
+The main part of the code is another loop that starts from the K-th element. In each step of this loop, it slides the window forward. It does this by adding the value of the new element that has entered the window and subtracting the value of the old element that has just fallen out of the window (which is the element at position i - k). After this quick update, it immediately checks if the new currentSum is still good enough and increments the counter if it is. Finally, the code returns the total count of all the valid windows it found.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1438: Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit
+
+
+
+
+
+
+Now, imagine you have a line of people again, but this time you are looking for the longest possible group of people standing consecutively. The condition for this group is that the difference between the tallest person and the shortest person in the group must not exceed a certain limit.
+
+If you think about any group, the only two numbers that matter for the absolute difference are the largest number and the smallest number in that group. The values in between do not directly affect the maximum difference.
+
+The challenge is that as you make the group larger by adding new people, the tallest person might get taller, or the shortest person might get shorter, which could break the limit rule. Similarly, when you shrink the group from the left, you might be removing the current tallest or shortest person, which would change the extremes.
+
+A brute-force method would be to check every possible group, which is incredibly slow for a long line. The efficient solution uses a sliding window that expands and contracts, and it uses two special lists (called deques) to keep track of the potential maximum and minimum values in the current window.
+
+Think of two assistants. One assistant's job is to remember the people in the current group who could be the tallest if the people in front of them were removed. This list is kept in descending order. The other assistant's job is to remember the people who could be the shortest, and this list is kept in ascending order.
+
+As you add a new person to the group (the window expands to the right), you update these lists. For the "max" list, you remove any person from the end who is shorter than the new person because this new, taller person makes them irrelevant as a future maximum. You then add the new person. You do the opposite for the "min" list, removing anyone who is taller than the new person.
+
+Now, you check the current extremes (the first person in your "max" list and the first in your "min" list). If the difference between their heights is more than the limit, your group is invalid. To fix it, you must shrink the group from the left. You move the left boundary forward. If the person leaving the group is the one at the front of either your "max" or "min" list, you also remove them from that list because they are no longer in the group.
+
+You constantly track the size of the valid group as you do this. The largest size you record during this entire process is your answer.
+
+
+
+
+
+The code implements this using two deque data structures, which are like lists that allow efficient insertion and removal from both ends. maxDeque stores indices of elements in a way that the corresponding values are in decreasing order, and minDeque stores indices for values in increasing order.
+
+A left pointer marks the start of the current window. The code loops through each element with a right pointer, expanding the window.
+
+Inside the loop, it first updates the maxDeque by removing from the back all indices whose values are less than or equal to the new value at right, as they are now obsolete. It then adds the current right index. The same logic, but reversed, is applied to maintain the minDeque.
+
+After updating the deques, it checks if the current window is valid by looking at the values at the fronts of the deques (the current max and min). If their difference exceeds the limit, it means the window is invalid. To fix this, it increments the left pointer to shrink the window from the start. While doing this, it also checks if the element at left is the front of either deque, and if so, removes it from the deque since it's no longer in the window.
+
+Finally, after ensuring the window is valid, it calculates the window size and updates the maxLength if the current window is the largest valid one found so far. The final result is the value of maxLength.
