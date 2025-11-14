@@ -1,0 +1,75 @@
+2222: Number of Ways to Select Buildings
+
+
+
+
+
+
+Imagine you are an official walking down a street with two types of buildings: offices (0) and restaurants (1). Your job is to pick exactly three buildings for inspection, but there is a very important rule: in your final selection of three, no two buildings that are next to each other in your chosen list can be of the same type.
+
+This means the sequence of your three chosen buildings must alternate. The only two valid patterns are "office, restaurant, office" (0,1,0) or "restaurant, office, restaurant" (1,0,1). Any other pattern like "0,0,1" or "1,1,0" would break the rule because it has two of the same type in a row.
+
+The key to solving this efficiently is to focus on the middle building. For every building on the street, we can ask: "If I make this my middle building, how many valid triples can I form?"
+
+If the middle building is an office (0), then to form the pattern "1,0,1", we need to find a restaurant (1) somewhere to its left and a restaurant (1) somewhere to its right. The total number of ways for this middle building is simply: (number of restaurants to the left) multiplied by (number of restaurants to the right).
+
+Similarly, if the middle building is a restaurant (1), then to form the pattern "0,1,0", we need to find an office (0) to its left and an office (0) to its right. The number of ways is: (number of offices to the left) multiplied by (number of offices to the right).
+
+By doing this for every possible middle building and adding up all the results, we get the total number of valid ways to select three buildings.
+
+
+
+
+The code first prepares by counting, for every position in the street, how many restaurants and offices are to its left and to its right. It does this by scanning the street from left to right to fill the "prefix" arrays (counts from the start up to a point), and then scanning from right to left to fill the "suffix" arrays (counts from a point to the end).
+
+Then, it loops through each building, treating it as the middle one. If it's an office, it looks up how many restaurants are to its left and right from the pre-calculated arrays and multiplies them. If it's a restaurant, it does the same but for offices. It adds all these products together to get the final answer. This method avoids a slow, brute-force check of every possible triple.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2270: Number of Ways to Split Array
+
+
+
+
+
+
+Imagine you have a row of treasure chests, each containing a certain amount of gold (which can be positive or negative). You want to draw a single dividing line somewhere between the chests to split them into a left group and a right group. A split is considered "valid" if the total gold in the left group is greater than or equal to the total gold in the right group. You cannot put the line after the last chest, because the right group must have at least one chest.
+
+The straightforward way would be to, for every possible split, add up all the chests on the left and all the chests on the right and compare them. However, with a long row of chests, this would be very slow because you would be re-adding the same chests many times.
+
+A much smarter way is to first figure out the total amount of gold in all the chests combined. Now, as you move your potential dividing line from left to right, you keep a running tally of the gold in the left group. You don't need to add up the right group separately because you can calculate it instantly: the right group's gold is simply the total gold minus the left group's gold.
+
+The rule for a valid split is: Left Sum >= Right Sum. If we substitute "Right Sum" with "Total Sum - Left Sum", the rule becomes: Left Sum >= Total Sum - Left Sum. A little bit of rearranging shows that this is the same as saying: (2 * Left Sum) >= Total Sum.
+
+So, the process becomes very simple: as you move from chest to chest, you add the current chest's gold to your running left sum. Before you add the very last chest (to ensure the right group isn't empty), you check if double your current left sum is at least the total sum. If it is, you have found a valid split.
+
+
+
+
+
+
+The code first calculates the total sum of the entire array. Then it initializes a running sum (prefix sum) to zero. It loops through each element of the array, but it stops before the last element to ensure the right side always has at least one chest.
+
+Inside the loop, it adds the current chest's value to the running left sum. It then checks the condition: if two times the left sum is greater than or equal to the total sum. If this condition is true, it means the current position is a valid splitting point, and it increments the counter. After checking all possible split positions, it returns the final count.
