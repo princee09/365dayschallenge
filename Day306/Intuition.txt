@@ -1,0 +1,65 @@
+1584: Min Cost to Connect All Points
+
+
+
+
+Imagine you have several houses on a large piece of land, and your goal is to connect them all with electrical wiring. The cost of the wire between any two houses is the shortest walking distance between them, calculated by adding the number of steps you take east or west to the number of steps you take north or south. This specific way of measuring distance is called the Manhattan distance.
+
+You want to connect all the houses for the lowest total cost. You do not need to connect them in a big circle; you just need one single network where every house is connected, directly or indirectly, to every other house. This is like building a tree that connects all the houses, where the total length of all the branches is as small as possible. This is known as a "Minimum Spanning Tree."
+
+The strategy to solve this is like a smart, greedy construction project. You start by picking any one house to begin your network. Now, you look at all the other houses not yet connected and find the single closest one to your current network. You then build the wire to that closest house, adding its cost to your total. Now your network has two houses.
+
+You repeat this process. Now, you look from your entire network (all the connected houses) to every house still unconnected. You find the very cheapest connection from any point in your network to any unconnected house, and you build that one. You keep doing this, always adding the cheapest possible new connection that links a new, unconnected house to your growing network, until every single house is connected.
+
+This method works because by always choosing the absolute cheapest next connection, you avoid expensive, long wires, ensuring the overall total cost is minimized.
+
+
+
+
+The code uses a special list called a "priority queue" or a "min-heap" to be efficient. It starts by marking the first point as the beginning of the network. It then calculates the distance from this first point to every other point and stores these distances in the priority queue, which automatically keeps the smallest distance on top.
+
+It then enters a loop. In each step, it takes the smallest distance from the top of the queue. If that point hasn't been visited yet, it officially adds it to the network and adds the cost of that connection to the total. Once a new point is added to the network, the code checks the distance from this new point to all other unvisited points. If it finds a shorter distance to an unvisited point than what was known before, it updates the distance for that point in the priority queue.
+
+This process repeats, always pulling the next cheapest connection from the queue, until all points have been visited and connected. The final total cost is the answer.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2285: Maximum Total Importance of Roads
+
+
+
+
+Imagine you have a number of cities and roads connecting them. You have to assign a unique importance value, from 1 to the number of cities, to each city. The "importance" of a single road is the sum of the values of the two cities it connects. Your goal is to assign these values to maximize the sum of the importance of every single road.
+
+The key insight is that some cities are busier than others. A city that has many roads connected to it, like a major hub, will contribute its value to the importance score of every single one of those roads. If a city has five roads, its value gets added to the total sum five separate times, once for each road.
+
+Therefore, to maximize the total sum, you should give the highest numbers to the cities that have the most roads connected to them. This way, the number that gets added the most times to your total is also the largest possible number.
+
+Think of it like giving the biggest megaphone to the person who has to speak to the most people. You want the most frequently used number in your final calculation to be as large as possible.
+
+
+
+
+
+The code first figures out how many roads are connected to each city. This is called calculating the "degree" of each city. It simply goes through the list of all roads and, for each road, adds one to the count for each of the two cities it connects.
+
+Once it has the count for every city, it sorts these counts from the highest number of connections to the lowest. This list tells us which cities are the most well-connected.
+
+Finally, it assigns the values. The city with the most connections gets the highest possible value, which is the total number of cities. The city with the second-most connections gets the next highest value, and so on, down to the least connected city, which gets the value of 1.
+
+To calculate the final answer, it goes through each city. For each city, it multiplies its number of connections by the value it was assigned. It then adds up all these products. This works because each road's importance is the sum of two city values, and when you add up the importance of all roads, you are essentially adding up the value of each city as many times as it has roads connected to it. This sum of (connections * value) for all cities gives the maximum total importance of all roads.
