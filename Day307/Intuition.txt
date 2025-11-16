@@ -1,0 +1,23 @@
+1878: Get Biggest Three Rhombus Sums in a Grid
+
+The intuition behind this problem is to find diamond-shaped patterns in a grid and calculate the sum of numbers along their borders. Imagine you have a grid of numbers and you're looking for diamond shapes of different sizes. The smallest diamond is just a single cell. Larger diamonds extend outward from a center point in four diagonal directions.
+
+The code works by checking every possible center point in the grid. For each center, it considers diamonds of increasing size. For each diamond size, it carefully adds up all the numbers along the diamond's border - the four edges that form the diamond shape. As it calculates these border sums, it keeps track of the three largest unique sums it finds.
+
+The algorithm uses a special container that automatically keeps elements sorted in descending order and only allows unique values. Whenever this container has more than three sums, it removes the smallest one. This ensures we're always tracking only the top three distinct sums without needing to store all possible sums.
+
+
+
+
+
+1895: Largest Magic Square
+
+This problem is about finding the largest square subgrid where all rows, all columns, and both diagonals have the same sum. Think of it like finding the largest perfectly balanced square within a larger grid of numbers.
+
+The code uses a clever optimization called prefix sums. Before starting the main search, it precomputes running totals for each row and each column. This allows the algorithm to quickly calculate the sum of any row segment or column segment without having to add up all the individual numbers each time.
+
+The search starts from the largest possible square size and works downward. For each possible position in the grid, it checks if a square of the current size starting at that position is a "magic square." It does this by verifying that all rows in the square have the same sum, all columns have the same sum, and both diagonals also have that same sum.
+
+The checking process first calculates what the target sum should be by looking at the first row of the candidate square. Then it verifies that every other row matches this sum, every column matches this sum, and both diagonals match this sum. If all conditions are met, it immediately returns the current size since we're checking from largest to smallest.
+
+If no magic square larger than 1x1 is found, the code returns 1 because every single cell is trivially a magic square by itself.
