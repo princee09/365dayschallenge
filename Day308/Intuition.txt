@@ -1,0 +1,85 @@
+572: Subtree of Another Tree
+
+
+
+
+Imagine you have two family trees. The first tree is very large and detailed. The second tree is a smaller, specific branch of a family. Your task is to check if this entire smaller family tree exists, exactly as it is, anywhere inside the larger family tree.
+
+The key idea is to look at every single point (or "node") in the big tree and ask: "Does the tree starting from this point look exactly the same as my small target tree?"
+
+To answer this, you need to perform two checks repeatedly.
+
+First, you need a way to compare two trees to see if they are identical. This means every person (node) in the same position must have the same name (value), and their children must be arranged in the exact same way. If you reach a point where both trees have no one (are null), that's a match for that branch. If one tree has a person and the other doesn't, or if the names are different, then the trees are not identical.
+
+Second, you start from the very top of the big tree. You first check: "Is the entire big tree from its root identical to the small tree?" If it is, you are done and can answer "true."
+
+If it is not, you don't give up. You now repeat the entire process, but you move your starting point. You ask the same question for the left side of the big tree: "Is the small tree embedded somewhere in this left part?" At the same time, you ask the same question for the right side of the big tree.
+
+This is a divide-and-conquer strategy. You break the big problem (searching the whole tree) into smaller sub-problems (searching the left and right subtrees). You keep breaking it down until you either find a perfect match or you have checked every possible starting point in the big tree and found none.
+
+
+
+
+
+The code has two main parts.
+
+The first part, isSubtree, is the main function. It takes the current node of the big tree and the root of the small tree. If the current node of the big tree is empty (null), there's nothing to compare, so it returns false. Then, it uses a helper function isSameTree to check if the tree starting from the current node is an exact copy of the small tree. If this is true, it immediately returns success.
+
+If it's not a match at the current node, the function calls itself recursively. It does this for the left child of the current node and the right child. The || (OR) operator means that if a match is found in either the left side or the right side, the final result is true.
+
+The second part is the helper function isSameTree. Its job is to check if two given trees are perfectly identical. First, it checks if both trees are empty; if so, they are identical. If only one is empty, they are not. Then, it checks if the values of the current nodes are the same. If not, the trees are different. Finally, if the current nodes match, it recursively checks if the left subtrees are identical and (using the && operator) if the right subtrees are identical. All these checks must pass for the trees to be considered the same.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+669: Trim a Binary Search Tree
+
+
+
+
+
+Imagine you have a perfectly organized filing cabinet (this is the Binary Search Tree). All files in the left drawer of a folder have lower numbers, and all files in the right drawer have higher numbers. You are given a specific range, for example, you are only allowed to keep files numbered between 10 and 50. Your task is to remove all files outside this range, but you must maintain the original organization (the hierarchical structure) of the remaining files.
+
+The special property of this organized cabinet (the BST property) is what makes the solution efficient. When you look at a file (a node), you can make an immediate decision about its entire sections without having to look at every single file inside them.
+
+Let's say you look at a file labeled with the number 60. Your allowed range is 10 to 50. Since 60 is greater than 50 (the high end of the range), you know something very important. Not only is the file 60 itself invalid, but every single file in its entire right drawer will also have numbers greater than 60, and therefore also be invalid. There is no need to even look in the right drawer. You can completely discard this file and its entire right section.
+
+However, the files in its left drawer might still be valid because they have numbers less than 60. Some of them could be within the 10-50 range. So, you simply take the entire contents of the left drawer and continue the process from there.
+
+The same logic applies in reverse. If you find a file labeled with the number 5, and your low limit is 10, this file is invalid. Furthermore, every file in its entire left drawer will be less than 5, so they are also all invalid. You can discard this file and its left section. You then take the entire contents of its right drawer and continue.
+
+If a file is within the valid range (e.g., number 25), you get to keep it. You then need to clean up its two drawers. You tell the left drawer to trim itself, and you tell the right drawer to trim itself. You then reattach these now-trimmed drawers back to your current file.
+
+This process continues all the way down until the entire cabinet has been checked and trimmed, resulting in a new, smaller, but perfectly organized cabinet that only contains files within the desired range.
+
+
+
+
+The trimBST function works recursively. It first checks if the current node (root) is empty; if so, it returns nothing (null). This is the base case that stops the recursion.
+
+Then, it uses the BST property to make smart decisions. If the current node's value is greater than the high limit, it knows the entire right subtree is invalid. The function does not even call itself on the right child. Instead, it directly calls itself only on the left child and returns whatever that call returns. This effectively replaces the current node with the trimmed version of its left subtree.
+
+Similarly, if the current node's value is less than the low limit, the entire left subtree is invalid. The function calls itself only on the right child and returns that result, effectively replacing the current node with its trimmed right subtree.
+
+Finally, if the current node's value is within the [low, high] range, this node is a keeper. The function then needs to clean up its subtrees. It calls trimBST on its left child and assigns the result back to left. It does the same for the right child. This ensures that any out-of-range nodes in the subtrees are also removed. Finally, it returns the current node, which now has trimmed left and right subtrees, making it the root of a valid, trimmed tree.
