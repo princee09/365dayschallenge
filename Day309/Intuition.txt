@@ -1,0 +1,56 @@
+905: Sort Array By Parity
+
+
+
+The goal is very simple: we want to rearrange a list of numbers so that all the even numbers come first, followed by all the odd numbers. We don't need to sort the even numbers among themselves or the odd numbers among themselves; we just need to group them.
+
+Imagine you have a line of people, and you want all the people wearing red shirts to stand on the left, and all people wearing blue shirts to stand on the right. You can start from both ends of the line. You walk from the left until you find someone with a blue shirt. Then, you walk from the right until you find someone with a red shirt. Once you have found a blue-shirted person on the left and a red-shirted person on the right, you simply swap their positions. After the swap, the red-shirted person is now on the left where they belong, and the blue-shirted person is on the right where they belong. You then move your pointers inward and repeat this process until you have checked everyone.
+
+This method is efficient because we only go through the list once, swapping elements in place without needing to create a brand new list.
+
+
+
+
+The code uses two markers, which we can call left and right. The left marker starts at the very beginning of the list, and the right marker starts at the very end.
+
+The main loop runs as long as the left marker is to the left of the right marker. Inside this loop, we have two smaller loops. The first small loop moves the left marker forward, skipping over all the even numbers it finds, because they are already on the correct (left) side. It stops when it finds an odd number.
+
+The second small loop moves the right marker backward, skipping over all the odd numbers it finds, because they are already on the correct (right) side. It stops when it finds an even number.
+
+Now, the left marker is pointing to an odd number that is misplaced on the left, and the right marker is pointing to an even number that is misplaced on the right. We check if the markers haven't crossed each other, and if they haven't, we swap these two misplaced numbers. After the swap, the even number goes to the left and the odd number goes to the right. We then move both markers one step inward to continue the process with the remaining part of the list.
+
+
+
+
+
+
+
+
+
+948: Bag of Tokens
+
+
+
+This problem is like a strategic game where you have two types of moves to play with your tokens. Each token has a cost. You start with a certain amount of power (like money) and zero score (like points).
+
+You have two moves. First, you can play a token "face-up" by spending power equal to the token's value to gain 1 point. This is a safe, point-gaining move. Second, you can play a token "face-down" by spending 1 point to gain power equal to the token's value. This is a risky, power-gaining move that costs you a point.
+
+The strategy to maximize your final score is greedy and logical. To get points, you want to spend as little power as possible. So, when you want to gain a point, you should always use the cheapest (smallest) token available. Conversely, when you are desperate for power and need to play a token face-down, you want to get the most power for the point you are sacrificing. So, you should always use the most expensive (largest) token available.
+
+This is why we first sort all the tokens from smallest to largest. This gives us immediate access to the cheapest token (at the start of the list) and the most expensive token (at the end of the list).
+
+We then use two pointers. We try to play the smallest token face-up for as long as we have enough power. This builds up our score. If we can no longer play a token face-up, we check if we have at least one score point. If we do, we "cash in" our largest token face-down to get a big boost of power. We then use this new power to continue buying more small tokens for points. We always keep track of the highest score we have ever achieved.
+
+The loop stops when we can no longer make any moves, meaning we don't have enough power to buy the cheapest remaining token, and we either have no points to cash in for more power, or it's not beneficial to do so.
+
+
+
+
+
+The code starts by sorting the list of tokens. It then sets up two markers, left at the beginning (pointing to the smallest token) and right at the end (pointing to the largest token). It also initializes score to track the current points and maxScore to remember the highest score seen.
+
+The main loop continues as long as there are tokens between the left and right markers. Inside the loop, the first condition checks if our current power is enough to play the smallest available token (tokens[left]). If it is, we spend that power, increase our score by one, and move the left marker forward (that token is now used). We then update our maxScore if the current score is the highest we've seen.
+
+If the first condition is false, it means we don't have enough power for the cheapest token. The code then checks the second condition: do we have at least 1 score? If yes, we sacrifice one point to play the largest available token (tokens[right]) face-down. This gives us a large amount of power, and we move the right marker backward (that token is now used).
+
+If both conditions are false, it means we are stuck. We cannot gain a point because we lack power, and we cannot gain power because we have no points to sacrifice. At this point, we break out of the loop. The function finally returns the maxScore we were able to achieve during the game.
