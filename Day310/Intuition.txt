@@ -1,0 +1,57 @@
+K-th Symbol in Grammar
+
+
+
+
+Imagine we are building a special sequence of numbers row by row. The first row has just one number, which is zero. Now, to create the next row, we take the previous row and transform each number in it. If we see a zero, we replace it with "zero one". If we see a one, we replace it with "one zero". So the second row becomes "zero one". The third row takes "zero one" and transforms it: zero becomes "zero one" and one becomes "one zero", giving us "zero one one zero". This pattern continues, with each new row being twice as long as the previous one.
+
+Now, if someone asks us what is the k-th number in the n-th row, we don't need to build all the rows from the beginning. We can work backwards. We can figure out that the k-th number in row n came from a specific number in row n-1. If k is an odd position, it came from the left part of its parent number. If k is even, it came from the right part. The left child is always the same as its parent, while the right child is always the opposite of its parent.
+
+So we keep going backwards through the rows until we reach the first row, which we know is just zero. Then we work our way forward, tracking whether each step should give us the same number as the parent or the opposite number.
+
+
+
+
+
+The code uses a function that calls itself, which is called recursion. First, it checks if we are at the very first row - if yes, we return zero immediately. If not, we find which number in the previous row was the parent of our current position. We calculate the parent's position by dividing our current position by two and rounding up. Then we ask what that parent number was by calling the same function again for the previous row.
+
+Once we know the parent number, we check if our current position is odd or even. If it's odd, we are the left child and we return the same number as the parent. If it's even, we are the right child and we return the opposite number of the parent (if parent was zero, we return one; if parent was one, we return zero). This way we efficiently find our answer without building the entire sequence.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Unique 3-Digit Even Numbers
+
+
+
+
+
+
+
+
+
+We are given a collection of single-digit numbers, and we need to create all possible three-digit numbers using these digits, but with two important rules. First, the number cannot start with zero because that wouldn't be a proper three-digit number. Second, the number must end with an even digit (zero, two, four, six, or eight) to be an even number. Also, we can only use each available digit as many times as it appears in our original collection - so if we have two of the same digit, we can use it twice, but not three times.
+
+To solve this, we need to try all possible combinations of three digits from our collection that follow these rules. We think of it as choosing one digit for the hundreds place (which cannot be zero), then one digit for the tens place (which can be any digit including zero), and finally one digit for the units place (which must be even). However, we must ensure we don't use the same physical copy of a digit more than once unless we have multiple copies available.
+
+Since we want only unique numbers, we need to keep track of all the valid numbers we create and make sure we don't count duplicates. For example, if our input has duplicate digits but we create the same number using different copies, we should still count it only once.
+
+
+
+
+
+The code creates an empty container to store all the unique numbers we will find. It then uses three loops that work together to try every possible combination of three different positions from our input digits. The first loop picks a digit for the hundreds place and immediately skips if that digit is zero. The second loop picks a digit for the tens place but makes sure it's not the same physical digit as the first one. The third loop picks a digit for the units place, making sure it's not the same as either of the first two, and also checks that this digit is even.
+
+For each valid combination, the code calculates the actual three-digit number by multiplying the hundreds digit by 100, the tens digit by 10, and adding the units digit. It then adds this number to a special collection that automatically ignores duplicates. Finally, after checking all possible combinations, the code returns how many unique valid numbers it found in that collection.
