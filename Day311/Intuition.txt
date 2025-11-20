@@ -1,0 +1,86 @@
+907: Sum of Subarray Minimums
+
+
+
+
+The goal is to find the sum of the smallest numbers from every possible contiguous subarray. A subarray is just a slice of the original list. The brute-force method would be to check every single subarray, find its minimum, and add it up, but that is far too slow for a large list.
+
+The clever trick is to change our perspective. Instead of asking "What is the minimum for each subarray?", we ask: "For how many subarrays is this specific number the minimum?"
+
+If we can answer that for every number in the list, we can calculate the total sum by multiplying each number by the count of subarrays where it is the smallest.
+
+How do we find that count?
+For a number at position i, it will be the minimum in a subarray if that subarray falls completely within a certain "domain of influence" around i. This domain is defined by the nearest previous number that is smaller than arr[i] and the nearest next number that is smaller than or equal to arr[i].
+
+Let's call the index of the previous smaller number L and the index of the next smaller number R. The subarrays where arr[i] is the minimum will start anywhere between L+1 and i, and end anywhere between i and R-1.
+
+Number of choices for the start of the subarray: (i - L)
+
+This counts all positions from L+1 up to i.
+
+Number of choices for the end of the subarray: (R - i)
+
+This counts all positions from i up to R-1.
+
+The total number of subarrays where arr[i] is the minimum is simply the product of these two counts: (i - L) * (R - i).
+
+
+The code needs to find L and R for every element efficiently. This is where a monotonic stack is used. A monotonic stack helps us find the "next/previous greater/smaller" element for every item in a list in a single, fast pass.
+
+The first loop goes left-to-right. The stack holds indices of elements for which we haven't yet found a next smaller element. When we see a new element that is smaller than the one at the top of the stack, it means we have found the "next smaller element" for that stack top. We pop it and continue. For the current element i, the top of the stack after popping becomes its "previous smaller element" (left[i]).
+
+The second loop goes right-to-left and does the same thing to find the "next smaller element" to the right (right[i]). The >= comparison ensures we don't miss duplicates.
+
+Finally, the last loop calculates the contribution of each element: arr[i] * (number of subarrays it is min in) and adds it to the total result, applying the modulo operation to keep the number manageable.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1574: Shortest Subarray to be Removed to Make Array Sorted
+
+
+
+
+The goal is to remove the shortest contiguous block from the list so that the remaining elements form a non-decreasing sequence (each element is less than or equal to the next one).
+
+The key observation is that the final sorted array will be made up of a prefix from the beginning, a suffix from the end, or a combination of both, with the middle part removed.
+
+
+
+
+Find the Longest Sorted Prefix: The code starts from the beginning and scans as long as the numbers are non-decreasing. The variable left marks the end of this sorted prefix (arr[0...left] is sorted).
+
+Check if the array is already sorted: If the entire array is sorted (left reaches the last element), we return 0 because nothing needs to be removed.
+
+Find the Longest Sorted Suffix: The code starts from the end and scans backwards as long as the numbers are non-decreasing. The variable right marks the start of this sorted suffix (arr[right...n-1] is sorted).
+
+At this point, we know we have a sorted prefix at the start and a sorted suffix at the end. The "problem" is in the middle. We have three main options for what to remove:
+
+Option A: Remove everything after the prefix. The remaining array would be arr[0...left]. The length of the removed subarray is n - left - 1.
+
+Option B: Remove everything before the suffix. The remaining array would be arr[right...n-1]. The length of the removed subarray is right.
+
+The code initially sets the result to the best of these two options.
+
+The Merging Option (Most Important): The best solution might be to remove a middle section that allows us to connect the prefix and the suffix. We try to find a point where we can take some from the beginning and some from the end, and the connection between them is still sorted.
+
+We use two pointers, i (starting at the beginning of the prefix) and j (starting at the beginning of the suffix, right).
+
+We check if arr[i] is less than or equal to arr[j]. If it is, it means we can form a valid sorted array by taking everything from the start up to i and everything from j to the end. The part we remove is everything between i and j, which has a length of j - i - 1. We record this as a potential answer.
+
+If arr[i] is greater than arr[j], it means the suffix part starting at j is too small to connect to i, so we move j forward to try a larger suffix value.
+
+By checking all these possibilities, the code finds the absolute shortest subarray that needs to be removed to leave the rest of the list in sorted order.
