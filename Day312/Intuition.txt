@@ -1,0 +1,38 @@
+Find K-th Smallest Pair Distance
+
+The problem is about finding a special number that represents the k-th smallest gap between any two numbers in a list. Imagine you have a group of people with different heights, and you want to find the k-th smallest height difference between any two people.
+
+First, we sort all the numbers because it makes finding distances much easier. When numbers are in order, we can systematically check differences without missing any pairs.
+
+The clever part is we don't actually list all possible pairs - that would be too many. Instead, we use a guessing game approach. We guess what the k-th smallest distance might be, then check if our guess is too high or too low.
+
+We check our guess by counting how many pairs have distance less than or equal to our guess. We do this counting efficiently using two pointers. One pointer moves through each number, and the other pointer finds how many numbers after it are within our guessed distance.
+
+If we count too many pairs with small distances, our guess is too high. If we count too few, our guess is too low. We keep adjusting our guess until we find the exact right distance.
+
+The code sorts the numbers first, then uses binary search to guess distances. For each guess, it counts pairs using two pointers where one pointer moves ahead of the other, counting valid pairs efficiently. The counting works because when numbers are sorted, if a pair has small distance, all numbers between them also form valid pairs with the first number.
+
+
+
+
+
+
+
+
+
+
+Closest Subsequence Sum
+
+This problem is about selecting some numbers from a list to make their sum as close as possible to a target number. You don't have to use all numbers - you can pick any combination.
+
+The challenge is that with 40 numbers, there are over a trillion possible combinations to check, which is impossible to do one by one.
+
+The solution uses a divide and conquer strategy called "meet in the middle". We split the list into two smaller halves. This is crucial because checking all combinations in each half is much faster than checking the whole list.
+
+For each half, we generate all possible sums you can make by selecting different numbers. We store these possible sums in lists.
+
+Then we combine the results from both halves. For every possible sum from the first half, we look in the second half for a sum that, when added together, gets us closest to our target. We use binary search to quickly find the best matching sum from the second half.
+
+The code first splits the array into two parts. It generates all possible subset sums for each part using a technique where we start with zero (empty set) and keep adding new numbers to existing sums. Then it sorts one part's sums for efficient searching. Finally, it combines sums from both parts, using binary search to find the combination that comes closest to the goal.
+
+The key insight is that by working with halves separately, we reduce an impossible problem to a manageable one, and by using sorting and binary search, we can efficiently find the best combination without checking every possibility.
