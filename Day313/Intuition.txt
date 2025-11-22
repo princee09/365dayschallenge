@@ -1,0 +1,62 @@
+1156: Longest Repeated Character After One Swap
+
+
+The goal is to find the longest sequence of the same character you can get if you are allowed to swap two characters in the entire string just once.
+
+Imagine you are focusing on one letter at a time, for example, the letter 'a'. You want to find the longest continuous block of 'a's you can create. The key trick is that you can use one character that is not an 'a' as a bridge to connect two separate groups of 'a's, provided you have a spare 'a' somewhere else in the string to swap with that non-'a' character.
+
+Think of it like this: You slide a window across the string. Inside this window, you allow at most one character that is not your current target letter (like 'a'). This single different character can be swapped for a real 'a' from outside the window. However, you can only do this if you actually have an extra 'a' available somewhere else in the string to perform the swap. If you don't have an extra 'a', the best you can do is the length of your window minus that one different character, meaning you have a solid block of 'a's with one intruder you cannot replace.
+
+The algorithm checks this for every letter from 'a' to 'z' to find the absolute longest possible sequence.
+
+
+
+
+First, the code counts how many times each letter appears in the whole string. This tells us if we have spare letters for a swap.
+
+Then, for each letter (like 'a'), it starts a sliding window. A left and a right pointer define the current segment of the string we are looking at. currCount tracks how many of our target letter are in the window, and diffCount tracks how many other letters are in the window.
+
+As the right pointer moves to include a new character, we update these counts. If we ever have more than one non-target letter in the window (diffCount > 1), it means our window has two intruders. We cannot fix both with one swap, so we must shrink the window from the left until we only have one or zero intruders again.
+
+Once the window is valid (has one or zero intruders), we check if we can fill it entirely with our target letter. If the total number of our target letters inside the window plus the number of intruders (which we want to swap) is less than or equal to the total number of that letter available in the entire string, it means we have enough spare letters elsewhere to swap and fill the entire window. So the potential length is the full window size.
+
+If we don't have enough spare letters, the best we can do is a sequence that doesn't include the one intruder, so the potential length is the window size minus one.
+
+We keep track of the maximum length found for all letters and return it.
+
+
+
+
+
+
+
+
+
+
+1477: Two Non-Overlapping Sub-arrays With Target Sum
+
+
+
+The goal is to find two sub-arrays (contiguous blocks of numbers) that do not overlap and whose numbers each add up to a specific target value. We want the pair with the smallest combined length.
+
+The clever approach is to find these sub-arrays in a single pass from left to right. As we discover a valid sub-array that ends at our current position, we immediately check if we have already found a valid sub-array that ends before this new one starts. If we have, then we have found a non-overlapping pair. We then check if the sum of their lengths is the smallest we've seen so far.
+
+To do this efficiently, we maintain a memory array (dp). The value dp[i] stores the length of the shortest valid sub-array we have found that ends at or before position i. This way, when we find a new valid sub-array, we can instantly look up the best possible partner for it that came earlier in the array.
+
+
+
+
+
+We start by defining a very large number (INF) to represent a situation where no valid sub-array has been found.
+
+We use a sliding window again, with left and right pointers, to find sub-arrays whose sum equals the target. We add numbers to our current sum by moving the right pointer. If the sum becomes too large, we subtract numbers from the left by moving the left pointer forward, until the sum is less than or equal to the target.
+
+When the sum exactly equals the target, we have found a valid sub-array. Its length is right - left + 1.
+
+Now, we update our memory array dp. At the current end position right, we store the length of this new sub-array. However, we also check the previous position dp[right - 1] to see if we had already found an even shorter sub-array ending earlier. We store the shorter of these two lengths in dp[right]. This ensures dp[right] always holds the shortest valid sub-array length found so far up to index right.
+
+This is the critical step. Now, we check for a pair. If the left index of our new sub-array is greater than 0, it means there is space before it. We look at dp[left - 1]. If this value is not our large INF number, it means we found a valid sub-array that ends before our current one starts. We have found a non-overlapping pair! We add the length of our current sub-array to the length stored in dp[left - 1] and see if this total is the new smallest result.
+
+If the current window's sum is not equal to the target, we simply carry forward the previous best sub-array length by setting dp[right] = dp[right - 1].
+
+Finally, if we never found a valid pair, result will still be INF and we return -1. Otherwise, we return the smallest combined length we found.
