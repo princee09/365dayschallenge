@@ -1,0 +1,62 @@
+653: Two Sum IV - Input is a BST
+
+
+
+Imagine you have a sorted list of numbers, like pages in a book arranged from smallest to largest. You are trying to find two different pages whose numbers add up to a specific target number.
+
+The smartest way to do this is not to check every possible pair, which would take a long time. Instead, you can use two pointers. You start one pointer at the first page (the smallest number) and another pointer at the last page (the largest number). You check their sum.
+
+If the sum is exactly your target, you are done and have found your answer.
+
+If the sum is too small, you know you need a bigger number. Since the list is sorted, you can move the left pointer one step to the right to get a larger starting number.
+
+If the sum is too large, you know you need a smaller number. So, you move the right pointer one step to the left to get a smaller ending number.
+
+You keep doing this, moving the pointers towards each other, until you either find the correct pair or the pointers meet, meaning no such pair exists.
+
+A Binary Search Tree (BST) has a very useful property: when you traverse it in an "inorder" manner (left node, then current node, then right node), it automatically gives you all its values in sorted order. So, the first step is to perform this inorder traversal to get a sorted list from the tree. Then, you can apply the two-pointer technique on this sorted list to find if the two numbers exist.
+
+
+
+The code first creates an empty list called nums. It then calls a helper function, inorder, which is a classic way to visit every node in the tree. It goes as far left as possible, then records the value of the node it's on, and then goes to the right. This process ensures all values are collected in ascending order, populating the nums list.
+
+Once the sorted list is ready, the code sets up two indices: left at the start (index 0) and right at the end (the last index). It enters a loop that continues as long as left is less than right, ensuring they are pointing to two distinct numbers.
+
+Inside the loop, it calculates the sum of the values at these two indices. If the sum matches the target k, it immediately returns true. If the sum is less than k, it means we need a larger number, so it increments the left index. If the sum is greater than k, it means we need a smaller number, so it decrements the right index. If the loop finishes without finding a match, the function returns false.
+
+
+
+
+
+
+
+
+
+654: Maximum Binary Tree
+
+
+
+
+
+You are given a list of numbers, and you need to build a special tree. The rule is simple: the largest number in the entire list becomes the root of the tree. All the numbers that were to the left of this largest number will form the left subtree, and all the numbers to the right will form the right subtree.
+
+You then apply this same rule recursively to the left and right sub-lists to build the entire tree. For any sub-list, the largest number becomes the root of that subtree, with its left and right subtrees built from the numbers on its left and right.
+
+The clever, efficient way to build this tree is by using a stack. Think of the stack as a pile of nodes you are currently working with. You process each number in the list one by one, making it into a new node.
+
+As you process a new number, you check the pile (stack). If the pile is not empty and the node on top of the pile has a value smaller than your current number, it means this current, larger number should be the parent of that smaller node. So, you keep popping (removing) smaller nodes from the top of the pile and make each of them the left child of your new node. This is because in the final tree, the new, larger node will be above and to the right of these smaller nodes.
+
+Once you have attached all possible smaller nodes as the left children of your new node, you check the pile again. If there is still a node on top of the pile, it means that node is larger than your current node. Therefore, your current node should be attached as the right child of that larger node. Finally, you push your new node onto the pile.
+
+This process ensures that the stack always contains nodes in decreasing order from bottom to top, and you are correctly establishing the parent-child relationships defined by the "maximum" rule in a single pass through the list. The very first node you put into the stack will ultimately be the root of the entire tree.
+
+
+
+
+The code starts by creating an empty vector called nodes which will act as our stack. It then loops through each number in the input list.
+
+For each number, it creates a new tree node. Then, it enters a while loop. This loop continues as long as the nodes stack is not empty AND the value of the node at the back (top) of the stack is less than the current number. Inside this loop, it takes the node from the top of the stack and makes it the left child of the new node we just created. It then removes that smaller node from the stack. This step effectively makes the new, larger node the parent of all the recently seen smaller nodes.
+
+After this, if the stack is still not empty, it means the node now at the top of the stack is larger than our current node. Therefore, the code attaches our current node as the right child of that larger node.
+
+Finally, the new node is pushed onto the stack. After processing all numbers in the list, the first node that was ever placed in the stack (now at the front of the vector, nodes[0]) is the global maximum and thus the root of the entire maximum binary tree, which is returned.
