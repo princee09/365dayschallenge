@@ -1,0 +1,35 @@
+2389: Longest Subsequence With Limited Sum
+
+
+The problem is about finding, for each query, the largest number of elements we can pick from the array such that their total sum does not exceed the query value. The key idea is that to maximize the number of elements chosen for a given sum limit, we should always pick the smallest available numbers first. This is because smaller numbers allow us to take more items without exceeding the sum limit.
+
+So, the approach involves first sorting the array from smallest to largest. Then, we compute the running total of the sorted array, which tells us the sum of the first one element, first two elements, first three elements, and so on. This running total array is called the prefix sum array.
+
+For each query, we then perform a binary search on this prefix sum array to find the rightmost position where the prefix sum is still less than or equal to the query value. The index we get from this search directly gives the count of elements we can take. The reason binary search works here is that the prefix sum array is sorted in increasing order, so we can quickly locate the maximum valid length without checking every possibility.
+
+The code sorts the input array and then reuses it to store prefix sums to save space. It then uses the upper_bound function, which performs binary search, to find the answer for each query efficiently.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2439: Minimize Maximum of Array
+
+This problem asks us to reduce the largest value in the array by performing operations where we can decrease an element and increase the element immediately to its left. The goal is to make the maximum value in the array as small as possible after any number of such operations.
+
+The important observation is that we can only move value to the left, not to the right. This means that if we consider the array from left to right, the sum of the first few elements imposes a lower bound on what the maximum value can be. Specifically, for the first i+1 elements, their total sum must be distributed among these positions, and the best we can do is to make each of them as equal as possible. Therefore, the smallest possible maximum value for the entire array is determined by the maximum among all these ceiling values for every prefix of the array.
+
+The formula used in the code calculates, for each prefix of the array, the minimum maximum value that prefix can have by taking the sum of the prefix, dividing it by the number of elements in that prefix, and rounding up. The largest of these values across all prefixes is the answer. This works because it ensures that for every segment starting from the beginning, the values can be balanced through leftward moves to not exceed this ceiling, and since we take the maximum over all prefixes, it guarantees the whole array can satisfy this condition.
+
+The code efficiently computes this by maintaining a running sum of elements and updating the result with the maximum ceiling encountered so far, providing an optimal solution without complex data structures or binary search.
+
