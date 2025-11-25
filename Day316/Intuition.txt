@@ -1,0 +1,58 @@
+2981: Find Longest Special Substring That Occurs Thrice I
+
+
+
+
+We are given a string and we need to find the longest possible substring where all characters are the same, and that substring appears at least three times in the original string. A special substring means all characters in it are identical, like "aaa" or "bbb".
+
+The key insight is that if a longer special substring appears three times, then all shorter versions of it made from the same character will also appear at least three times. For example, if "aaaa" appears three times, then "aaa" and "aa" and "a" from those same runs will also appear multiple times.
+
+We approach this by checking each letter from 'a' to 'z' separately. For each letter, we find all consecutive runs of that letter in the string. For example, in "aaabbaa", for letter 'a' we would find runs of length 3 and 2.
+
+For each letter, we then check what is the maximum length where the total number of appearances of special substrings of that length is at least three. We calculate appearances by noting that in a run of length L, there are (L - k + 1) substrings of length k.
+
+We start from the longest possible length down to 1, and as soon as we find a length that appears at least three times across all runs of that letter, we know it's the maximum for that letter. We then compare across all letters to find the overall maximum.
+
+
+
+
+The code first loops through each character from 'a' to 'z'. For each character, it scans through the string to find all consecutive runs of that character, storing their lengths in a list. These lengths are then sorted in descending order so we can check from the longest runs first.
+
+For each possible substring length starting from the maximum run length down to 1, the code calculates how many times special substrings of that length appear across all runs of the current character. This is done by summing up (L - k + 1) for each run length L that is at least k.
+
+If the total count reaches three or more for a particular length, that length is considered as a candidate answer. The code tracks the maximum such length across all characters and returns it. If no special substring appears at least three times, it returns -1.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3318: Find X-Sum of All K-Long Subarrays I
+
+
+
+
+We are given an array of numbers and two parameters k and x. We need to slide a window of size k through the array, and for each window position, we calculate what is called the "x-sum".
+
+The x-sum is computed by first counting how many times each number appears in the current window. Then we keep only the top x most frequent numbers - if multiple numbers have the same frequency, we prefer the larger number. Finally, we sum up all occurrences of these selected numbers in the window.
+
+For example, if in a window we have numbers [2,2,3,3,4] and x=2, we see that 2 and 3 both appear twice (most frequent), and 4 appears once. Since we need top 2 frequent numbers and 2 and 3 have same frequency, we compare their values - both are kept. Then we sum all 2's and all 3's: 2+2+3+3=10.
+
+
+
+
+The code slides a window of size k through the input array. For each window position, it counts the frequency of each number using a frequency array since the numbers are small (1-50).
+
+It then creates a list of pairs containing each number and its frequency in the current window, but only for numbers that actually appear. This list is sorted using a custom comparator that first sorts by frequency in descending order, and for equal frequencies, sorts by the number itself in descending order.
+
+After sorting, the code takes the first x elements from this sorted list (or all elements if there are fewer than x distinct numbers). The x-sum is calculated by multiplying each selected number by its frequency and summing these products, which effectively sums all occurrences of the selected numbers in the window.
+
+This process repeats for each window position, and all the x-sum values are collected in the result array.
