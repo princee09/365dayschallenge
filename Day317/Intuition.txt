@@ -1,0 +1,61 @@
+Imagine you have a row of different-sized buildings.
+You want to draw dividing lines between them to create groups.
+The rule is simple: in any single group, the height difference between the tallest and shortest building must not be too large.
+
+Your task is to count all the different ways you can draw these dividing lines while following the rule.
+
+The challenge is that checking every possible way of grouping would take an impossibly long time for a long row of buildings.
+We need a smart way to count them without checking each one individually.
+
+If you know how many valid groupings exist for the first few buildings, you can figure out the count for the next one.
+You look back at all the previous points where a group could have ended, and if the new group you are forming from that point to the current building follows the rule, you add those previous counts to your current total.
+
+To do this efficiently, you use a "sliding window" to instantly know the tallest and shortest building in any potential group.
+This window helps you find the earliest starting point for a new group that still keeps the height difference within the limit.
+Once you have that starting point, all groups ending before it are invalid, but all groups starting from that point up to the current building are valid.
+You then simply add up the counts of all the valid groupings that ended just before this new group starts.
+
+
+
+The code uses a few main tools to solve this problem efficiently.
+
+Dynamic Programming Array (dp):
+This is a memory array where each entry dp[i] stores the number of valid ways to group the first i buildings.
+We start by knowing there is exactly 1 way to group zero buildings (do nothing), so dp[0] = 1.
+
+Prefix Sum Array (prefix):
+To quickly calculate the sum of a range of values in the dp array, we use a prefix sum array.
+prefix[i] holds the sum of all dp values from dp[0] up to dp[i].
+This allows us to find the sum of dp values between any two points almost instantly.
+
+Two Deques (maxQ and minQ):
+These are special lists that help us track the tallest and shortest building in our current window of buildings.
+
+The maxQ keeps buildings in descending order. The front always has the tallest building in the current window.
+
+The minQ keeps buildings in ascending order. The front always has the shortest building in the current window.
+They are updated efficiently so we always know the extremes without searching every time.
+
+The Sliding Window (using left and right pointers):
+
+The right pointer moves forward one building at a time, adding it to our window and updating the maxQ and minQ.
+
+If the height difference between the tallest and shortest in the window exceeds the limit k, we move the left pointer forward.
+This shrinks the window from the left until the rule is satisfied again.
+
+The left pointer marks the earliest possible start of a new group that ends at right and still obeys the rule.
+
+
+Once the window [left, right] is valid, it means we can form a group ending at right that starts at any point from left to right.
+For each possible start, the groupings that ended just before that start are given by the dp array.
+We use the prefix sum array to quickly add up all these valid dp values from dp[left-1] to dp[right-1] and store the result in dp[right+1].
+This builds the solution step-by-step until we reach the end, and the final answer is found in dp[n].
+
+
+
+
+In short, the algorithm slides through the list, using smart lists to track building heights.
+It finds the earliest point where a new group can legally start.
+It then uses pre-calculated totals to instantly know how many ways exist to form groups up to the current point, all while respecting the height difference rule.
+This avoids brute-force checking and solves the problem efficiently.
+
