@@ -1,0 +1,19 @@
+Imagine you are adding up numbers in a line, one by one, and keeping a running total. This running total is called a prefix sum.
+
+The problem is to find a special group of consecutive numbers in that line. This group must have a length that is a multiple of a given number K (like length K, 2K, 3K, etc.), and this group should have the largest possible sum.
+
+The key trick is to use the idea of remainders from division. When you look at the running total at different points, if two running totals have the same remainder when divided by K, the distance between those two points is a multiple of K.
+
+This means the sum of the numbers between those two points is simply the difference of the two running totals. To get the largest sum, for any current point, we want to subtract the smallest previous running total that has the same remainder. This gives us the biggest possible difference, which is the biggest sum for a valid group.
+
+
+
+The code first prepares the running totals (prefix sums) for the list of numbers.
+
+It then sets up a small tracker to remember the smallest running total seen so far for each possible remainder (from 0 to K-1). It starts by noting that at the very beginning (before any numbers), the running total is 0 and its remainder is 0.
+
+The code then goes through the list of numbers. For each new number added to the running total, it calculates the current remainder.
+
+It checks the tracker: "What was the smallest running total I've ever seen with this same remainder before now?" If it finds one, it calculates the current running total minus that old small total. This result is the sum of a valid group of numbers. It checks if this is the largest sum found so far.
+
+Finally, it updates the tracker with the current running total for this remainder, so future calculations can use it. This process repeats for all numbers, and the largest valid sum found is the final answer.
