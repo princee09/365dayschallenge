@@ -1,0 +1,72 @@
+318: Maximum Product of Word Lengths
+
+
+
+
+The goal of this problem is to find two words from a given list that have no letters in common, and among all such pairs, find the one where the product of their lengths is the largest.
+
+Imagine you have a list of words. To check if two words share a common letter, the most straightforward way is to look at each letter in the first word and see if it exists in the second word. However, doing this for every possible pair of words is very slow, especially if the words are long and the list is large.
+
+We need a fast way to represent the set of letters in a word. This is where the clever "bitmask" idea comes in. Think of a light switch panel with 26 switches, each labeled from 'a' to 'z'. When we read a word, for every letter in it, we flip the corresponding switch to the "ON" position.
+
+For example, the word "abcw" would turn on the switches for 'a', 'b', 'c', and 'w'. We can represent this entire panel of ON/OFF switches as a single number, which we call a "bitmask." This number is like a unique fingerprint for the set of letters in the word.
+
+Now, how do we check if two words have no common letters? If two words have no common letters, it means their sets of ON switches do not overlap at all. In our switch panel analogy, there is no switch that is ON in both panels. In the world of numbers and bitmasks, we can check this in one single operation called a "bitwise AND." If the result of the AND operation between two bitmasks is zero, it confirms that not a single switch (or letter) is common to both.
+
+So, the plan is: First, we go through every word and create its unique number fingerprint (the bitmask) and also remember its length. Then, we take every possible pair of words. For each pair, we quickly check their fingerprints. If the AND result is zero, we calculate the product of their lengths and see if it's the largest we've found so far.
+
+
+
+
+
+The code starts by finding out how many words are in the list. It then creates two lists of the same size: one to store the numeric fingerprint (bitmask) for each word, and another to store the length of each word.
+
+Next, it processes each word one by one. For a given word, it starts with a fingerprint value of zero. It then looks at each character in the word. For a character like 'c', it calculates which position it is in the alphabet ( 'c' - 'a' = 2 ). It then uses the left-shift operation to create a number where only the 2nd bit is set to 1. The bitwise OR operation is used to combine this into the main fingerprint. This process effectively builds the fingerprint by turning on the bits corresponding to all the letters present in the word. This fingerprint and the word's length are saved in their respective lists.
+
+After all words are processed and their fingerprints are stored, the code begins comparing every possible pair of words. It uses two loops for this. The inner loop starts from the next word to avoid comparing the same pair twice. For each pair of words, it checks their fingerprints using the bitwise AND operator. If the result is zero, it means the words share no common letters. In that case, it multiplies their lengths and updates the maximum product found so far. Finally, the largest product found is returned as the answer.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+583: Delete Operation for Two Strings
+
+
+
+
+
+This problem asks for the minimum number of single-character deletion steps required to make two given strings identical. You can only delete characters, one at a time, from either string.
+
+The key insight is to realize that the characters we do not want to delete are the ones that are common to both strings and are in the same order. This is exactly the definition of the "Longest Common Subsequence" or LCS. The LCS is the longest sequence of characters that appears in both strings in the same order, but not necessarily consecutively.
+
+Once we know the length of the LCS, the solution becomes clear. The characters that are part of the LCS are the ones we want to keep. All other characters in both strings must be deleted.
+
+Therefore, the minimum number of deletions is calculated as follows: From the first string, we delete all characters that are not part of the LCS. The number of such characters is the length of the first string minus the LCS length. Similarly, from the second string, we delete all characters not part of the LCS, which is the length of the second string minus the LCS length. The total steps are the sum of these two numbers.
+
+The code uses a dynamic programming table to find the length of this LCS. The table is built step by step. The value at any cell dp[i][j] represents the minimum number of deletions needed to make the first i characters of word1 and the first j characters of word2 the same.
+
+
+
+
+
+The code first finds the lengths of the two input words. It then creates a two-dimensional grid or table called dp with one extra row and one extra column. The rows correspond to the number of characters we have considered from the first word, and the columns correspond to the number of characters from the second word.
+
+The code then initializes the first row and first column of this table. The first row represents the scenario where the first word is empty. To make an empty string equal to a string of length j, we must delete all j characters from the second word. So, each cell in the first row is filled with its column index. Similarly, the first column represents the scenario where the second word is empty. To make the first word equal to an empty string, we must delete all its characters, so each cell in the first column is filled with its row index.
+
+Now, the code starts filling the rest of the table from the top-left to the bottom-right. For each cell dp[i][j], it compares the i-th character of word1 and the j-th character of word2. If these two characters are the same, we have found a matching character. We don't need to delete it. The number of deletions required up to this point is the same as it was for the previous characters in both strings, which is stored in dp[i-1][j-1].
+
+If the characters are different, we face a choice: we can either delete the character from the first word, which would mean the deletions become 1 + dp[i-1][j] (one deletion plus the cost of making the previous part of word1 match the current part of word2), or we can delete the character from the second word, which would be 1 + dp[i][j-1] (one deletion plus the cost of making the current part of word1 match the previous part of word2). We choose the option that results in the minimum number of deletions.
+
+Finally, after the entire table is filled, the bottom-right cell dp[m][n] contains the minimum number of deletions required to make the entire first word equal to the entire second word, which is our answer.
