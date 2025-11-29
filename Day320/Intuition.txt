@@ -1,0 +1,70 @@
+Delete and Earn
+
+
+
+Imagine you have a collection of numbers, and each number is worth a certain number of points. Your goal is to collect as many points as possible, but there is a catch. Whenever you decide to take a number, you are not allowed to take the number that is one less or one more than it. It's like a neighborhood rule: if you pick a house, you cannot pick its immediate neighbors.
+
+First, you need to figure out the total value of each number. For example, if you have the number 3 appearing four times, its total value is 3 * 4 = 12 points.
+
+Now, the problem becomes very similar to the "House Robber" problem. You have a street of houses (the numbers), each with some money (the total points for that number). You want to rob the houses to get the maximum money, but you cannot rob two houses that are next to each other. In our case, the "houses" are the numbers, and they are naturally in order. If you take the points from number 5, you cannot take points from number 4 or number 6 because they are its immediate neighbors.
+
+So, you start from the smallest number and work your way up. At each number, you have a simple choice:
+
+Skip the current number: If you skip it, your maximum points remain the same as the maximum points you had up to the previous number.
+
+Take the current number: If you take it, you add its total points to the maximum points you had up to the number two steps back (because you couldn't have taken its immediate neighbor, the previous number).
+
+You consistently choose the option that gives you more points. By the time you reach the largest number, you will have calculated the maximum points you can earn without ever breaking the neighbor rule.
+
+
+
+
+The code first checks if the input list is empty. Then, it uses a dictionary, called points, to add up the total value for each unique number. It also finds the largest number in the list. It then creates a list, dp, where each entry at index i will store the maximum points we can earn considering all numbers up to i.
+
+It sets the first base case: for the number 1, the best you can do is just take all its points. Then, it starts a loop from the number 2 up to the largest number. For each number i, it calculates the maximum points by comparing the two choices: the points from skipping i (which is dp[i-1]) and the points from taking i (which is the points from i plus the best score from two numbers back, dp[i-2]). Finally, the answer is simply the value stored for the largest number, as it represents the best score considering all numbers.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Prison Cells After N Days
+
+
+
+
+
+
+
+
+
+You have a row of 8 prison cells, each either empty or occupied. Every day, the status of each cell changes based on a simple rule: a cell becomes occupied only if its two adjacent neighbors are both occupied or both empty. Otherwise, it becomes empty. The two end cells can never have two neighbors, so they will always become empty after the first day.
+
+The challenge is that the number of days, n, can be enormous (like a billion). Simulating each day one by one would be far too slow. The key insight is that with only 8 cells, the number of possible different patterns the prison can have is limited. Since the next day's pattern depends entirely on the current day's pattern, the sequence of patterns must eventually start repeating itself. This repeating sequence is called a cycle.
+
+Think of it like a song on repeat. Once you recognize the song has started again from the beginning, you don't need to listen to every single note to know what the 100th note will be. You can just figure out the song's length and calculate the position of the 100th note within that cycle.
+
+The strategy is to simulate the days one by one, but to keep a record of every prison pattern we see and the day we saw it on. As soon as we see a pattern that we have seen before, we have found the start of the cycle. We then know how long the cycle is. Now, we can calculate how many more days into the cycle we need to go to reach the final day n. We then jump directly to that day in our records to get the answer, saving us from simulating millions or billions of days.
+
+
+
+
+
+The code starts by creating a dictionary, stateToDay, to map a prison pattern to the day it appeared on, and a list, dayToState, to store the pattern for each day. It begins simulating from the initial cell configuration.
+
+For each day, it calculates the next day's pattern by applying the rule to each cell, ignoring the first and last cells which become zero. It then converts this list of cells into a single integer to make it easy to store and compare. This is done by treating the list as a binary number.
+
+It then checks if this new integer pattern is already in the stateToDay dictionary. If it is, a cycle has been detected. The code calculates the cycle's length and determines how many days are left after the cycle is accounted for. It then uses the dayToState list to immediately return the pattern that would appear on the final day n.
+
+If no cycle is found for the current day, it records the new pattern in both the dictionary and the list and continues to the next day. If it completes all n days without finding a cycle (which is unlikely for large n but possible for small n), it simply returns the last calculated pattern.
