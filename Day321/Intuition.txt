@@ -1,0 +1,62 @@
+132: Palindrome Partitioning II
+
+
+
+
+This problem is about finding the minimum number of cuts needed to split a string into pieces where every piece is a palindrome. A palindrome reads the same forwards and backwards. Think of it like cutting a string of beads into smaller strings where each smaller string is symmetrical.
+
+The key insight is that we can use dynamic programming to build up solutions to smaller problems. We maintain two important pieces of information. First, we track whether each possible substring is a palindrome. Second, we track the minimum cuts needed up to each position in the string.
+
+The algorithm works by checking every possible substring. For each ending position in the string, we check all possible starting positions. If we find that a substring from position i to j is a palindrome, then we know we can make a cut right before position i and have a valid palindrome from i to j. The minimum cuts up to position j would then be the minimum between its current value and the minimum cuts up to position i-1 plus one cut.
+
+The palindrome checking is optimized by using the fact that if the first and last characters match, and the inner substring is already a palindrome, then the entire substring is a palindrome. This avoids recomputing the same information repeatedly.
+
+
+
+
+The code uses two main arrays. The dp array stores the minimum cuts needed for the substring from start to each position. The isPalindrome 2D array stores whether substrings are palindromes.
+
+The outer loop goes through each possible ending position j. The inner loop goes through all possible starting positions i up to j. If the characters at i and j match, and either the substring is very short or the inner substring is already a palindrome, then we mark this substring as a palindrome.
+
+If the palindrome starts from the beginning of the string, no cuts are needed up to position j. Otherwise, we update the minimum cuts at position j by considering making a cut right before this palindrome and adding one to the minimum cuts from the previous position.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+213: House Robber II
+
+
+
+
+
+
+This problem is about robbing houses arranged in a circle where you cannot rob two adjacent houses. The circular arrangement makes it tricky because the first and last houses are considered adjacent, meaning you cannot rob both the first and last house.
+
+The key realization is that the circular constraint can be handled by solving two separate linear problems. In the first problem, we consider robbing houses from the first to the second-to-last house, excluding the last house. In the second problem, we consider robbing houses from the second to the last house, excluding the first house. The final answer is the maximum of these two solutions.
+
+For each linear problem, we use a dynamic programming approach that tracks two values at each house: the maximum amount we can rob if we include the current house, and the maximum amount if we exclude it. We move through the houses, at each step deciding whether to rob the current house or skip it. If we rob the current house, we cannot rob the previous house, so we add the current house's value to the maximum from two houses back. If we skip the current house, we take the maximum from the previous house.
+
+
+
+
+
+The code first handles edge cases where there is only one or two houses. For the main logic, it defines a helper function that solves the linear house robber problem for a given range of houses.
+
+The helper function uses two variables: prev represents the maximum amount that could be robbed up to the previous house, and curr represents the maximum amount up to the current house. At each house, we calculate the new maximum by comparing whether it's better to rob the current house plus the maximum from two houses ago, or to skip the current house and keep the maximum from the previous house.
+
+The main function calls this helper function twice: once excluding the last house, and once excluding the first house. The maximum of these two results gives the final answer, ensuring we never rob both the first and last house simultaneously while maximizing our total loot.
+
