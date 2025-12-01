@@ -1,0 +1,40 @@
+414. Third Maximum Number
+
+The goal here is to find the third largest unique number in a list. Imagine you have a stack of different sized boxes. You want to know the 
+size of the third largest box, but if there is no third unique size, you just want the largest box size. The strategy is to keep track of 
+the three biggest boxes you have seen so far as you look through all the boxes. You start with three placeholder values set to the smallest possible number. As you examine each box, you first check if its size is already one of the three biggest you have recorded; if it is, you 
+skip it because you only care about unique sizes. If the box is bigger than your current biggest, you shift the rankings down: the old 
+biggest becomes second biggest, the old second becomes third, and the new box becomes the biggest. If it is not bigger than the biggest but 
+is bigger than the second biggest, you shift only the second and third, making the new box the second biggest. If it is only bigger than 
+the third biggest, you just replace the third biggest. After looking at all boxes, you check if you ever found a valid third biggest. 
+If your third biggest is still the initial placeholder, it means there were fewer than three unique sizes, so you return the biggest 
+size. Otherwise, you return the third biggest. The code uses LONG_MIN as the initial placeholder to safely handle cases where the actual 
+numbers could be as small as the minimum integer value.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+518. Coin Change II
+
+This problem asks how many different ways you can combine coins to reach a specific total amount, using an unlimited supply of each 
+coin denomination. Think of it as finding all unique combinations, not the order in which coins are used. The efficient solution uses 
+a technique called dynamic programming, building up the answer step by step. You create an array where each position represents an amount 
+from zero up to the target amount. The value at each position will eventually be the number of ways to make that amount. You start by 
+saying there is exactly one way to make amount zero: by using no coins. Then, you go through each coin type one by one. For each coin, 
+you update the array for every amount that is at least as large as the coin's value. The update rule is: the number of ways to make the 
+current amount includes all the ways you could make the amount without this coin plus all the ways you could make the amount minus the 
+coin's value. By processing coins one type at a time, you ensure that combinations are counted only once, regardless of the order the coins 
+are used. To prevent calculation errors from numbers getting too large during the process, the code temporarily uses a larger data type 
+for the addition. Finally, the value at the position of the target amount in the array gives the total number of combinations.
