@@ -1,0 +1,73 @@
+Fibonacci Number Problem
+
+
+
+The Fibonacci sequence is a famous mathematical sequence where each number is the sum of the two numbers before it. It starts with 0 and 1. So the sequence goes 0, 1, 1, 2, 3, 5, 8, 13, 21, and so on.
+
+The problem asks us to find the nth Fibonacci number. A simple way to solve this is by building up the sequence step by step. Instead of calculating each Fibonacci number from scratch every time, we can store the results as we compute them.
+
+Think of it like climbing stairs. To reach step 5, you need to know how to reach step 4 and step 3 first. Similarly, to find the 5th Fibonacci number, you need to know the 4th and 3rd Fibonacci numbers.
+
+We create a list or array to store these computed values. We start by putting 0 at position 0 and 1 at position 1, because these are the first two numbers given. Then for each position from 2 up to n, we calculate the value by adding the two previous values in our list.
+
+This approach avoids recalculating the same Fibonacci numbers over and over again, which makes it much more efficient than the simple recursive approach.
+
+
+
+The code begins by checking if n is 0 or 1. If it is, it simply returns n because F(0) = 0 and F(1) = 1. This is the base case.
+
+Next, it creates an array called dp with n+1 elements. The dp stands for dynamic programming, which is the technique of storing computed results to avoid redundant calculations.
+
+It sets the first two elements of the array: dp[0] = 0 and dp[1] = 1. These are our starting points.
+
+Then it enters a loop that starts from i = 2 and goes up to i = n. In each iteration, it calculates dp[i] by adding dp[i-1] and dp[i-2]. This follows the Fibonacci definition exactly.
+
+Finally, after the loop completes, it returns dp[n], which contains the nth Fibonacci number.
+
+The beauty of this solution is its simplicity and efficiency. It calculates each Fibonacci number exactly once and stores it for future use. This makes it run in linear time, meaning the time it takes grows proportionally with n.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Longest Palindromic Subsequence Problem
+
+
+
+
+A palindrome is a sequence that reads the same forward and backward. A subsequence is a sequence that can be derived from another sequence by deleting some characters without changing the order of the remaining characters.
+
+The problem asks us to find the longest subsequence within a given string that is also a palindrome. For example, in the string "bbbab", the longest palindromic subsequence is "bbbb" which has length 4.
+
+The key insight is to think about comparing characters from the start and end of the string. If the first and last characters match, they can both be part of our palindrome. If they don't match, we need to consider two possibilities: either skip the first character or skip the last character, and see which gives us a longer palindrome.
+
+We work from small substrings to larger ones. We start with single characters (which are always palindromes of length 1). Then we consider strings of length 2, then length 3, and so on, building up our solution.
+
+To save space, we use only two arrays instead of a full table. We keep track of the previous row of solutions and the current row we're computing. This is like keeping just the previous step's information instead of the entire history.
+
+
+
+
+The code first gets the length of the string and creates two arrays: dp and dpPrev, both initialized with zeros. These arrays will help us store intermediate results.
+
+The outer loop starts from the end of the string and moves backward. This is important because we're building solutions from smaller substrings to larger ones. For each starting position i, we set dp[i] = 1 because a single character by itself is always a palindrome of length 1.
+
+The inner loop starts from j = i+1 and moves forward to the end of the string. This loop considers all substrings starting at position i and ending at position j.
+
+Inside the inner loop, we check if the characters at positions i and j are the same. If they are, we can form a longer palindrome. The length would be 2 (for the matching characters at both ends) plus the length of the longest palindromic subsequence in the substring between i+1 and j-1.
+
+If the characters don't match, we have two choices: either skip the character at position i or skip the character at position j. We take the maximum of these two possibilities.
+
+After finishing the inner loop for a particular i, we copy the current dp array to dpPrev. This prepares us for the next iteration where i moves one position to the left.
+
+Finally, after all iterations complete, dpPrev[n-1] contains the length of the longest palindromic subsequence for the entire string.
+
+The space optimization here is clever. Instead of storing results for all possible substrings in a two-dimensional table, we only keep two rows at a time: the previous row and the current row. This reduces the space requirement significantly while maintaining the same logical flow of the solution.
