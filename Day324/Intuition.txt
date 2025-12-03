@@ -1,0 +1,51 @@
+714: Best Time to Buy and Sell Stock with Transaction Fee
+
+
+
+Let us understand the stock problem first. You have a list of stock prices for different days. You can buy and sell stocks multiple times but each time you sell you pay a fixed transaction fee. The goal is to find the maximum profit possible.
+
+Imagine you have two states on any given day. Either you are holding a stock you bought earlier, or you are not holding any stock. These two states are tracked separately. For each day, we calculate the best profit we can have if we are holding a stock, and the best profit if we are not holding any stock.
+
+On the first day, if you buy the stock, your profit is negative because you spent money, so you start with a negative value equal to the price of the stock.
+
+For each subsequent day, you have choices. If you are holding a stock, you can either continue holding it from the previous day, or you could buy a new stock today using the cash you have from not holding any stock. You choose the option that gives you more profit.
+
+If you are not holding any stock, you can either continue not holding from the previous day, or you could sell a stock that you were holding earlier. When you sell, you get the selling price minus the transaction fee. Again, you choose the option that gives more profit.
+
+By the end, the maximum profit will be when you are not holding any stock, because holding a stock at the end means you have not converted it to cash.
+
+The code uses two arrays, one for the buy state and one for the sell state. The buy array stores the maximum profit when holding a stock on each day. The sell array stores the maximum profit when not holding a stock on each day. It updates these values day by day, considering the previous day's values and today's price. Finally, it returns the last value in the sell array, which is the maximum profit achievable by the last day.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+788: Rotated Digits
+
+
+
+
+Now, let us understand the rotated digits problem. We have numbers from 1 to n. Each digit can be rotated 180 degrees. Some digits rotate to themselves, some rotate to different digits, and some become invalid after rotation. A number is considered good if, after rotating each of its digits, we get a different number, and all digits remain valid after rotation.
+
+Digits 0, 1, and 8 rotate to themselves. Digits 2 and 5 rotate to each other. Digits 6 and 9 rotate to each other. Digits 3, 4, and 7 become invalid after rotation.
+
+A good number must contain at least one digit that changes to a different digit (2, 5, 6, or 9) and must not contain any invalid digit (3, 4, or 7). Digits that rotate to themselves (0, 1, 8) are allowed but alone do not make a number good.
+
+The approach uses dynamic programming. We create an array to store the state of each number from 0 to n. There are three states. State 0 means the number is invalid because it contains a digit that becomes invalid after rotation. State 1 means the number is valid but not good, because all its digits rotate to themselves. State 2 means the number is good, because it contains at least one digit that changes and no invalid digits.
+
+For single-digit numbers, we assign the states directly. For example, 0, 1, and 8 are state 1. Digits 2, 5, 6, and 9 are state 2. Digits 3, 4, and 7 are state 0.
+
+For numbers with more than one digit, we break the number into two parts. The first part is all digits except the last digit, and the last digit is separate. We check the states of these two parts. If either part is invalid, the whole number is invalid. If either part is good, the whole number is good. If both parts are valid but not good, the whole number is valid but not good.
+
+We count how many numbers are in state 2, which are the good numbers, and return that count. This method efficiently determines whether each number is good by building on the states of smaller numbers.
