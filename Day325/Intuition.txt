@@ -1,0 +1,49 @@
+1025. Divisor Game
+
+
+
+Imagine you are playing a game with your friend where you have a number written on a board. On your turn, you must choose a number smaller than the current number that divides evenly into it. You then subtract that number from the current number. The next player continues with the new number. If you cannot make a move because no such divisor exists, you lose. Both players play perfectly, trying to win.
+
+The key insight is that the outcome depends entirely on whether the starting number is even or odd. If you start with an even number, you can always win by playing perfectly. If you start with an odd number, you will lose if your opponent plays perfectly.
+
+Why does this happen? Let's think step by step. When you have an even number, you can always subtract one, which leaves your opponent with an odd number. Odd numbers have only odd divisors. When you subtract an odd divisor from an odd number, the result is even. This creates a pattern where the player who starts with an even number can always pass an odd number to their opponent. Since the game ends at one, and one is odd, the player who receives the odd number at one will lose. Therefore, starting with an even number gives you control to always pass odd numbers to your opponent, ensuring your victory.
+
+
+
+
+The code uses dynamic programming to determine who wins for each possible number up to n. It creates an array where each position represents whether the current player wins starting with that number. The code checks all possible moves for each number. A move is valid if the chosen number divides evenly into the current number. If there exists a move that leaves the opponent in a losing position, then the current player can win from this position. The code efficiently checks divisors by only going up to the square root of the number, since every divisor found can be paired with its corresponding larger divisor. For each divisor found, it checks both the divisor itself and its pair to see if either move leads to a losing position for the opponent. If such a move exists, the current player can win from this number. The final answer simply returns whether the starting player wins with the initial number n.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+221. Maximal Square
+
+
+
+
+
+Imagine you have a grid filled with zeros and ones, like a black and white image. You want to find the largest square area that contains only ones. The square must be perfectly aligned with the grid, meaning its sides are horizontal and vertical. The size of the square is measured by its side length, and you need to return the area of the largest square.
+
+The challenge is to find this efficiently without checking every possible square individually, which would be very slow for larger grids. The smart approach uses dynamic programming, where you build up the solution step by step. At each cell in the grid, you determine the size of the largest square that ends at that cell, using the information from neighboring cells you've already processed.
+
+Think about what makes a square of ones. For a cell to be the bottom-right corner of a square of side length k, three conditions must be true: the cell directly above must be part of a square of at least side length k-1, the cell to the left must be part of a square of at least side length k-1, and the cell diagonally up-left must be part of a square of at least side length k-1. If any of these neighbors cannot support a square of sufficient size, the square ending at the current cell cannot be larger. This is why we take the minimum of these three values and add one for the current cell.
+
+
+
+
+The code processes the grid row by row, column by column. It maintains a single row of data that represents the current row's calculations, plus a variable to remember the diagonal value from the previous row. For each cell containing a one, it calculates the largest square ending at that cell by taking the minimum of three values: the value above the current cell, the value to the left of the current cell, and the value diagonally up-left from the current cell. It then adds one to this minimum to account for the current cell itself. The code tracks the maximum side length found so far. When it encounters a zero, it resets the value for that position to zero since no square of ones can end at a zero cell. The algorithm uses space efficiently by only storing one row of data plus the diagonal value, rather than the entire grid. Finally, it returns the area by squaring the maximum side length found.
