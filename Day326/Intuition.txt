@@ -1,0 +1,32 @@
+1: Reverse Nodes in k-Group
+
+
+
+Imagine you have a chain of people holding hands, and you want to reverse the order of groups of people, but only if the group has exactly a certain number of people. Let's say you want to reverse groups of 3 people at a time. You walk along the chain, and whenever you find exactly 3 people in a row, you reverse their order. If you find fewer than 3 people left at the end, you leave them in their original order. The challenge is to do this by only rearranging who holds whose hand, without creating a new chain.
+
+The key insight is to process the chain in sections. You keep track of where the last group ended, then look ahead to see if you have enough people for a complete group. If you do, you carefully reverse their connections one by one. You need to be careful to properly connect the reversed group back to the previous part of the chain and to the next part. This requires keeping several pointers to remember important positions while you're rearranging the connections.
+
+The code starts by handling simple cases where no reversal is needed. It creates a dummy starting point to simplify edge cases. The main loop goes through the chain looking for complete groups. It counts forward to see if there are enough nodes. If a complete group is found, it reverses those nodes by carefully changing their next pointers one by one. The reversal is done by temporarily storing the next node, pointing the current node backward, then moving forward. After reversing, it connects this reversed group to the previous part and sets up for the next iteration. If there aren't enough nodes for a complete group, it simply connects what's left without reversing.
+
+
+
+
+
+
+
+
+
+
+
+
+
+2: Insert Greatest Common Divisors in Linked List
+
+
+
+
+Imagine you have a line of people, each holding a number. You want to insert a new person between each pair of adjacent people. This new person's number should be the Greatest Common Divisor (GCD) of the numbers held by the two people they're standing between. The GCD is the largest number that divides both numbers evenly. For example, between someone holding 18 and someone holding 6, you would insert someone holding 6, because 6 is the largest number that divides both 18 and 6.
+
+The process is straightforward: you walk along the line, looking at each pair of adjacent people. For each pair, you calculate their GCD, create a new person holding that GCD number, and insert them between the pair. Then you skip over this newly inserted person to look at the next pair. You continue until you reach the end of the line. If there's only one person or no people in the line, you don't need to insert anything.
+
+The code first checks if the list is too short to need any insertions. Then it walks through the list, looking at each current node and its immediate neighbor. For each pair, it calculates their GCD using the Euclidean algorithm, which repeatedly finds remainders until it reaches zero. It creates a new node with the GCD value, inserts it between the current pair by adjusting pointers, then moves two steps forward to the next pair (skipping the newly inserted node). This continues until all adjacent pairs have been processed.
