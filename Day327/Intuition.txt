@@ -1,0 +1,31 @@
+41. First Missing Positive
+
+
+The intuition behind this problem is to find the smallest positive integer that is not present in the array. The key insight is that the answer must be between 1 and n+1, where n is the size of the array. If the array contains all numbers from 1 to n, then the answer is n+1. Otherwise, the answer is some number between 1 and n.
+
+The clever approach uses the array itself as a lookup table. We try to place each number in its correct position. For example, the number 1 should be at index 0, number 2 at index 1, and so on. We iterate through the array and for each position, if the current number is between 1 and n, we swap it to its correct position. We keep doing this until the current number is either out of range or already in its correct position.
+
+This process reorganizes the array so that positive numbers end up in their natural positions if they exist in the array. After this rearrangement, we scan through the array again. The first index where the number doesn't match index + 1 gives us our answer. If all positions match, then all numbers 1 through n are present, so the answer is n+1.
+
+The code implements this by using a while loop inside the for loop to repeatedly swap numbers to their correct positions. The condition checks if the current number is positive, within range, and not already in its correct position. After the rearrangement, a second pass checks each position to find the first mismatch between the value and its expected value.
+
+
+
+
+
+
+
+
+
+
+877. Stone Game
+
+This problem involves two players taking stones from either end of a row of piles. Both play optimally, meaning they choose the move that gives them the best chance to win. The dynamic programming solution models the game state as a series of subproblems.
+
+The core idea is to track the net advantage (Alice's stones minus Bob's stones) for each possible game state. We create a table where dp[i][j] represents the maximum advantage Alice can achieve when playing with piles from index i to index j.
+
+We start with the base case when there's only one pile (i equals j), Alice gets all those stones, so dp[i][i] equals the pile value. For longer sequences, we consider what happens when Alice picks from the left or right. If Alice picks the left pile, she gets piles[i], and then Bob gets to play on the remaining piles from i+1 to j. Since the dp table tracks Alice's advantage, and it's now Bob's turn, we subtract dp[i+1][j] from piles[i] to account for Bob's optimal play. Similarly, picking from the right gives piles[j] minus dp[i][j-1].
+
+Alice chooses the move that gives her the maximum advantage. This is calculated as the maximum between picking from left and picking from right. We build up the solution from smaller intervals to larger ones. Finally, if dp[0][n-1] is positive, it means Alice has an overall advantage and will win the game.
+
+The code implements this by initializing the diagonal of the dp table with individual pile values. Then it fills the table for increasing interval lengths. For each interval starting at i and ending at j, it calculates the advantage of picking left or right and stores the maximum. The final result comes from checking if Alice's overall advantage is positive.
