@@ -1,0 +1,81 @@
+Best Time to Buy and Sell Stock III
+
+
+
+
+
+Imagine you are a trader in the stock market with a special rule: you can only make two complete buy and sell transactions. You cannot buy again without selling first. Your goal is to maximize your total profit from these two transactions. The challenge is that the stock prices change every day, and you need to decide when to buy and sell to get the most money.
+
+Think of it this way: you need to track two separate opportunities to make money. For the first transaction, you want to buy at the lowest possible price and sell at the highest price after that. For the second transaction, you want to do the same, but you have the money from your first profit already in your pocket.
+
+The clever part is understanding that the money from your first profit affects your second transaction. When you consider buying for the second time, you effectively have more money because of your first profit. So the cost of the second purchase is actually reduced by the amount you made in the first transaction. This is like having a discount on your second purchase equal to your first profit.
+
+The algorithm walks through each day's price. It keeps track of four important numbers: the best price to buy for the first transaction, the maximum profit from the first transaction so far, the best effective price to buy for the second transaction (considering the first profit), and the maximum total profit from both transactions so far.
+
+As you go through each day, you update these numbers. For the first buy, you look for the lowest price you've seen. For the first sell, you calculate the profit if you sold at today's price after buying at the lowest price seen so far. For the second buy, you look for the lowest effective price, which is today's price minus the profit from the first transaction (this represents getting today's stock at a discount because you already have profit from the first trade). For the second sell, you calculate the total profit if you sold the second stock today at the current price after buying at the best effective price.
+
+At the end, the second sell value contains the maximum total profit possible from up to two transactions.
+
+
+
+
+The code uses four variables. FirstBuy tracks the lowest price seen so far for the first purchase. FirstSell tracks the maximum profit from a single transaction up to this point. SecondBuy tracks the lowest effective price for the second purchase, which is calculated as the current price minus the profit from the first transaction. SecondSell tracks the maximum total profit from two transactions.
+
+The loop goes through each price. For each price, it updates these four values. It finds the minimum price for the first buy. It calculates the maximum profit for the first sell by subtracting the best buy price from the current price. It finds the minimum effective price for the second buy by considering the current price minus the first profit. It calculates the maximum total profit by subtracting the best second buy price from the current price.
+
+The final answer is the second sell value, which represents the maximum profit achievable with at most two transactions.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+House Robber III
+
+
+
+
+
+
+Imagine you are a thief in a neighborhood where all houses are arranged in a tree structure. There is one main house (the root) with branches to other houses. Each house has some money. You want to rob houses to get the maximum money, but there is a security system: if you rob two houses that are directly connected (parent and child), the police will be alerted.
+
+This creates a dilemma at each house: if you rob this house, you cannot rob its immediate children houses. But if you skip this house, you can rob the children houses or their children. You need to make this decision for every house in the tree to maximize your total loot.
+
+The key insight is that for each house, you need to consider two scenarios: what happens if you rob this house, and what happens if you don't rob this house. Then you need to combine these decisions from the bottom of the tree upward.
+
+Start from the leaves (houses with no children). For a leaf house, if you rob it, you get its money. If you skip it, you get nothing. For a house with children, if you rob it, you get its money plus the maximum money from the grandchildren (since you cannot rob the children). If you skip it, you get the maximum money from the children, whether you rob them or not.
+
+The algorithm works by exploring the tree from the bottom up. For each house, it asks both its left and right branches: "What's the maximum money if I rob you? What's the maximum money if I skip you?" Then it combines these answers. If it robs the current house, it adds the house's money to the "skip" amounts from the children. If it skips the current house, it adds the maximum of "rob" or "skip" from each child.
+
+This way, every house reports two numbers to its parent: how much money the thief can get if the parent house is robbed, and how much if the parent house is skipped. The parent then uses these numbers to make its own decision.
+
+At the root house, you finally decide whether to rob it or skip it by taking the maximum of the two options, giving you the total maximum money possible without alerting police.
+
+
+
+
+
+
+The code defines a structure called RobResult that holds two numbers: the maximum money if we rob this house, and the maximum money if we skip this house.
+
+There is a dfs function that goes through the tree. If the current house doesn't exist (it's null), it returns zero for both options.
+
+For a real house, it first gets the results from the left and right children. Then it calculates two values. The first value, robThis, is the current house's money plus the "skip" amounts from both children (because if we rob this house, we cannot rob the children). The second value, skipThis, is the sum of the maximum of "rob or skip" from the left child and the maximum of "rob or skip" from the right child (because if we skip this house, we can choose the best option for each child).
+
+The function returns these two numbers to the parent. At the root, the main function takes the maximum of these two numbers as the final answer.
+
+This approach ensures we consider all possibilities without robbing two connected houses, and we find the maximum total money possible.
