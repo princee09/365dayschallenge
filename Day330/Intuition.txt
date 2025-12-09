@@ -1,0 +1,81 @@
+Number of Islands Problem (200)
+
+
+
+
+Imagine you have a map showing land and water. Land is marked as '1' and water is marked as '0'. An island is any connected piece of land where you can walk from one land cell to another by moving up, down, left, or right without stepping on water.
+
+The problem asks: How many separate islands are there on this map?
+
+The key insight is that when you find a piece of land (a '1'), you need to find ALL the land connected to it and mark it as "already counted" so you don't count it again as a separate island. This is like finding a group of friends at a party where everyone in the group knows each other directly or through other friends in the group.
+
+Think of it this way: You're scanning the map from top-left to bottom-right. When you find land, you've discovered a new island. But you need to "explore" that entire island by checking all neighboring cells (up, down, left, right) to see if they're also land. And for each of those neighboring land cells, you need to check THEIR neighbors too, and so on, until you've found all connected land.
+
+The reason we need to mark visited land (changing '1' to '0') is crucial: if we don't do this, we might count the same island multiple times. Once we finish exploring an entire island, we continue scanning the map until we find another unvisited land cell, which would be a new island.
+
+
+
+
+The code works in two parts. First, there's the main function that scans the entire grid. It goes through each cell in the grid, row by row, column by column. Whenever it finds a '1' (land), it means it has found a new island, so it increases the island count by one.
+
+Then, it immediately calls a helper function called DFS (Depth First Search) to "sink" or mark that entire island as visited. The DFS function works like this: starting from the current land cell, it first checks if it's out of bounds or if the current cell is water. If either is true, it stops exploring from that direction.
+
+If it's valid land, it does three things: first, it marks the current cell as visited by changing '1' to '0' (making it water). Then, it explores in all four directions - up, down, left, and right - by calling itself recursively. This recursive exploration continues until all connected land has been turned to water.
+
+This approach ensures that once an island is counted, we never count any part of it again because we've turned all its land cells into water cells. Then we continue scanning the rest of the grid for more islands.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+H-Index Problem (274)
+
+
+
+
+
+
+Imagine you're a researcher who has published several papers. Each paper has received a certain number of citations from other researchers. The h-index is a measure of both your productivity (how many papers you've published) and the impact of those papers (how many citations they've received).
+
+The h-index is defined as: the largest number h such that you have at least h papers with at least h citations each.
+
+Let's break this down with a simple example. Suppose your papers have citations: [3, 0, 6, 1, 5]. After sorting in descending order: [6, 5, 3, 1, 0].
+
+Now ask: How many papers have at least 1 citation? Looking at the sorted list, the first 4 papers have at least 1 citation (6, 5, 3, 1). So h could be at least 1.
+
+How many papers have at least 2 citations? The first 3 papers have at least 2 citations (6, 5, 3). So h could be at least 2.
+
+How many papers have at least 3 citations? The first 3 papers have at least 3 citations (6, 5, 3). So h could be 3.
+
+How many papers have at least 4 citations? Only the first 2 papers have at least 4 citations (6, 5). So h cannot be 4 because we need at least 4 papers with 4 citations each, but we only have 2 such papers.
+
+Therefore, the maximum h that satisfies the condition is 3.
+
+The intuition is that if you sort the citations in descending order, the h-index is essentially the point in this sorted list where the citation count (the value) is greater than or equal to its position in the list (plus one), and this stops being true at the next position.
+
+
+
+
+
+The code takes a simple but clever approach. First, it sorts the citation counts from highest to lowest. This rearrangement puts the most-cited papers first in the list.
+
+Then, it goes through this sorted list, looking at each position. It asks: Is the citation count at position i (starting from 0) greater than or equal to i+1? The i+1 represents the number of papers we're considering (since we're counting how many papers meet a certain threshold).
+
+For example, at position 0 (the first paper), we check: Does this paper have at least 1 citation? At position 1 (the second paper), we check: Does this paper have at least 2 citations? And so on.
+
+As long as this condition holds true (paper i has at least i+1 citations), we update our h value to i+1. The moment we find a paper that doesn't meet this condition, we stop looking further. Why? Because the papers are sorted in descending order, so if paper i doesn't have at least i+1 citations, then paper i+1 certainly won't have at least i+2 citations, and so on.
+
+The beauty of this approach is that it directly implements the definition of h-index in a very natural way using the sorted list. The variable h keeps track of the largest valid value we've found so far, and when we can no longer extend it, we return that value as our answer.
