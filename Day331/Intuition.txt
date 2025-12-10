@@ -1,0 +1,40 @@
+Longest Mountain in Array
+
+
+
+
+
+
+
+The intuition here is to think of a mountain as having three parts: a climbing side, a peak, and a descending side. We look for peaks in the array. A peak is an element that is higher than both its left neighbor and its right neighbor. Once we find a peak, we explore leftwards to see how far the climbing side extends. We check each element to the left to ensure it is strictly higher than the one before it, moving left as long as this is true. Then we explore rightwards from the peak to see how far the descending side extends. We check each element to the right to ensure it is strictly lower than the one before it, moving right as long as this is true. This gives us the full span of the mountain. We then calculate the length from the leftmost base to the rightmost base. We keep track of the longest mountain length we find. After processing a mountain, we skip ahead to the end of its descending side to avoid unnecessary checks, because within that mountain, no new peak can start until after the descent is complete. We repeat this process, scanning through the array only once.
+
+In the code, we first check if the array is too small to form a mountain. We start scanning from the second element. For each position, we check if it is a peak. If it is, we initialize two pointers at the neighbors of the peak. We then expand the left pointer backwards while the elements are strictly increasing. We expand the right pointer forwards while the elements are strictly decreasing. We calculate the length between the final left and right pointers. We update our answer if this length is the largest seen so far. We then move our main scanning index to the end of this mountain to continue the search. If the element is not a peak, we simply move to the next element. This approach ensures we examine each element a limited number of times.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The k Strongest Values in an Array
+
+
+
+
+
+
+
+
+
+The intuition is based on the definition of strength. Strength is determined by how far a number is from the array's median. A larger distance means stronger. If two numbers are equally distant, the larger number is stronger. To solve this efficiently, we first sort the array. Sorting allows us to easily find the median, which is defined as the middle element after sorting. Once we have the median, the strongest values will logically be found at the extreme ends of the sorted array. This is because the numbers at the ends are the farthest from the center. We can use a two-pointer technique. One pointer starts at the smallest number on the left end. The other pointer starts at the largest number on the right end. We compare the "strength" of the numbers pointed to by these two pointers. The strength is the absolute difference between the number and the median. We pick the stronger one, add it to our answer list, and move that pointer inward. If the strengths are equal, we pick the larger number. We repeat this process until we have collected the k strongest values. This method works because after sorting, the array's natural order places the potentially strongest candidates at the boundaries relative to the median.
+
+In the code, we first sort the array. We then calculate the median index. We store the median value. We initialize two pointers at the start and end of the sorted array. We also initialize an empty list for the result. We then enter a loop that runs until we have collected k values. In each step, we calculate how far the left and right elements are from the median. We compare these distances. If the right element is farther, it is stronger, so we take it and move the right pointer leftwards. If the left element is farther, we take it and move the left pointer rightwards. If the distances are equal, we compare the actual values and take the larger one, moving the corresponding pointer. We add the chosen value to our result list and reduce the count of k. This process efficiently selects the k strongest values in descending order of strength.
+
