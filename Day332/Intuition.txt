@@ -1,0 +1,79 @@
+623: Add One Row to Tree
+
+
+
+
+Let's understand this problem like we're organizing a family tree or a company structure. We have a tree structure where each person or node can have two children left and right. We're told to insert a new level of people or nodes at a specific depth or level in this hierarchy.
+
+Think of it like this: You have a company organization. The CEO is at level 1. Managers are at level 2. Employees are at level 3. Now you want to insert a new layer of supervisors between managers and employees at level 3. But here's the catch: you need to put the new supervisors right above where you want them to be, and then reassign the reporting structure.
+
+The key insight is that to insert a row at depth D, we actually need to find all the nodes at depth D-1. Why? Because we're going to make these nodes at depth D-1 become the parents of our new row. For each node at depth D-1, we create two new children nodes with the given value. Then we take whatever was previously the left child of this node and make it the left child of our new left node. Similarly, we take whatever was previously the right child and make it the right child of our new right node.
+
+There's a special case: if we want to insert at depth 1, that means we're putting someone above the CEO. So we create a new root, and the entire existing company becomes the left child of this new root.
+
+The algorithm uses a breadth-first search approach, which means we explore the tree level by level. We use a queue data structure to keep track of nodes at each level. We start from the root and move down level by level until we reach the level just above where we want to insert our new row depth minus one. Once we find all nodes at that level, we perform the insertion for each node.
+
+
+
+
+
+The code starts by handling the special case where depth equals one. In this case, it creates a new root node with the given value and makes the original tree the left child of this new root. Then it returns this new root.
+
+For other cases, the code uses a queue to perform level order traversal. It tracks the current depth as it goes through each level. When it reaches depth minus one the level just above where we want to insert, it processes all nodes at that level.
+
+For each node at depth minus one, the code creates two new nodes with the given value. The new left node gets the original left subtree of the current node as its left child. Then the current node's left pointer is updated to point to this new left node. Similarly for the right side, a new right node is created, it gets the original right subtree as its right child, and the current node's right pointer is updated to point to this new right node.
+
+If we haven't reached depth minus one yet, the code simply adds the children of current nodes to the queue to process the next level. It increments the current depth and continues until it finds the right level or exhausts all nodes.
+
+Finally, it returns the original root for cases where depth is greater than one, or the new root for cases where depth equals one.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+671: Second Minimum Node In a Binary Tree
+
+
+
+
+
+
+
+This problem involves a special type of binary tree with a unique property. In this tree, every node that has two children has a value equal to the minimum value of its two children. This means the root node always has the smallest value in the entire tree. Think of it like a tournament where the winner the node with the smallest value always advances upward.
+
+We need to find the second smallest value in this entire tree. The challenge is that the smallest value is guaranteed to be at the root, but the second smallest could be anywhere in the tree.
+
+Let's use an analogy. Imagine a sports tournament where the best team the smallest value always wins and moves up. At the championship root, we have the absolute best team. The second-best team would be one that lost only to the champion. In our tree structure, this means the second smallest value would be found in positions where it lost to the smallest value.
+
+The key observation is that since every parent node takes the minimum of its children's values, if we encounter a node whose value is greater than the root's value, this node's value could potentially be the second minimum. But we need to find the smallest among all such values that are greater than the root value.
+
+The algorithm uses a depth-first search approach. It starts from the root and knows the root's value is the minimum. As it explores the tree, whenever it finds a node with a value greater than the minimum, that becomes a candidate for the second minimum. However, we need to check both children because the second minimum might be in either subtree.
+
+When we recursively check both children, we compare their results. If both children return valid candidates values greater than minimum, we take the smaller of the two. If only one returns a valid candidate, we use that. If neither returns a valid candidate, we return negative one indicating no second minimum exists.
+
+
+
+
+
+The code defines a helper function that performs depth-first search. This function takes a node and the minimum value which we know is the root's value. If the node is null, it returns negative one.
+
+If the current node's value is greater than the minimum value, this node itself becomes a candidate, so it returns this value immediately. This is because in this tree structure, if a node's value is already greater than the minimum, all values in its subtree will be at least this large, so we don't need to look further down this path for smaller candidates.
+
+For nodes with value equal to the minimum, we need to check both children because the second minimum might be deeper in the tree. The code recursively calls itself on both left and right children.
+
+After getting results from both children, the code combines them. If both children returned valid values not negative one, it returns the smaller of the two because we want the second minimum, which should be the smallest value greater than the minimum. If only one child returned a valid value, it returns that value. If neither returned a valid value, it returns negative one.
+
+The main function simply calls this helper function with the root and the root's value, and returns whatever the helper function returns.
