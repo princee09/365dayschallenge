@@ -1,0 +1,77 @@
+Question 167 - Two Sum II on Sorted Array
+
+
+
+
+
+Imagine you have a list of numbers arranged from smallest to largest, and you need to find two numbers that add up to a specific target value. Think of this like trying to find two books on a bookshelf that have page counts adding up to exactly 500 pages. The books are arranged from thinnest to thickest on the shelf.
+
+Since the numbers are already sorted, you can use a clever approach that starts looking from both ends of the list simultaneously. Picture yourself pointing at the smallest number with your left hand and the largest number with your right hand. You add these two numbers together.
+
+If the sum is exactly what you're looking for, you've found your answer. If the sum is too small, you know you need a larger number on the left side, so you move your left hand one position to the right toward larger numbers. If the sum is too large, you know you need a smaller number on the right side, so you move your right hand one position to the left toward smaller numbers.
+
+This works perfectly because the list is sorted. When the sum is too small, moving the left pointer rightward increases the sum. When the sum is too large, moving the right pointer leftward decreases the sum. You keep adjusting like this until you find the exact pair that adds up to your target. This is much more efficient than checking every possible pair.
+
+
+
+
+
+
+The code starts with two pointers - one at the beginning of the array called left and one at the end called right. These represent indices in the array. The while loop continues as long as the left pointer is to the left of the right pointer, meaning they haven't crossed each other.
+
+Inside the loop, the code calculates the sum of the numbers at these two positions. If this sum equals the target, it returns the positions adjusted by adding one because the problem uses 1-based indexing instead of 0-based indexing.
+
+If the sum is less than the target, the left pointer moves right by one position to increase the sum. If the sum is greater than the target, the right pointer moves left by one position to decrease the sum. This process repeats until the correct pair is found. The code assumes there is always a solution, which the problem guarantees.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Question 217 - Contains Duplicate
+
+
+
+
+
+
+
+
+
+
+Imagine you're checking if there are any repeated names on a guest list for a party. You have a long list of names, and you want to know if any name appears more than once. The simplest way is to keep track of names you've already seen as you go through the list.
+
+As you read each name, you check if you've seen it before. If you have, you know there's a duplicate and you can stop checking immediately. If you haven't seen it before, you add it to your memory of names you've seen so far, then continue to the next name. If you reach the end of the list without finding any duplicates, then all names are unique.
+
+This approach uses what's called a set in programming - a collection that only stores unique items and lets you quickly check if something is already in it. The key advantage is speed: checking if a name is already in your memory takes constant time, regardless of how many names you've already seen.
+
+
+
+
+
+
+
+
+
+The code creates an empty set called seen to keep track of numbers encountered so far. It then goes through each number in the input list one by one using a for loop. For each number, it first checks if that number already exists in the seen set using the count method.
+
+If the number is found in the set, the function immediately returns true, indicating a duplicate was found. If the number is not in the set, it adds the number to the set using the insert method and continues to the next number.
+
+If the loop completes without finding any duplicates, meaning all numbers were unique, the function returns false. This approach is efficient because checking for existence in a set and adding to a set are very fast operations, allowing the code to handle large lists efficiently.
