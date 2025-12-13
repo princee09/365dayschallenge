@@ -1,0 +1,35 @@
+98. Validate Binary Search Tree
+
+
+
+The intuition here is based on a property of Binary Search Trees: when you traverse a BST in inorder fashion (left child, then current node, then right child), you should get all values in strictly increasing order. This is because in a valid BST, all left subtree values must be smaller than the current node, and all right subtree values must be larger.
+
+Think of it like checking if numbers are arranged in a sorted list when you visit them in a specific left-to-right pattern. We use a depth-first approach, visiting the leftmost node first, then its parent, then the right child, and so on. As we visit each node, we compare its value with the previously visited node's value. If at any point we find a node with a value less than or equal to the previous node's value, we know the tree is not a valid BST.
+
+The code uses a recursive helper function to perform this inorder traversal. It maintains a reference to the previous node visited. It first recursively validates the left subtree. Then it checks if the current node's value is greater than the previous node's value (if a previous node exists). If this condition fails, it returns false immediately. If it passes, it updates the previous node to be the current node, then recursively validates the right subtree. This approach ensures we're constantly checking that every node we visit is larger than the one before it, which matches the strictly increasing order requirement of BST inorder traversal.
+
+The time complexity is O(n) because we visit each node exactly once, and the space complexity is O(h) where h is the height of the tree due to the recursive call stack.
+
+
+
+
+
+
+
+
+
+241. Different Ways to Add Parentheses
+
+
+
+The intuition here is to break down the problem by considering every possible way to place parentheses in the expression. Think of the expression as containing numbers separated by operators. When we add parentheses, we're essentially deciding the order of operations. For example, in "2-1-1", we can compute (2-1)-1 or 2-(1-1), giving different results.
+
+The key insight is that every valid parenthesization corresponds to choosing some operator to be the "last" operation performed. If we pick an operator as the last operation, then we need to compute all possible results for the left part of the expression (before that operator) and all possible results for the right part (after that operator), then combine those results using the chosen operator.
+
+This leads to a recursive divide-and-conquer approach. For each operator in the expression, we split the expression into left and right subexpressions at that operator. We then recursively compute all possible results for both sides. Finally, we combine each result from the left with each result from the right using the operator between them.
+
+The code implements this using recursion with memoization to avoid redundant calculations. The memoization stores results for subexpressions we've already computed, which significantly improves efficiency. When we encounter a subexpression that's just a number (no operators), that's our base case: we simply return a list containing that number.
+
+The function iterates through the expression character by character. When it finds an operator, it recursively computes results for the left and right parts, then combines them. If no operator is found, it means the expression is just a number, so it converts that string to an integer and returns it as a single-element list.
+
+This approach systematically explores all possible parenthesizations by treating each operator as a potential last operation, recursively computing all possible values for subexpressions on either side, and combining them in all possible ways.
