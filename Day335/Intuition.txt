@@ -1,0 +1,45 @@
+Minimum Cost to Move Chips to The Same Position
+
+
+
+
+
+
+
+
+
+The problem is about moving chips to the same position with special cost rules. Moving two steps left or right costs zero. Moving one step left or right costs one. This creates a useful observation: moving a chip from an even-numbered position to any other even position costs nothing because you can do it in jumps of two. Similarly, moving a chip from an odd position to any other odd position also costs nothing. The only time you pay a cost is when you need to move a chip from an odd position to an even position, or from an even to an odd. That move costs one per chip because you must shift by one step.
+
+Therefore, all chips that share the same parity, meaning all evens together and all odds together, can be gathered at one spot within their group for free. After that, you have two groups: one group of chips on even positions and another group on odd positions. Now you must move one group to the other's position, and that will cost one per chip moved. To minimize cost, you move the smaller group to the larger group. So the minimum cost is simply the smaller count between odd-positioned chips and even-positioned chips.
+
+The code implements this by looping through all chip positions. For each position, it checks if it is even or odd. It counts how many are even and how many are odd. Finally, it returns the smaller of these two counts as the answer. This works because the actual position numbers do not matter, only whether they are odd or even. The solution is efficient, running in one pass through the data, using almost no extra memory.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+K Items With the Maximum Sum
+
+
+
+
+
+
+
+
+We have a bag containing three types of items: ones, zeros, and negative ones. We must pick exactly k items to maximize the sum of their values. Naturally, we want to pick as many ones as possible first because they add the most to the sum. Zeros are neutral, they do not change the sum. Negative ones reduce the sum, so we pick them only if necessary.
+
+This leads to a simple three-case strategy. First, if k is less than or equal to the number of ones available, we pick only ones, and the sum is k. Second, if k is greater than the number of ones but still within the total of ones and zeros, we pick all ones first, then fill the remaining slots with zeros, giving a sum equal to the number of ones. Third, if k exceeds the total of ones and zeros, we must pick all ones, all zeros, and the rest from negative ones. Each negative one reduces the sum by one, so the total sum becomes the number of ones minus the number of negative ones taken.
+
+The code follows this logic directly. It checks k against the count of ones and the count of zeros to decide which case applies. Then it computes the answer using the described formulas. This approach guarantees the maximum possible sum because it prioritizes higher-value items and uses lower or negative-value items only when needed to meet the exact k requirement. The solution is very fast, using only a few comparisons and arithmetic operations.
