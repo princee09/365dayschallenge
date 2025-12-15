@@ -1,0 +1,61 @@
+Search in a Binary Search Tree (Problem 700)
+
+
+
+
+
+A Binary Search Tree is like a well-organized library. In a library, books are arranged in a specific order. If you're looking for a book with a particular title, you don't start searching randomly. Instead, you go to the correct section, then the correct shelf, then find the exact book. A Binary Search Tree works similarly. Each node has a value, and there's a special rule: all values in the left branch are smaller than the current node's value, and all values in the right branch are larger. This organization creates a predictable pattern that allows us to search efficiently.
+
+Think of it like playing the "higher or lower" guessing game. If I tell you I'm thinking of a number between 1 and 100, you could ask: "Is it 50?" If I say "higher," you know the number is between 51 and 100. If you then ask "Is it 75?" and I say "lower," you know it's between 51 and 74. You keep narrowing down the range. In a Binary Search Tree, we do exactly this. We start at the root. If the value we're looking for equals the current node's value, we found it. If it's smaller, we go left because all smaller values are in the left branch. If it's larger, we go right because all larger values are in the right branch.
+
+The beauty of this approach is that we never waste time searching areas where the value cannot possibly be. We only follow one path from the root down to where the value should be. If we reach a dead end (a null pointer), it means the value doesn't exist in the tree. This is much faster than checking every single node.
+
+
+
+
+
+
+The code implements this search logic using a simple loop. We start with a pointer called "current" pointing to the root of the tree. We keep moving through the tree as long as we haven't reached a dead end. Inside the loop, we check if the current node's value equals what we're looking for. If it does, we immediately return that node. If our target value is smaller than the current node's value, we move left by updating the current pointer to point to the left child. If our target is larger, we move right by updating the current pointer to point to the right child. This continues until we either find the value or reach a point where we can't go further (when current becomes null), in which case we return null to indicate the value wasn't found. The code is clean, efficient, and directly implements the logical search process we described.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Minimum Distance Between BST Nodes (Problem 783)
+
+
+
+
+
+
+
+
+This problem asks us to find the smallest difference between any two values in a Binary Search Tree. At first, you might think we need to compare every pair of values, which would be very inefficient. But we can use a special property of Binary Search Trees to solve this efficiently. When you visit the nodes of a BST in a specific order called "in-order traversal" (left subtree, then current node, then right subtree), you get all the values in sorted order from smallest to largest.
+
+Think of it like lining up students by height from shortest to tallest. If you want to find the two students with the closest heights, you don't compare every possible pair. Instead, you look at each consecutive pair in the sorted line because the smallest height difference will always be between two students standing next to each other in this sorted order. The same principle applies here. In a sorted list of numbers, the minimum difference between any two numbers will always be between two consecutive numbers in that sorted order.
+
+So our strategy becomes: first, get all the node values in sorted order using in-order traversal. Then, as we get each value in sorted order, we compare it with the previous value we saw. We keep track of the smallest difference we've found so far. We need to be careful to handle the first value we encounter since it doesn't have a previous value to compare with. This approach ensures we check exactly what we need: the differences between consecutive values in sorted order, which is where the minimum difference must occur.
+
+
+
+
+
+
+The code implements this idea using an iterative approach with a stack. We need to traverse the tree in sorted order without using recursion. We use a stack to keep track of nodes we need to come back to. We start at the root and keep going left as far as we can, pushing each node onto the stack. This gets us to the smallest value in the tree. Once we can't go left anymore, we take the node from the top of the stack (which is the smallest value we haven't processed yet). This is our current node in sorted order.
+
+Now we check: do we have a previous node? If yes, we calculate the difference between the current node's value and the previous node's value. We update our minimum difference if this new difference is smaller. Then we set the previous node to be this current node. After processing this node, we need to move to the right subtree because in in-order traversal, after processing a node, we process its right subtree. We then repeat the process: go as far left as possible in this right subtree, pushing nodes onto the stack, then process them.
+
+This continues until we've processed all nodes. The stack helps us backtrack to parent nodes when we finish processing left subtrees. The "prev" pointer remembers the last node we processed, so we can always calculate the difference between consecutive nodes in the sorted order. The "minDiff" variable keeps track of the smallest difference we've found so far, starting with the largest possible integer value. At the end, we return this minimum difference. This approach visits each node exactly once while maintaining the sorted order traversal needed to find the minimum difference efficiently.
+
