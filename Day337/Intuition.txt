@@ -1,0 +1,79 @@
+188: Best Time to Buy and Sell Stock IV
+
+
+
+
+
+Imagine you are a trader in a stock market. You have historical prices of a stock for several days. You are allowed to make at most K transactions. A transaction means you buy the stock on one day and sell it on a later day. You cannot buy again without selling first. You want to maximize your total profit.
+
+The key insight here is that if K is very large (specifically, if K is at least half the number of days), then you can essentially make as many transactions as you want. In this case, you can profit from every price increase between consecutive days. For example, if prices go up from day 1 to day 2, you buy on day 1 and sell on day 2. If they go up again from day 2 to day 3, you buy on day 2 and sell on day 3, and so on. This is handled by the first special case in the code.
+
+When K is limited, we need to be smarter. The approach uses dynamic programming with two arrays. One array tracks the minimum effective purchase price when you have completed a certain number of transactions and are ready to buy again. The other array tracks the maximum profit achieved after completing a certain number of transactions.
+
+For each day and for each possible number of transactions from 1 to K, we update these values. The update rule is: the minimum cost for the j-th transaction is the lesser of the previous minimum cost and the current price minus the profit from the previous transaction. This effectively finds the best price to buy at, considering the profit we already made from earlier transactions. Then, the profit for j transactions is the maximum of the previous profit and the current price minus that minimum cost, which represents selling at the current price after buying at the best earlier price.
+
+By processing all days this way, we build up the maximum profit possible for up to K transactions. The final answer is the profit after K transactions.
+
+
+
+
+
+
+The code first checks if there are no prices or if K is zero, in which case profit is zero. Then it handles the unlimited transactions case when K is large. For the limited K case, it initializes two arrays: one for profit after each transaction count and one for the minimum effective purchase price for each transaction count.
+
+It then loops through each day starting from the second day. For each day, it considers each possible transaction count from 1 to K. It updates the minimum cost for that transaction count by comparing the existing minimum with the current price minus the profit from one fewer transaction. This finds the best buying opportunity. Then it updates the profit for that transaction count by comparing the existing profit with selling at the current price after buying at the minimum cost.
+
+After processing all days, the profit for K transactions is the answer.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+336: Palindrome Pairs
+
+
+
+
+
+
+
+
+
+
+
+You are given a list of unique words. You need to find all pairs of words such that when you concatenate them, they form a palindrome. A palindrome reads the same forwards and backwards.
+
+The brute force approach would check every pair of words, concatenate them, and check if the result is a palindrome. But that is too slow for large inputs. The clever approach uses a dictionary to store all words and their indices for quick lookup.
+
+There are several cases to consider. First, if a word's exact reverse exists in the list, then concatenating the word with its reverse gives a palindrome. For example, "abcd" and "dcba" form "abcddcba", which is a palindrome.
+
+Second, consider splitting a word into two parts. If the first part is itself a palindrome, then to make the whole concatenation a palindrome, the second part's reverse must exist as a separate word. For instance, take "lls". Split it into "l" (which is a palindrome) and "ls". The reverse of "ls" is "sl". If "sl" exists as a word, then "sl" + "lls" = "sllls", which is a palindrome. Here, the word from the list would be "s".
+
+Similarly, if the second part is a palindrome, then the reverse of the first part must exist as a word. For example, take "sssll". Split it into "sss" and "ll". "ll" is a palindrome. The reverse of "sss" is "sss" itself. If "sss" exists as a word, then "sssll" + "sss" = "sssllsss", which is a palindrome.
+
+The empty string is a special case. When one word is empty, the concatenation is just the other word. So if that other word is a palindrome, the pair works both ways: empty + palindrome and palindrome + empty.
+
+We need to check all possible splits for each word and use the dictionary to quickly check if the required complementary word exists. Finally, we remove any duplicate pairs that might have been added multiple times.
+
+
+
+
+
+
+The code starts by building a dictionary mapping each word to its index for fast lookups. Then it iterates through each word. For each word, it handles the empty string case separately by checking all other words that are palindromes.
+
+For non-empty words, it first checks if the exact reverse of the word exists in the dictionary and adds that pair if the indices are different. Then it considers all possible split points in the word. For each split, it checks if the left part is a palindrome. If yes, it takes the right part, reverses it, and checks if that reversed string exists in the dictionary. If found, it adds the pair with the indices appropriately.
+
+Similarly, it checks if the right part is a palindrome. If yes, it takes the left part, reverses it, and checks if that exists in the dictionary. If found, it adds the corresponding pair.
+
+After processing all words, it sorts the list of pairs and removes duplicates to ensure each unique pair appears only once. The helper function checks if a string is a palindrome by comparing characters from both ends moving towards the center.
