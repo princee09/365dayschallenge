@@ -1,0 +1,39 @@
+679: 24 Game
+
+
+
+
+The intuition behind solving the 24 Game is to explore all possible ways to combine the four numbers using basic arithmetic operations. Since we have only four numbers, we can systematically try every combination.
+
+Think of it like this: We start with four numbers. At each step, we pick any two numbers and try adding, subtracting, multiplying, or dividing them. After performing an operation, we replace those two numbers with the result, so we now have three numbers left. We repeat this process: pick two numbers from the remaining set, apply an operation, reduce to two numbers, and finally to one number. That final number is what we check to see if it is approximately 24. The key is that we must try every possible pair and every possible operation at each step, and also consider that subtraction and division are not commutative—subtracting B from A is different from subtracting A from B, and similarly for division.
+
+The code uses a technique called backtracking, which is like exploring all branches of a decision tree. The function takes a list of numbers. If the list has only one number, it checks if that number is close enough to 24, accounting for tiny floating-point errors. If not, it enters loops to pick two different numbers from the list. It creates a new list containing the other numbers not chosen. Then it tries each arithmetic operation on the two chosen numbers, adding the result to the new list, and recursively calls itself with this smaller list. If any recursive call returns true, we immediately return true. To avoid redundant calculations, for commutative operations like addition and multiplication, we skip cases where the second index is less than the first, since A+B is the same as B+A. For subtraction and division, we try both orders. Division checks for near-zero denominators to prevent division by zero. The recursion explores all possible combinations of numbers and operations, eventually determining if 24 can be reached.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1665: Minimum Initial Energy to Finish Tasks
+
+
+
+
+The intuition for this problem is to find the best order to perform tasks to minimize the starting energy. Each task has an actual energy cost and a minimum energy threshold required to start it. If we think about two tasks, the order matters because the energy left after the first task affects whether we can start the second.
+
+Consider two tasks: Task A requires at least MA energy to start and costs AA energy to complete. Task B requires at least MB energy and costs AB. If we do A first, we need starting energy to be at least MA, and after finishing A, we have energy minus AA. To then do B, we need that remaining energy to be at least MB. So the total starting energy needed is the maximum of MA and AA plus MB. Similarly, if we do B first, we need the maximum of MB and AB plus MA. We want the order that gives the smaller requirement. After comparing the two expressions, we find that the better order is when the difference between the minimum and the actual is larger for the task done later. In other words, tasks that have a bigger gap between their minimum requirement and their actual cost (meaning they give back more energy relative to their threshold) should be done later, because they are more forgiving and we can use energy from previous tasks to meet their high minimum.
+
+The code sorts the tasks based on this difference (minimum minus actual) in descending order. This places tasks with the largest difference last. Then it calculates the minimum starting energy. It keeps a running sum of the actual costs of tasks already considered. For each task in the sorted order, the required starting energy must be at least the task's minimum plus the sum of actual costs of all previously considered tasks, because before starting this task, we must have spent energy on all previous tasks. The overall answer is the maximum of these values across all tasks. This works because sorting ensures that at each step, the current task's minimum, when added to the energy already spent on previous tasks, represents the minimum energy needed at the very beginning to reach this point. Taking the maximum across all tasks gives the smallest initial energy that suffices for the entire sequence.
