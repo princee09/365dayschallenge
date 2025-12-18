@@ -1,0 +1,59 @@
+1: Minimize Maximum Pair Sum in Array
+
+
+
+
+
+
+
+We have an array of numbers that we need to pair up. Each number must be used exactly once, and we want to minimize the largest sum among all pairs. Think of it like this: if we pair two very large numbers together, their sum will be huge and become the maximum. To avoid this, we should balance the pairs by pairing large numbers with small numbers.
+
+The best strategy is to sort the array first, which arranges all numbers from smallest to largest. Then we pair the smallest number with the largest number, the second smallest with the second largest, and so on. This way, every large number gets paired with a small number, which keeps all pair sums relatively balanced. If we tried any other pairing method, we would end up pairing some large numbers together, creating a larger maximum sum that we want to avoid.
+
+After sorting, we use two pointers: one starting at the beginning (smallest numbers) and one at the end (largest numbers). We move inward, pairing them together, and track the largest sum we see. This largest sum after pairing everything is our answer.
+
+
+
+
+
+
+The code first sorts the array to arrange numbers in order. It then sets up two pointers: one at the start and one at the end. These pointers represent the current smallest and largest numbers available for pairing. The code enters a loop that continues until the pointers meet in the middle. In each step, it calculates the sum of the two numbers at the pointers, updates the maximum sum if this sum is larger than any previous sum, and then moves both pointers inward toward the center. This process pairs all numbers as described. Finally, it returns the maximum sum found during all pairings.
+
+
+
+
+
+
+
+
+
+
+
+
+The Latest Time to Catch a Bus
+
+
+
+
+
+
+
+
+
+We have buses that leave at specific times and passengers who arrive at specific times. Each bus has limited capacity. Passengers board buses in the order they arrive, and only if they arrive before or when the bus leaves. We want to find the latest possible time we can arrive to catch a bus, but we cannot arrive at the same time as any existing passenger.
+
+The key insight is that we need to simulate what happens with all buses and passengers. First, we sort both buses and passengers by time to process events in chronological order. We then simulate each bus in order. For each bus, we board passengers who have arrived by that time, up to the bus capacity, always taking the earliest arriving passengers first.
+
+When we reach the last bus, we have two scenarios. If the last bus has empty seats after boarding passengers, we could potentially arrive exactly when the bus leaves or earlier. But we cannot arrive when any passenger arrives, so we check backward from the bus departure time until we find a time slot not occupied by any passenger.
+
+If the last bus is full, we need to arrive before the last passenger who boarded that bus. We start from just before that last passenger's arrival time and check backward until we find an available time not used by any passenger.
+
+We must check backward carefully because passengers might have arrived at consecutive times, so we need to skip over all occupied times until we find an empty slot.
+
+
+
+
+
+The code first sorts buses and passengers by time. It uses a pointer to track which passengers have been processed. For each bus, it boards passengers in order until the bus is full or no more eligible passengers remain. It keeps track of the last passenger who boarded.
+
+When processing the last bus, the code checks if there are empty seats. If yes, it starts checking from the bus departure time backward to find an available time. If the bus is full, it starts from just before the last passenger's time and checks backward. In both cases, it uses binary search to check if a particular time is occupied by any passenger, and keeps going backward until finding an unoccupied time. This found time is the latest possible arrival time to catch a bus.
