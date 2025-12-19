@@ -1,0 +1,61 @@
+581. Shortest Unsorted Continuous Subarray
+
+
+
+The problem asks us to find the smallest continuous section of an array that if we sort just that section, the entire array becomes sorted. Imagine you have a list of numbers that should be in increasing order, but somewhere in the middle, the order gets mixed up. We need to find exactly where that mixed-up section starts and ends.
+
+First, we scan from the left side of the array. We move forward as long as each number is smaller than or equal to the next number. The moment we find a number that is larger than the next number, we stop. This is our initial left boundary. It marks where the increasing order first breaks from the left.
+
+Next, we scan from the right side of the array. We move backward as long as each number is larger than or equal to the previous number. The moment we find a number that is smaller than the previous number, we stop. This is our initial right boundary. It marks where the decreasing order first breaks from the right.
+
+If after checking from the left we reach the end of the array, that means the entire array is already sorted, so we return zero.
+
+Now we have a preliminary unsorted section between the left and right boundaries. However, this section might need to be expanded. Why? Because even if numbers outside this section seem in order, they might actually be in the wrong place relative to the numbers inside the unsorted section.
+
+We need to find the smallest number and the largest number within our preliminary unsorted section. We do this by scanning from the left boundary to the right boundary and tracking the minimum and maximum values.
+
+Now we expand the left boundary. We look to the left of our current left boundary. If we find a number that is larger than the minimum value from the unsorted section, that means that number is out of place too. It should not be there because it is bigger than the smallest number in the messed-up section. So we keep moving the left boundary leftward until we find a number that is smaller than or equal to the minimum value from the unsorted section.
+
+Similarly, we expand the right boundary. We look to the right of our current right boundary. If we find a number that is smaller than the maximum value from the unsorted section, that means that number is out of place too. It should not be there because it is smaller than the largest number in the messed-up section. So we keep moving the right boundary rightward until we find a number that is larger than or equal to the maximum value from the unsorted section.
+
+Finally, the distance between the final left boundary and the final right boundary, plus one, gives us the length of the shortest unsorted continuous subarray that needs to be sorted to make the whole array sorted.
+
+The code implements this step by step. It starts by finding where the order breaks from left and right. If the array is already sorted, it returns zero. Then it finds the minimum and maximum values within the initially identified unsorted section. It then expands the left boundary by checking numbers to the left, moving left if a number is greater than the minimum. It expands the right boundary by checking numbers to the right, moving right if a number is less than the maximum. The final answer is the difference between the right and left boundaries plus one.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+624. Maximum Distance in Arrays
+
+
+
+
+The problem gives us multiple sorted lists, each in increasing order. We need to pick one number from one list and another number from a different list, and we want the largest possible absolute difference between these two numbers. Since the lists are sorted, the smallest number in any list is always at the beginning, and the largest number is always at the end.
+
+We want to maximize the distance, which is the difference between a large number and a small number. The challenge is that these two numbers must come from different lists. We cannot take both from the same list.
+
+We start by taking the first list. We note its smallest number as the current global minimum and its largest number as the current global maximum. We also remember which list these came from by storing their list indices.
+
+Then we move to the next list. We look at its smallest number and its largest number. We check two possibilities. First, we take the largest number from this current list and subtract the global minimum from a previous list. Since the global minimum is from a different list (a list we processed earlier), this gives us a valid distance. We update our result if this distance is bigger than what we have seen so far.
+
+Second, we take the global maximum from previous lists and subtract the smallest number from the current list. Again, these are from different lists, so this is a valid distance. We update our result if this distance is bigger.
+
+Now, we need to update our global minimum and maximum for future lists. If the current list's smallest number is smaller than our recorded global minimum, we update the global minimum to this new smaller number and remember that it came from this current list. Similarly, if the current list's largest number is larger than our recorded global maximum, we update the global maximum to this new larger number and remember that it came from this current list.
+
+We repeat this process for every list. Each time we process a new list, we calculate distances using the global minimum and maximum from previous lists, ensuring they are from different lists. Then we update the global minimum and maximum if needed.
+
+The key is that we always compare the current list's numbers with the best minimum and maximum from all previously processed lists. Since those previous lists are different from the current list, the distances we calculate are always valid. By continuously updating the global minimum and maximum, we always have the best candidates from all lists seen so far to pair with the next list.
+
+The code does exactly this. It initializes with the first list's minimum and maximum and their list index. Then for each subsequent list, it calculates two possible distances: current list's maximum minus global minimum, and global maximum minus current list's minimum. It updates the result with the larger of these. Then it updates the global minimum and maximum if the current list provides better values. This way, in one pass through all lists, we find the maximum distance between elements from different lists.
