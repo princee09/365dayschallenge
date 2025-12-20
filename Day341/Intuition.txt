@@ -1,0 +1,83 @@
+1: Maximum Subarray Min-Product
+
+
+
+
+
+Imagine you have a series of buildings with different heights, represented by the numbers in the array. For each building, we want to find the widest possible stretch of consecutive buildings where this particular building is the shortest one in that stretch. Why do we care about this? Because the min-product for a subarray is calculated by taking the smallest building in that stretch and multiplying it by the total sum of all buildings in that stretch. So, for each building, if we can find the widest stretch where it remains the shortest, we get the largest possible sum to multiply with its height, potentially giving us the maximum min-product.
+
+Think of each building looking left and right, trying to extend its territory as far as possible until it encounters a building that is shorter than itself. The left boundary for a building is the first building to its left that is shorter. The right boundary is the first building to its right that is shorter. The stretch between these boundaries (excluding the boundaries themselves) is the widest subarray where this building is the minimum. Within this stretch, all buildings are at least as tall as our current building, so it remains the shortest.
+
+Once we have these boundaries for every building, we need a way to quickly calculate the total sum of the buildings within each stretch. This is where prefix sums come in. A prefix sum array keeps a running total of building heights. For any stretch from index L to index R, the total sum is simply the prefix sum at position R+1 minus the prefix sum at position L. This allows us to compute the sum in constant time.
+
+Finally, for each building, we calculate the min-product: its own height multiplied by the total sum of its allowed stretch. We track the largest value we find. The answer is this largest value, but because numbers can be very large, we give the answer modulo one billion plus seven to keep it manageable.
+
+
+
+
+
+First, the code builds a prefix sum array. This is like keeping a running total of heights so we can quickly find the sum of any segment later.
+
+Then, it processes the array from left to right using a stack. A stack is a data structure that follows "last-in, first-out." As we move left to right, for each building, we check the stack which holds indices of buildings. We remove any building from the stack that is taller than or equal to the current building because those taller buildings cannot be the left boundary for the current building; a shorter building would stop the stretch. After removing all taller or equal ones, the top of the stack (if it exists) is the index of the first shorter building to the left. That becomes our left boundary. If the stack is empty, it means no building to the left is shorter, so we can extend all the way to the start (represented as index -1). We then add the current building's index to the stack.
+
+Next, we repeat a similar process but from right to left to find the right boundaries. We use the same logic: for each building, we look at the stack and remove any building that is taller than or equal to the current one. The top of the stack (if it exists) is the first shorter building to the right, which is our right boundary. If the stack is empty, we can extend all the way to the end (represented as index n, the size of the array).
+
+Now, with left and right boundaries for every building, we loop through each building. For each, the valid stretch starts just after the left boundary (left index + 1) and ends just before the right boundary (right index - 1). Using the prefix sums, we calculate the total height sum of this stretch. The min-product is the building's own height multiplied by this sum. We keep track of the largest min-product found.
+
+Finally, we return this maximum value after applying the modulo operation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sum of Subarray Ranges
+
+
+
+
+
+
+
+This problem asks for the sum of the differences between the largest and smallest number for every possible contiguous subarray. A direct approach would be to look at every subarray, find its maximum and minimum, and add their difference to a total. However, this is inefficient for large arrays. A smarter approach is to realize that the total sum of ranges for all subarrays can be broken down into two separate calculations: first, calculate the sum of the maximum values for all subarrays; second, calculate the sum of the minimum values for all subarrays. Then, subtract the sum of minimums from the sum of maximums. This works because for any subarray, its range is max minus min, and if we sum this over all subarrays, it's the same as summing all maximums and subtracting the sum of all minimums.
+
+Now, the key is: for each individual number in the array, in how many subarrays is this number the maximum? And in how many subarrays is it the minimum? If we can answer these two questions for every number, we can compute the total sum of maximums by adding each number multiplied by the count of subarrays where it is the maximum. Similarly, we compute the total sum of minimums.
+
+To find these counts, we again use boundaries. For a number to be the maximum in a subarray, all other numbers in that subarray must be less than or equal to it. But to avoid double counting when there are equal numbers, we need to define rules carefully. Typically, when looking for the stretch where a number is the maximum, we find the first number to the left that is strictly greater, and the first number to the right that is strictly greater. The subarray where our number is the maximum can start anywhere from just after the left boundary up to the current index, and can end anywhere from the current index up to just before the right boundary. The number of such subarrays is (distance to left boundary) multiplied by (distance to right boundary).
+
+Similarly, for a number to be the minimum in a subarray, all other numbers must be greater than or equal to it. We find the first number to the left that is strictly smaller, and the first number to the right that is strictly smaller. The count of subarrays where it is the minimum is calculated the same way.
+
+By summing up each number multiplied by its count as maximum, we get the total sum of maximums. By summing each number multiplied by its count as minimum, we get the total sum of minimums. The final answer is the difference between these two totals.
+
+
+
+
+
+
+First, the code initializes variables to hold the total sum of maximums and total sum of minimums.
+
+It uses stacks to help find boundaries. The process is done in four passes.
+
+In the first pass, moving left to right, the code finds the left boundary for each element when considering it as a potential maximum. It uses a stack to keep indices of elements. For each element, it removes from the stack any element that is less than or equal to the current element because those cannot be a strict left boundary for the current element's maximum stretch. After removal, the top of the stack (if exists) is the index of the first element to the left that is strictly greater. This becomes the left boundary. If the stack is empty, the boundary is -1, meaning we can extend to the beginning.
+
+The second pass, moving right to left, finds the right boundary for each element as a maximum. This time, the condition is different: we remove from the stack any element that is less than the current element. Why strict inequality here? To avoid double counting when equal elements exist. We want the first element to the right that is strictly greater. After removal, the top of the stack (if exists) is that boundary, else it is the end of the array (index n).
+
+Similarly, two more passes are done to find boundaries for each element as a minimum. For the left boundary as minimum, moving left to right, we remove from the stack any element that is greater than or equal to the current element, looking for the first strictly smaller element to the left. For the right boundary as minimum, moving right to left, we remove any element that is greater than the current element, looking for the first strictly smaller element to the right.
+
+After we have all boundaries, we loop through each element. For each, we calculate the number of subarrays where it is the maximum: this is (current index minus left max boundary) multiplied by (right max boundary minus current index). Similarly, we calculate the number of subarrays where it is the minimum.
+
+Then, we add to the sum of maximums: the element's value multiplied by its maximum count. We add to the sum of minimums: the element's value multiplied by its minimum count.
+
+Finally, we return the difference between the sum of maximums and the sum of minimums. This gives us the total sum of ranges for all subarrays.
