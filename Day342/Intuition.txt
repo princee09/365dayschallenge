@@ -1,0 +1,84 @@
+1081 — Smallest Subsequence of Distinct Characters
+
+
+
+
+We want to form the smallest possible sequence in dictionary order that contains every distinct letter from the original string exactly once. The main challenge is to decide which position of each letter to keep so that the final sequence is as small as possible in dictionary order, which means earlier letters in the alphabet should come first if possible.
+
+We can use a stack to build the result step by step while scanning the string from left to right. The idea is to try to put smaller letters earlier, but only if removing a larger letter from the stack is safe. Removing a larger letter is safe only if that larger letter appears again later in the string.
+
+To know if a letter appears again later, we first record the last occurrence position of each letter by scanning the string once. That way, when we see a letter at position i, we know its last occurrence index.
+
+Now, as we scan the string again, for each letter, if it’s already in the stack, we skip it because we already have it in our result sequence. If it’s not in the stack, we check the top of the stack.
+
+If the top of the stack is a letter that comes later in alphabet order (larger) than the current letter, and that top letter will appear again later in the string (its last index is greater than current index i), we pop it from the stack and mark it as not in stack. This allows us to place the smaller current letter earlier. We repeat this until the top of stack is smaller than current letter or the top letter doesn’t appear again.
+
+Then we push the current letter onto the stack and mark it as in stack.
+
+At the end, the stack contains the result in bottom-to-top order, so we pop and reverse the order to get the final string.
+
+This way, we ensure each distinct letter appears once, and the sequence is the smallest possible in dictionary order.
+
+
+
+
+
+The code first creates an array lastIndex of size 26 (for letters a to z), initializes all to -1, then updates each with the last position where each letter appears in the string. This tells us if a letter can be removed now because it will come again later.
+
+Another array inStack tracks whether a letter is already in the stack to avoid duplicates.
+
+We then scan the string a second time. For each character, if it’s already in stack, skip. Otherwise, while the stack is not empty, the top letter is greater than current letter, and the last occurrence of that top letter is beyond current index, pop it from stack and mark it as not in stack. This step tries to make the sequence lexicographically smaller.
+
+Then push current character onto stack and mark in stack as true.
+
+Finally, pop from stack to build the result string in correct order.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1190 — Reverse Substrings Between Each Pair of Parentheses
+
+
+
+
+Here, the string has parentheses and lowercase letters. The rule is: for each pair of matching parentheses, reverse the substring inside them, starting from the innermost parentheses and moving outward. So, if we see nested parentheses, we reverse the innermost part first, then move outward.
+
+We can think of this as working layer by layer. Each time we see an opening parenthesis (, we start a new layer or level of string building. Each time we see a closing parenthesis ), we finish the current layer’s string, reverse it, and then append it to the previous layer’s string.
+
+We use a stack of strings. The stack stores the string being built at each depth level. We start with an empty string at the bottom of the stack (level 0).
+
+As we read the string character by character:
+
+If we encounter a regular letter (not parentheses), we add it to the current top string of the stack (the current level).
+
+If we encounter (, that means we are entering a deeper nested level, so we push a new empty string onto the stack for that deeper level.
+
+If we encounter ), we are exiting the current level: we pop the top string from the stack (the deepest unfinished string), reverse it, and append this reversed string to the new top of the stack (the previous level). This automatically handles nested reversals because when inner parentheses close, their content gets reversed and passed to the outer layer.
+
+At the end, the stack’s top contains the final string with all parentheses processed.
+
+
+
+
+
+The code initializes a stack of strings with one empty string. Then it loops through each character of the input string.
+
+For an opening parenthesis (, it pushes a new empty string onto the stack to represent the start of a new inner substring.
+
+For a closing parenthesis ), it pops the top string (the inner substring just completed), reverses it, and adds it to the string now on top of the stack (the outer substring).
+
+For a normal letter, it appends the letter to the top string of the stack.
+
+Finally, the top of the stack contains the fully processed string without any parentheses.
