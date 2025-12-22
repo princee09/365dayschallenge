@@ -1,0 +1,23 @@
+Preorder Traversal :
+
+Preorder traversal means we visit each node in a specific order. First, we visit the root node itself. Then we visit all of its children from left to right. This pattern continues for every node we encounter. Think of it like exploring a family tree: you start with the grandparent (root), then immediately after meeting them, you go meet their first child, then that child's children, and so on before moving to the second child.
+
+The challenge with doing this without recursion (which is like doing it without asking the computer to remember where to come back to) is that we need to manually keep track of which nodes we still need to visit. We use a stack for this purpose. A stack is like a pile of books where you can only take the top book. We put nodes on this stack in reverse order so that when we take them off, we get them in the correct left-to-right sequence.
+
+Here is how the code works: First, we check if the tree is empty. If it is, we return an empty list. If not, we start with the root node on our stack. Then we enter a loop that continues as long as there are nodes on the stack. In each step of the loop, we take the top node from the stack. We immediately record its value in our result list because in preorder, we process the node as soon as we see it. Then we look at this node's children. We need to push them onto the stack in reverse order. Why reverse? Because the stack is last-in-first-out. If we want the first child to be processed next, it needs to be the last one pushed onto the stack. So we start from the last child and go backward to the first child, pushing each one onto the stack. This ensures that when we pop from the stack next time, we get the first child, then its children, and so on, maintaining the correct preorder sequence. We continue this process until the stack is empty, meaning we have visited every node in the correct order.
+
+
+
+
+
+
+
+Postorder Traversal :
+
+Postorder traversal has a different visiting order. Here, we visit all the children of a node first, from left to right, and only after visiting all the children do we visit the node itself. Using the family tree analogy, you would first visit all the grandchildren and great-grandchildren, then their parents, and finally the grandparent at the very end.
+
+Doing this iteratively is trickier than preorder because you cannot process a node until after all its children are done. The clever solution is to do something very similar to preorder but with a twist. We start with the root node on a stack, just like before. We pop it and immediately add its value to our result list. Then we push all its children onto the stack in normal left-to-right order. This seems backwards, and it is. This process will actually give us a traversal that is the exact reverse of what we want for postorder.
+
+Let me explain why this works. If we do a preorder traversal but push the children in normal order (not reverse), and we also process the root immediately when we pop it, we get a sequence that goes: root, then children from right to left (because of the stack's nature). This is essentially a "reverse preorder" starting from the right side. It turns out that if you reverse this entire sequence at the end, you get the correct postorder traversal. The reversal magically transforms root-right-left into left-right-root, which is postorder.
+
+In the code, we start by handling the empty tree case. We then create a stack and push the root onto it. We loop while the stack has nodes. We pop the top node, record its value in our result list immediately, and then push all of its children onto the stack in their natural left-to-right order. After the loop finishes, we have a list that is the reverse of the desired postorder. So the final step is to reverse the entire result list. This gives us the correct postorder sequence: all children visited first (from left to right), then the parent node. This method is elegant because it reuses the preorder logic with a simple modification and one reversal operation at the end.
