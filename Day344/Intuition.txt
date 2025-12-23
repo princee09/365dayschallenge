@@ -1,0 +1,64 @@
+Insert into a Binary Search Tree
+
+
+
+
+Think of a Binary Search Tree like an organized filing cabinet where every folder has a label number. There's a special rule: any folder in the left drawer has a smaller number than the folder itself, and any folder in the right drawer has a larger number. Your task is to insert a new folder with a specific number into this organized system.
+
+The process is straightforward. You start at the main folder (the root). You look at its number. If your new number is smaller, you need to go to the left drawer. If your new number is larger, you go to the right drawer. You keep moving through the drawers following this rule until you find an empty spot. That empty spot is exactly where your new folder belongs because you've followed the organizational rules all the way down.
+
+If you open a drawer and find nothing inside (it's empty), that's where you place your new folder. If the entire filing cabinet is empty to begin with, your new folder becomes the main folder.
+
+
+
+
+
+
+The code uses a recursive approach which means the function calls itself to go deeper into the tree. First, it checks if the current spot is empty. If it is, it creates a new folder there with the given number.
+
+If not empty, it compares the new number with the current folder's number. If smaller, it goes to the left drawer by calling itself on the left side. If larger, it goes to the right drawer by calling itself on the right side. After placing the folder in the correct spot deep down, it returns back up through all the calls, connecting everything properly.
+
+The key is that when it finds the empty spot, it creates the new folder and connects it to the parent folder that led to that empty spot. This happens automatically through the return statements as the recursion unwinds.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Range Sum of BST
+
+
+
+
+
+
+
+Imagine you have a tree of organized numbers where smaller numbers branch to the left and larger numbers branch to the right. You're given two boundary numbers - a low number and a high number. Your task is to find all numbers in the tree that fall between these two boundaries (including the boundaries themselves) and add them up.
+
+The smart way to do this uses the tree's organized structure to avoid unnecessary searching. You start at the top number. If this number is less than your low boundary, you know something important: ALL numbers in the left branch will be even smaller (since left branches contain smaller numbers), so you can skip the entire left side completely. You only need to check the right branch where numbers might be large enough.
+
+Similarly, if the current number is greater than your high boundary, ALL numbers in the right branch will be even larger, so you can skip the entire right side. You only need to check the left branch where numbers might be small enough.
+
+If the current number falls within your boundaries, you add it to your total. Then you need to check both branches because there might be other numbers in range in both directions - some smaller ones in the left that are still above your low boundary, and some larger ones in the right that are still below your high boundary.
+
+
+
+
+
+The code uses an iterative approach with a stack, which is like having a to-do list of folders to check. It starts by putting the main folder on the to-do list. Then it repeatedly takes a folder from the list, checks if its number is within the range, and adds it to the sum if it is.
+
+Here's the clever part: it only adds folders to the to-do list if they might contain numbers in range. If the current number is greater than the low boundary, it adds the left folder to check because smaller numbers might still be above the low boundary. If the current number is less than the high boundary, it adds the right folder to check because larger numbers might still be below the high boundary.
+
+This way, the code doesn't waste time checking folders that definitely cannot contain numbers in range. It systematically explores only the relevant parts of the tree, following the organized structure to be efficient. The stack keeps track of all the folders that still need to be checked, and the process continues until all possibly relevant folders have been examined.
