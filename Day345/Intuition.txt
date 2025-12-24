@@ -1,0 +1,46 @@
+312: Burst Balloons
+
+
+
+Let's understand the balloon bursting problem. You have balloons with numbers on them. When you burst a balloon, you get coins equal to the product of that balloon's number with its immediate left and right neighbors. If there's no neighbor on a side, we treat it as having a balloon with number 1 there. The challenge is to find the best order to burst all balloons to collect maximum coins.
+
+The key insight is to think backwards. Instead of asking which balloon to burst first, ask which balloon bursts last. Why? Because when a balloon bursts last, its neighbors are not the original neighbors but whatever balloons are left at that moment. Those neighbors will be fixed based on what we define as the boundaries of our current working section.
+
+Imagine we add invisible balloons with number 1 at both ends of our array. These act as boundaries that never get burst. Now, consider any section of balloons between two fixed boundaries. If we decide which balloon in that section bursts last, then when it bursts, it will multiply with the two boundary numbers (the ones at the edges of the section). That's because all other balloons inside have already been burst.
+
+So, we break the problem into smaller pieces. We create a table where each cell represents the maximum coins we can get from bursting all balloons between two positions (excluding those boundary positions themselves). We start with the smallest possible sections (just two boundaries with nothing between them, which gives zero coins). Then we gradually build up to larger sections.
+
+For a section from left boundary to right boundary, we try every balloon in between as the potential last one to burst. If balloon at position 'last' bursts last, we get coins from three parts: first, the coins from bursting all balloons between left and last (which we've already calculated for that smaller section), second, the coins from bursting all balloons between last and right (also calculated), and third, the coins from bursting this last balloon itself, which will be left boundary number multiplied by the last balloon's number multiplied by right boundary number.
+
+We compute this for all possible 'last' positions and take the maximum value. We fill our table from smallest sections to largest until we cover the entire array including the invisible boundaries at both ends. The final answer is the value for the section from the leftmost invisible boundary to the rightmost invisible boundary.
+
+In the code, we first create an extended array with 1s at both ends. We create a two-dimensional table where rows and columns represent boundary positions. We use three nested loops: the outermost controls the length of the section we're considering, the middle loop controls the starting left boundary, and the innermost loop tries each possible last balloon to burst. We fill the table gradually. The final answer is at position (0, n-1) where n is the size of the extended array including boundaries.
+
+
+
+
+
+
+
+
+
+
+
+
+
+3074: Apple Redistribution into Boxes
+
+
+
+
+This problem is about packing apples into boxes. We have packs of apples where each pack contains some number of apples. We also have boxes with different capacities. We need to find the smallest number of boxes needed to hold all apples, remembering that apples from the same pack can go into different boxes.
+
+The intuitive approach is to first know how many total apples we need to store. We simply add up all apples from all packs. Then we need boxes whose combined capacity can hold at least that many apples.
+
+To use the fewest boxes, we should use the largest boxes first. This makes sense because a single large box can hold more apples than several small boxes combined. If we start with smaller boxes, we might need more boxes than necessary.
+
+So, we sort the boxes by their capacity from largest to smallest. Then we start taking boxes one by one, adding their capacities together. We keep count of how many boxes we've taken. Once the total capacity of the selected boxes equals or exceeds the total apples we need to store, we stop. The number of boxes we took is our answer.
+
+In the code, we first calculate the total apples by summing the apple array. Then we sort the capacity array in descending order using the greater comparison. We initialize variables to track how many boxes we've used and what their total capacity is so far. We loop through the sorted capacities, adding each box's capacity to our running total and incrementing the box count. We check after each addition if we now have enough capacity. When we do, we break out of the loop and return the number of boxes used.
+
+This approach works because apples can be distributed across boxes arbitrarily, so we don't care which pack's apples go where. We only need the total capacity to be sufficient. Starting with the largest boxes ensures we minimize the count.
