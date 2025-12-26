@@ -1,0 +1,39 @@
+Distant Barcodes
+
+
+
+
+
+The intuition behind this problem is about spacing out similar items to prevent them from being next to each other. Imagine you have a collection of colored balls and you need to arrange them in a row so that no two balls of the same color are touching. The key challenge is that some colors appear more frequently than others. The most frequent color needs the most careful placement because it has the highest chance of creating adjacent duplicates.
+
+Think of it like organizing a schedule where you cannot have the same activity back-to-back. You always want to place the most frequent activity first, then alternate with other activities. The algorithm uses a priority queue which is like a smart list that always gives you the color with the most remaining balls first. Each time you take the most frequent color and place it in your result, you temporarily set it aside. Then you take the next most frequent color and place it. After placing two different colors, you put them back into the queue with their reduced counts, unless they are completely used up.
+
+This careful alternation ensures that no two identical colors end up next to each other because you always place different colors consecutively. The algorithm maintains a previous element variable to remember what was just placed, ensuring that when you put elements back into the queue, you don't immediately reuse the same color again. This process continues until all balls are arranged in the sequence, resulting in a valid arrangement where identical colors are always separated.
+
+The code first counts how many times each barcode appears using a frequency map. Then it creates a max-heap which automatically keeps the most frequent barcode at the top. It builds the result array by repeatedly taking the most frequent barcode, placing it, and then storing it as the previous element. Before taking the next barcode, it puts the previous barcode back into the heap if it still has remaining occurrences. This alternating pattern continues until all barcodes are placed. The key insight is that by always placing the most frequent available barcode and then immediately placing a different one before potentially reusing the same barcode again, we prevent adjacent duplicates.
+
+
+
+
+
+
+
+
+
+
+
+
+Minimum Penalty for a Shop
+
+
+
+
+The intuition for this problem involves finding the optimal closing time for a shop to minimize penalties. Imagine you are managing a shop and you get penalized in two ways: first, when the shop is open but no customers arrive, and second, when the shop is closed but customers do arrive. Your goal is to choose a closing time that balances these two types of penalties.
+
+Think of it as a sliding scale where initially, if you close at hour zero, you get penalized for every customer that arrives because they came when you were closed. As you move your closing time later, each hour's status changes. If an hour had no customers and you were open, moving your closing time past that hour adds a penalty. If an hour had customers and you were closed, moving your closing time past that hour removes a penalty.
+
+The algorithm starts by calculating the penalty if you close at hour zero, which is simply the count of all customers. Then it considers each subsequent closing hour. For each new hour, it looks at what happened in the previous hour. If the previous hour had no customers, your penalty increases because you were open during that hour with no customers. If the previous hour had customers, your penalty decreases because that hour is no longer counted as customers arriving when you were closed.
+
+The code tracks the current penalty as it moves through possible closing times, always keeping track of the minimum penalty seen and the earliest hour at which that minimum occurs. The algorithm efficiently computes the optimal closing time by observing that penalty changes can be calculated incrementally based only on the previous hour's customer status, without needing to recalculate the entire penalty from scratch each time.
+
+This approach works because the penalty calculation has a predictable pattern: each hour's contribution to the penalty depends only on whether you were open or closed during that hour, which is determined by your chosen closing time. By moving the closing time one hour at a time and updating the penalty based on the previous hour's status, you can find the optimal closing time efficiently in a single pass through the customer data.
