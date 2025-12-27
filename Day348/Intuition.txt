@@ -1,0 +1,60 @@
+2367: Number of Arithmetic Triplets
+
+
+
+
+
+
+The problem asks us to find special groups of three numbers in a list. These groups must follow a specific pattern: if we have three numbers in order, let's call them first, middle, and last. The middle number minus the first number should equal a given difference, and the last number minus the middle number should also equal the same difference.
+
+Think of it like stairs with equal steps: if you take three steps and each step is the same height, then the height from first to second equals the height from second to third. We're looking for all such three-step patterns in the list.
+
+Now, the clever approach uses a mathematical insight. Instead of checking all possible combinations of three numbers (which would be slow), we notice that if we have a starting number, then the next number in the triplet must be exactly that starting number plus the given difference, and the final number must be the starting number plus twice the difference.
+
+So for each number in the list, we simply check: does the number plus the difference exist in the list? And does the number plus double the difference also exist in the list? If both exist, we've found a valid triplet.
+
+
+
+
+
+The code first puts all numbers into a special fast-lookup container called a hash set. This container lets us check if a number exists in the list very quickly. Then it goes through each number in the original list. For each number, it checks if both the number plus the difference and the number plus double the difference are present in the set. Each time both are found, it counts that as one valid triplet. Finally, it returns the total count.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2396: Strictly Palindromic Number
+
+
+
+
+
+
+This problem asks whether a number looks the same forwards and backwards when written in different number systems. A palindrome reads the same forward and backward, like "racecar" or "1331". The question is: for every number system from base 2 up to base n-2, does the representation of n look the same forwards and backwards?
+
+Here's the key insight that makes the solution very simple: For any number n that is 4 or larger, when we write it in base n-2, it always looks like "12". Let's understand why.
+
+When we write a number in base b, we're essentially breaking it down into multiples of powers of b. For base n-2, the number n is just slightly larger than the base itself. Specifically, n = 1×(n-2) + 2. So in base n-2, n is written as the digit 1 followed by the digit 2, which is "12".
+
+Now, "12" is clearly not a palindrome because it reads differently forwards and backwards ("12" versus "21"). Since there's at least one base (specifically base n-2) where the representation is not palindromic, the number cannot be strictly palindromic. This is true for every number n that is 4 or larger.
+
+
+
+
+
+
+
+The code first shows the brute force approach. It checks every base from 2 up to n-2. For each base, it converts the number to that base system using a helper function. The conversion works by repeatedly dividing the number by the base and collecting the remainders, then reversing them to get the correct order. Then it checks if the resulting string is a palindrome by comparing characters from both ends moving toward the center. If any base produces a non-palindromic representation, it immediately returns false. If all bases produce palindromic representations, it returns true.
+
+However, based on the mathematical insight explained above, we know the answer is always false for n ≥ 4, so the optimal solution is simply to always return false.
