@@ -1,0 +1,73 @@
+99: Recover Binary Search Tree
+
+
+
+
+
+Imagine you have a bookshelf where all books are arranged in alphabetical order from left to right. Someone accidentally swapped two books, so the order is no longer correct. To fix this, you need to find which two books were swapped and put them back in their correct positions.
+
+In a Binary Search Tree (BST), when you visit nodes in "inorder" sequence (left node, then current node, then right node), you should get values in strictly increasing order, just like alphabetically arranged books. If two nodes are swapped, this increasing sequence gets broken at two points.
+
+There are two possible cases: First, when two adjacent nodes are swapped. In this case, you'll find one violation where a previous value is greater than the current value. Second, when two non-adjacent nodes are swapped. In this case, you'll find two violations in the sequence.
+
+The key insight is to walk through the tree in inorder sequence while keeping track of the previous node visited. Whenever you find that the previous node's value is greater than the current node's value, you've found a violation. The first violation gives you the larger misplaced node, and the last violation gives you the smaller misplaced node. Once you identify both misplaced nodes, you simply swap their values to restore the BST.
+
+
+
+
+The code uses Morris Traversal, which is a clever way to traverse a tree without using extra space for a stack or recursion. It works by creating temporary links in the tree itself. The algorithm has two main cases: when the current node has no left child, and when it has a left child.
+
+When there's no left child, we process the current node. We check if the previous node's value is greater than current node's value (a violation). If this is the first violation, we mark the previous node as the first misplaced node. We always update the second misplaced node when we find a violation. Then we move to the right child.
+
+When there's a left child, we find the "inorder predecessor" - the rightmost node in the left subtree. We check if this predecessor already points to our current node (meaning we've visited the left subtree already). If not, we create a temporary link from the predecessor to the current node and move to the left child. If the link already exists, we remove it (restoring the tree structure), process the current node (checking for violations), and move to the right child.
+
+This way, we traverse the entire tree in inorder sequence while using only constant extra space. After identifying both misplaced nodes, we swap their values to correct the BST.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1351: Count Negative Numbers in a Sorted Matrix
+
+
+
+
+
+
+Imagine a grid of numbers where each row is sorted from largest to smallest left to right, and each column is sorted from largest to smallest top to bottom. The negative numbers will naturally cluster in the bottom-right region of this grid because larger numbers are at the top-left and smaller (negative) numbers move toward the bottom-right.
+
+Think of it like a topographic map where high ground (positive numbers) is in the northwest and low ground (negative numbers) is in the southeast. You want to count how much area is below sea level (negative numbers).
+
+The most efficient approach starts from the top-right corner of the grid. From this position, if you find a negative number, you know that EVERY number below it in the same column must also be negative because columns are sorted top to bottom. So you can immediately count all those numbers and move left to check the previous column.
+
+If you find a non-negative number, you know that numbers to the left in the same row could be negative, but numbers above in the same column cannot be negative (they're larger or equal). So you move down to check the next row.
+
+This approach is like walking down a staircase starting from the top-right corner. Each step either goes down (when you find a non-negative) or left (when you find a negative). You never need to check every cell because the sorted property allows you to skip large sections of the grid.
+
+
+
+
+
+The code begins by getting the dimensions of the grid: m rows and n columns. It starts from the top-right corner (row 0, column n-1). A while loop continues as long as we're within the grid boundaries.
+
+Inside the loop, we check the current cell. If it contains a negative number, we know all cells below it in the same column are also negative due to the column-wise sorting. So we add (m - row) to our count - this represents all rows from current row to the bottom. Then we move left to the previous column to continue searching.
+
+If the current cell contains a non-negative number, we move down to the next row. We cannot move left because there might be negative numbers in the same row to the left (since rows are sorted left to right with larger numbers on the left).
+
+This process continues until we've either checked all rows (reached the bottom) or checked all columns (reached the left edge). At each step, we're either eliminating an entire column of negatives or moving closer to the negative region. The algorithm efficiently finds the boundary between non-negative and negative numbers without checking every single cell, resulting in O(m + n) time complexity instead of O(m × n).
