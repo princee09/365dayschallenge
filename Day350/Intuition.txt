@@ -1,0 +1,63 @@
+538: Convert BST to Greater Tree
+
+
+
+Imagine you have a binary search tree, which is like a sorted collection of numbers organized in a special way. In this tree, all numbers on the left side of any node are smaller, and all numbers on the right side are larger. The task is to change each number in the tree to become the sum of itself plus all numbers that are greater than it in the entire tree.
+
+Think of it like this: you're going through a sorted list of numbers from largest to smallest. As you move from the largest number down to the smallest, you keep a running total of all the numbers you've seen so far. For each number you encounter, you update it by adding this running total to it. Since you're going from largest to smallest, the running total at any point represents the sum of all numbers greater than the current number you're looking at.
+
+In a binary search tree, if you want to process numbers from largest to smallest, you would visit the right side first (which has larger numbers), then the current node, then the left side (which has smaller numbers). This is called a reverse in-order traversal.
+
+The code implements this by using a recursive function that first goes to the right subtree to process all larger numbers, then updates the current node's value by adding the accumulated sum, and finally goes to the left subtree to process smaller numbers. A reference to the sum variable is passed around so that all recursive calls share and update the same running total.
+
+
+
+
+The solution uses a helper function that traverses the tree in a specific order: right subtree first, then current node, then left subtree. This is because in a binary search tree, the right subtree contains all values greater than the current node. By processing the right subtree first, we accumulate the sum of all greater values before we reach the current node.
+
+The function takes two parameters: the current node being processed and a reference to an accumulating sum. The sum starts at zero and accumulates values as we traverse. When we go to the right subtree, we process all those larger values first, adding them to our sum. Then when we return to the current node, we add the current node's original value to the sum and then replace the node's value with this new total. Finally, we process the left subtree, which contains smaller values.
+
+The recursive nature of the function means it will process the entire right side of the tree first, working its way from the largest value down to the root, then continue to the left side. At each step, the sum variable contains the total of all values processed so far, which are exactly the values greater than the current node (plus the current node's original value after it's added).
+
+This approach is efficient because it visits each node exactly once and doesn't require any additional data structures beyond the call stack for recursion.
+
+
+
+
+
+
+
+
+
+
+
+
+919: Complete Binary Tree Inserter
+
+
+
+
+
+
+A complete binary tree is a special type of tree where every level is completely filled with nodes from left to right, except possibly the last level, which is filled from left to right but might not be completely full. The challenge is to design a system that can insert new nodes into such a tree while maintaining its completeness.
+
+Think of it like seats in a theater being filled row by row from left to right. You always fill the current row completely before starting a new row, and within each row, you fill seats from left to right. When you need to add a new person, you find the first available seat in the current row, or if the current row is full, you start a new row at the leftmost seat.
+
+In computer science terms, we can store all nodes in the order they would appear in a level-by-level traversal. This ordering has a mathematical property: for any node at position i in this list, its parent will be at position (i divided by 2, minus 1). Also, if i is an even number, the node is a left child of its parent; if i is odd, it's a right child.
+
+The insertion process works like this: we add the new node to the end of our list. Then we calculate which existing node should be its parent using the mathematical formula. We attach the new node as either a left or right child based on whether its position is even or odd. This guarantees that the tree remains complete because we're always filling positions in order.
+
+
+
+
+
+
+The solution maintains two main components: the original root of the tree and a deque (double-ended queue) that stores all nodes in level order. When the CBTInserter is first created with an existing complete binary tree, it performs a breadth-first traversal (level order traversal) to collect all nodes and store them in the deque in the exact order they appear from left to right, level by level.
+
+For the insert operation, a new node is created with the given value and added to the end of the deque. The size of the deque tells us the position of this new node. Using the mathematical relationship mentioned earlier, we calculate the parent's position as (size divided by 2, minus 1). We retrieve this parent node from the deque.
+
+Now we need to determine whether the new node should be a left child or right child of its parent. If the size (position) is even, it means the new node should be a left child. If the size is odd, it should be a right child. This pattern emerges from how complete binary trees are filled: left children always come first at each parent position.
+
+After attaching the new node to its parent, we return the parent's value as required by the problem. The get_root method simply returns the original root of the tree, which remains unchanged as we only modify the tree by adding new nodes as children of existing nodes.
+
+This approach is efficient because the constructor runs in O(n) time to build the initial list, and each insert operation runs in O(1) time since we're just doing simple arithmetic and deque operations to find the parent and attach the new node.
