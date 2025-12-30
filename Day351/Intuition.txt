@@ -1,0 +1,49 @@
+840: Magic Squares In Grid
+
+
+
+
+The intuition behind this solution is to systematically check every possible 3 by 3 square within the larger grid to see if it qualifies as a magic square. Imagine you are scanning a big picture to find smaller 3x3 squares that follow specific rules. A magic square must satisfy several conditions. First, the number in the very center of the 3x3 square must always be 5. This is a special property of a 3x3 magic square using numbers 1 through 9. If the center is not 5, we can immediately skip that square, saving time.
+
+Next, we must check that all nine numbers inside the square are different from each other. We do this by keeping a record of numbers we have already seen in that square. If we see the same number twice, it is invalid. Additionally, every number must be between 1 and 9 inclusive. We check each number to make sure it falls within this range.
+
+After verifying the numbers are correct and unique, we check all the sums. For a 3x3 magic square, every row, every column, and both main diagonals must add up to exactly 15. We calculate the sum of each of the three horizontal rows. We then calculate the sum of each of the three vertical columns. Finally, we calculate the sum of the diagonal from top-left to bottom-right and the diagonal from top-right to bottom-left. All eight of these sums must equal 15. If all these checks pass, then we have found a valid magic square, and we increase our count.
+
+In the code, the main function slides a 3x3 window over the entire grid. For each possible top-left starting position of this window, it calls a helper function. This helper function performs all the checks described above. It first looks at the center cell. It then uses a small array to track which numbers have appeared, ensuring uniqueness and correct range. It then calculates all the required sums. Only if every single condition is true does it confirm the square is magic. The function returns the total number of such squares found.
+
+The algorithm is efficient because it does not check sums unnecessarily. The early exit when the center is not 5 avoids many calculations. The use of a small fixed-size array to track seen numbers is very fast. The sum checks are straightforward and constant time for each 3x3 window.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+862: Shortest Subarray with Sum at Least K
+
+
+
+
+
+The intuition for this problem is to find the smallest contiguous block of numbers within a list where the total sum of that block is at least a target value K. The challenge is that the list can contain negative numbers, which complicates finding the shortest subarray.
+
+The core idea uses a concept called prefix sums. A prefix sum is a running total. For example, if the list is [2, -1, 2], the prefix sums are [0, 2, 1, 3]. The first sum is 0 (before we start). The next is 0+2=2. Then 2+(-1)=1. Then 1+2=3. The key insight is that the sum of any subarray from index i to index j-1 is simply the prefix sum at position j minus the prefix sum at position i. For instance, the sum from index 1 to 2 is nums[1] + nums[2] = (-1)+2 = 1. Using prefix sums, this is prefix[3] - prefix[1] = 3 - 2 = 1.
+
+Our goal is to find the smallest distance (j - i) such that prefix[j] - prefix[i] >= K, meaning the subarray from i to j-1 has a sum of at least K. We scan through the prefix sums from left to right. For the current position j, we want to find the best starting position i that satisfies the condition and gives us the shortest length.
+
+To do this efficiently, we maintain a special list of candidate starting indices in a double-ended queue (deque). This list is kept in a specific order where the corresponding prefix sums are strictly increasing. This is the most important optimization.
+
+Why keep it increasing? Imagine we have two candidate starting points, i and k, where i < k. If the prefix sum at i is greater than or equal to the prefix sum at k, then for any future position j, the subarray sum starting at k will always be at least as large as the sum starting at i. This is because prefix[j] - prefix[k] >= prefix[j] - prefix[i] when prefix[i] >= prefix[k]. Furthermore, since k is a later index, the subarray length (j - k) will be shorter than (j - i). Therefore, starting point i is useless if there exists a later point k with a smaller or equal prefix sum. We can safely remove i from our candidates.
+
+So, as we process each new prefix sum, we first check: Can we form a valid subarray using the earliest (smallest index) candidate in our deque? We calculate the sum from that candidate to our current position. If this sum is at least K, we have found a valid subarray. We record its length and then remove that candidate from the front of the deque. We keep checking and removing from the front until the condition is no longer met.
+
+After this, we need to add our current position as a new potential starting point for future subarrays. Before adding it, we enforce the increasing order property. We look at the last candidate in our deque. If the prefix sum at our current position is less than or equal to the prefix sum at that last candidate, we remove that candidate from the back. We repeat this process until our current prefix sum is greater than the last candidate's prefix sum, or the deque is empty. Then we add our current index to the back. This ensures our deque always stores indices with strictly increasing prefix sums.
+
+In the code, we first build the prefix sum array. We initialize a deque and set the minimum length to a very large value. We then iterate through each index of the prefix array. For each index, we perform the two steps described: checking for valid subarrays from the front and maintaining the increasing order from the back. At the end, if we found a valid subarray, we return its length; otherwise, we return -1. This method works in linear time because each index is added to the deque once and removed at most once.
