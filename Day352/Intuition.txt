@@ -1,0 +1,58 @@
+Most Frequent Subtree Sum
+
+
+
+
+The problem asks us to find the sum of each subtree in a binary tree and determine which sums occur most frequently. A subtree sum is the total of all node values within that subtree, including the root node itself. We need to find all sums that appear with the highest frequency.
+
+The intuition is to calculate the sum for every subtree in the tree. Since a tree is made up of smaller subtrees, we can use a recursive approach. For each node, we calculate the sum of its left subtree, the sum of its right subtree, and then add the node's own value to get the total subtree sum for that node.
+
+We need to keep track of how many times each sum appears. We use a frequency map, which is like a counter that remembers how many times we've seen each sum. We also need to know the maximum frequency we've encountered so far, so we can later identify which sums appear most often.
+
+The recursive function works like this: if we reach a null node (an empty spot), we return 0 because an empty subtree has sum zero. Otherwise, we ask the left child for its subtree sum, then ask the right child for its subtree sum, add those together with the current node's value, and that gives us the total subtree sum for this node.
+
+After calculating the sum for a node, we record it in our frequency counter by incrementing the count for that sum. We also check if this count is now the highest we've seen, updating our maximum frequency if needed. Then we return this sum to the parent node so it can use it in its own calculation.
+
+Once we've processed the entire tree, we have a complete frequency counter showing how many times each sum appears. We then go through all the sums we recorded, and for any sum whose frequency equals the maximum frequency we found, we add it to our result list. This way we get all sums that appear most frequently, and if there's a tie, we include all of them.
+
+The code uses a recursive helper function that travels through the tree in a post-order manner (children first, then parent). This ensures that when calculating a node's subtree sum, we already know the sums of its children's subtrees. The frequency map and maximum frequency are maintained as class members so all recursive calls can access and update them. After the recursion completes, we collect all sums with the highest frequency into a result vector and return it.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Average of Levels in Binary Tree
+
+
+
+
+
+
+
+The problem asks us to calculate the average value of nodes at each level of a binary tree. Level 0 is just the root node, level 1 contains the root's children, level 2 contains the grandchildren, and so on. We need to return these averages in order from level 0 to the deepest level.
+
+The intuition is to process the tree level by level, similar to how you might read a book line by line. We start at the root level and work our way down. For each level, we need to know all the nodes at that level, calculate their sum, count how many there are, and then divide the sum by the count to get the average.
+
+We use a queue data structure to help with this level-by-level processing. A queue works like a line of people waiting - the first person to enter is the first to leave. We start by putting the root node into the queue.
+
+The key insight is that at any moment, the queue contains all nodes at the current level we're processing. We first check how many nodes are in the queue - this tells us how many nodes are at the current level. Then we process exactly that many nodes: for each node, we take it out of the queue, add its value to our running total for this level, and then put its children (if they exist) into the queue for processing in the next level.
+
+After processing all nodes at the current level, we calculate the average by dividing the total sum by the number of nodes we just processed. We record this average in our result list. Then we repeat the process for the next level, which now contains all the children nodes we just added to the queue.
+
+This continues until the queue is empty, meaning we've processed all levels of the tree. The result is a list of averages, one for each level of the tree.
+
+The code starts by checking if the tree is empty. If not, it creates a queue and adds the root node. It then enters a loop that continues as long as there are nodes to process. For each level, it records how many nodes are currently in the queue (the level size). It then processes exactly that many nodes, summing their values and adding their children to the queue. After processing all nodes at that level, it calculates and stores the average. This process repeats for each level until the entire tree has been processed, giving us averages for all levels from top to bottom.
