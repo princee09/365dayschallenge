@@ -1,0 +1,47 @@
+309. Best Time to Buy and Sell Stock with Cooldown
+
+
+
+The intuition behind this problem is to keep track of three possible states you can be in at the end of each day. The first state is that you are holding a stock that you have bought. The second state is that you have just sold a stock on that day. The third state is that you are in a cooldown period, meaning you sold a stock at least one day before and are now free to buy again.
+
+At any day, if you are holding a stock, you could have either bought it today or be carrying it from the previous day. If you buy today, you must have been in the cooldown state yesterday, because you cannot buy immediately after selling. If you are selling today, you must have been holding a stock yesterday. If you are resting today, you could have been resting yesterday or sold yesterday.
+
+So we maintain three variables. The buy variable represents the maximum profit if we end the day holding a stock. The sell variable represents the maximum profit if we end the day by selling a stock. The rest variable represents the maximum profit if we end the day in cooldown, not holding any stock.
+
+We start with buying on day zero, so our buy profit is negative the price of the stock. We cannot sell on day zero, so sell profit is zero. We are not in cooldown on day zero, so rest profit is zero.
+
+Then for each new day, we update these three values. The new buy profit is the maximum between holding the stock from yesterday or buying today after being in cooldown yesterday. The new sell profit is simply selling the stock we were holding yesterday at today's price. The new rest profit is the maximum between continuing to rest from yesterday or coming from a sell state yesterday.
+
+Finally, the answer is the maximum between the sell state and the rest state on the last day, because we want to end with no stock held.
+
+In the code, we use three variables: prevBuy, prevSell, and prevRest to store yesterday's values. We update them day by day. We calculate today's buy, sell, and rest using yesterday's values. Then we set yesterday's values to today's values for the next iteration. The loop runs through each price. The result is the maximum of the final sell or rest profit.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+338. Counting Bits
+
+
+
+
+The intuition behind counting the number of one bits for each number from zero to n is based on a simple observation about binary numbers. When you look at a binary number, if you shift it right by one bit, which is like dividing by two, you remove the last bit. The number of ones in the shifted number is almost the same as the original, except you need to add back the last bit if it was a one.
+
+For example, take the number six, which is 110 in binary. If you shift it right by one, you get 11, which is three in decimal. The binary representation of three has two ones. The original number six also has two ones. Now take the number seven, which is 111 in binary. Shift right by one gives 11, which is three with two ones. But the original number seven has three ones. The difference is that the last bit of seven is one, while the last bit of six is zero.
+
+So the formula is: the number of ones in a number is equal to the number of ones in half that number, plus one if the number is odd, or plus zero if the number is even. In binary terms, half the number is achieved by shifting bits to the right by one. Checking if the number is odd is done by checking the last bit.
+
+Therefore, we can compute the count of ones for each number by using the already computed result for half of that number, and then adding the parity of the number. This way, we build the answer array from one up to n, using previous results to compute new results efficiently.
+
+In the code, we create an answer array of size n plus one, initialized to zero. Then we loop from one to n. For each number i, we set ans[i] to ans[i shifted right by one] plus the result of i AND one. The i shifted right by one gives us half of i. The i AND one gives us one if i is odd, zero if i is even. This computes the count of ones in constant time for each i, resulting in a linear time solution.
