@@ -1,0 +1,78 @@
+698: Partition to K Equal Sum Subsets
+
+
+
+
+
+
+Imagine you have a pile of different sized bricks and you want to divide them equally among k friends. Each friend should get exactly the same total size of bricks. First, you would check if the total size of all bricks can be divided equally among your friends. If the total size is not perfectly divisible by the number of friends, it's impossible right away. Then you would calculate what size pile each friend should get.
+
+Now, if any single brick is larger than what one friend should get, that's also impossible because you can't cut bricks. So you check for that too. The smart way to approach distributing the bricks is to start with the largest bricks first because big bricks are harder to fit. If you try to place small bricks first, you might end up with spaces that are too small for the big bricks later.
+
+When you start placing bricks into your friends' piles, you check each friend's current pile. If adding the current brick would make their pile too big, you skip that friend. Here's an important trick: if two friends have the same size pile so far, you only need to try placing the brick with one of them because the situation is symmetric - trying it with both would just duplicate effort.
+
+As you try placing bricks, if you ever encounter a situation where you're trying to place a brick into an empty pile but it doesn't work out, you can stop trying that brick with other empty piles because if it doesn't work in an empty pile, it won't work starting a new pile either. This saves a lot of time.
+
+You keep trying different arrangements until either all bricks are placed perfectly or you've tried all reasonable possibilities and found it impossible.
+
+
+
+
+
+
+
+The code starts by calculating the total sum of all numbers. It checks if this total can be divided equally by k. If not, it returns false immediately. It calculates the target sum each subset should have. It sorts the numbers in descending order (largest first) because larger numbers are harder to fit. It checks if any single number is larger than the target sum - if so, it's impossible.
+
+Then it creates k empty buckets (subsets) and starts the backtracking process. The backtracking function tries to place each number into each bucket that can accept it without exceeding the target. It uses several optimizations: it skips buckets where adding the number would exceed the target, it skips buckets that have the same current sum as the previous bucket (to avoid duplicate work), and if it ever backtracks from an empty bucket, it breaks the loop because if a number doesn't work in an empty bucket, it won't work starting a new bucket either.
+
+The function returns true if it successfully places all numbers into buckets where each bucket sums to exactly the target.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2294: Partition Array Such That Maximum Difference Is K
+
+
+
+
+
+
+
+
+
+
+Imagine you have students of different heights and you need to form groups for a photo. The rule is that in each group, the tallest and shortest student cannot differ by more than K inches. You want to form the fewest number of groups possible.
+
+The smart approach is to first line up all students from shortest to tallest. Now start forming groups from the shortest student. Make this shortest student the reference point for your first group. Keep adding the next shortest students to this group as long as their height doesn't exceed the first student's height by more than K.
+
+Once you find a student who is too tall for the current group (their height is more than K inches taller than your reference student), you need to start a new group. This student becomes the reference for the new group. You repeat this process until all students are in groups.
+
+This method works because by sorting first, you're always trying to pack as many students as possible into each group. Starting a new group only when absolutely necessary naturally gives you the minimum number of groups. If you tried to put a taller student in an earlier group when you shouldn't, you might need more groups overall.
+
+
+
+
+
+
+The code first sorts all the numbers in ascending order. This organizes everyone from smallest to largest. Then it starts counting groups from the first (smallest) number. For each group it starts, it takes the current number as the minimum value for that group.
+
+It then looks ahead to find all consecutive numbers that are within K of this minimum value. It keeps moving forward until it finds a number that's too large (more than K bigger than the starting number). When it finds such a number, it ends the current group and starts counting a new group beginning with that number.
+
+The variable i tracks where we are in the sorted list, and j scans ahead to find how many numbers can fit in the current group. Each time we finish a group, we move i to j (to the first number of the next group) and increment our group count. We continue this until all numbers are placed in groups, then return the total number of groups formed.
+
