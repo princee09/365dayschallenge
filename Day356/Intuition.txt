@@ -1,0 +1,83 @@
+Longest Equal Subarray with Deletions
+
+
+
+
+
+We are given an array of numbers and allowed to delete up to k elements. The goal is to find the longest subarray where all elements are equal.
+
+The key insight is that instead of thinking about deletions, we can think about which equal elements we want to keep. For any particular value (like the number 3), all occurrences of that value are scattered throughout the array at different positions.
+
+Imagine we want to form a subarray containing only the number 3. We need to pick some consecutive occurrences of 3 from its list of positions. The gap between these positions is filled with other numbers that we would need to delete.
+
+For example, if 3 appears at positions 1, 4, and 7 in the array, and we want to include all three of these 3's in our subarray, we need to delete the elements at positions 2, 3, 5, and 6 (the elements between them). The number of deletions needed equals the distance between the first and last position minus the number of 3's we're including plus one.
+
+The formula is: deletions needed = (last_position - first_position) - (count_of_elements - 1). This makes sense because in a stretch from position 1 to 7, there are 7 positions total, but we only want 3 of them (the three 3's), so we need to delete 7 - 3 = 4 other elements.
+
+We use a sliding window approach on the list of positions for each distinct value. We maintain a window where the number of deletions needed doesn't exceed k. As we expand the window to the right (include more occurrences), if we need too many deletions, we shrink the window from the left. The longest valid window for any value gives us our answer.
+
+
+
+
+
+
+The code first creates a dictionary that maps each value to a list of all positions where it appears in the array. For example, if the array is [1,3,2,3,1,3], the value 3 would map to positions [1,3,5] (using 0-based indexing).
+
+Then for each value and its list of positions, we use two pointers (left and right) to form a window on this position list. The right pointer expands the window by including more occurrences. For each window, we calculate how many deletions would be needed to bring all these occurrences together: that's the distance between the first and last position minus the number of occurrences in the window.
+
+If this exceeds k, we move the left pointer forward to shrink the window. We keep track of the maximum window size (number of occurrences) we can achieve for any value, and that's our answer.
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Maximum Subarray With Equal Products
+
+
+
+
+
+
+
+
+We are looking for the longest subarray where a special mathematical condition holds true. The condition is that the product of all elements equals the least common multiple (LCM) multiplied by the greatest common divisor (GCD) of the elements.
+
+Let's understand this condition with examples. For a single number, say 5: product = 5, GCD = 5, LCM = 5, and 5 × 5 = 25, which doesn't equal 5. So single elements never satisfy the condition (except the code starts with result = 1 as minimum).
+
+For two numbers, the condition simplifies: for numbers a and b, product = a×b, GCD = g, LCM = a×b/g. Then product = LCM×GCD becomes a×b = (a×b/g)×g = a×b, which is always true! So any two numbers always satisfy this condition.
+
+For three or more numbers, the condition becomes interesting and restrictive. The key insight is that the condition holds when all numbers in the subarray are either the same or follow certain patterns. In particular, if you have numbers where each pair has GCD = 1 (they're coprime), then LCM becomes the product of all numbers, and the condition fails because product = product but GCD = 1, so product ≠ 1 × product.
+
+Actually, working through the math: for the condition product = LCM × GCD to hold, the numbers need to have a special relationship. It turns out this happens when the numbers are such that the product of all numbers equals the product of their LCM and GCD. This occurs in specific cases, like when numbers form a chain where each number divides or is related to the next in a particular way.
+
+The practical approach is to check every possible subarray, compute the product, GCD, and LCM, and see if they satisfy the condition. Since the array size is small (up to 100), we can afford to check all subarrays.
+
+
+
+
+
+The code examines every possible starting point in the array and expands to the right to form subarrays of increasing length. For each subarray, it maintains three values: the product of all elements, the GCD of all elements, and the LCM of all elements.
+
+As we add a new element to the current subarray, we update:
+
+The product by multiplying with the new element
+
+The GCD by taking the GCD of the current GCD and the new element
+
+The LCM by taking the LCM of the current LCM and the new element
+
+We use long long integers to avoid overflow since products can become very large. After each update, we check if product equals GCD times LCM. If it does, we update our answer with the current subarray length if it's longer than what we've seen before.
+
+We also include an optimization: if the product exceeds a billion, we break early since with positive integers, once the product gets too large, it cannot equal GCD × LCM (which would be much smaller in most cases).
+
+The code includes helper functions for GCD (using the Euclidean algorithm) and LCM (using the formula LCM = a × b / GCD(a, b)).
