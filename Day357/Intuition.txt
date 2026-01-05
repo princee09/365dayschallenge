@@ -1,0 +1,47 @@
+Shortest Subarray With OR at Least K I
+
+
+
+We need to find the shortest subarray where the bitwise OR of all its elements is at least k. The bitwise OR operation combines numbers by setting bits to 1 if they are 1 in any of the numbers. For example, OR of 3 (binary 011) and 5 (binary 101) is 7 (binary 111) because all bits that are 1 in either number become 1 in the result.
+
+The key observation is that OR is a non-decreasing operation when we add more elements—adding more numbers can only turn more bits to 1, never reduce them. So if we start from an element and keep adding elements to the right, the OR value will only stay the same or increase. Therefore, for each starting position, we can expand to the right until the OR becomes at least k, and then stop because adding more elements would only make the subarray longer, not shorter.
+
+
+
+
+We check every possible starting point i in the array. For each starting point, we initialize a current OR value to 0. Then we expand the subarray by moving the end point j from i to the end of the array. At each step, we update the current OR by OR-ing with the new element nums[j]. As soon as this OR value becomes at least k, we record the length of this subarray (j - i + 1) if it's shorter than any we've found before, and then break out of the inner loop because any longer subarray starting at i would be even longer, so we don't need to check them.
+
+We try all possible starting positions, and at the end, if we found at least one valid subarray, we return the minimum length; otherwise, we return -1.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Find the Power of K-Size Subarrays I
+
+
+
+
+We need to check every subarray of fixed size k and determine if its elements are consecutive integers in increasing order. For example, if k=3, valid subarrays would look like [5,6,7] or [10,11,12] where each number is exactly 1 more than the previous number.
+
+The condition "consecutive and sorted in ascending order" means that for a subarray starting at position i, we need to check that: nums[i] + 1 == nums[i+1], nums[i+1] + 1 == nums[i+2], and so on, for all k-1 consecutive pairs in the subarray. If this holds true, then the subarray is valid, and its maximum element is simply the last element (since the numbers are increasing consecutively). If any pair doesn't satisfy this, the subarray is invalid.
+
+
+
+
+We create an array results to store the answer for each subarray. There are exactly n - k + 1 subarrays of size k. For each starting index i from 0 to n-k, we assume the subarray is valid (set isValid = true), then check each consecutive pair within the subarray (from index i to i+k-2).
+
+For each pair, we verify if the first number plus 1 equals the second number. If any pair fails this check, we mark the subarray as invalid and stop checking further pairs. If all k-1 pairs pass the check, then the subarray is valid, and we set the result for this starting position to the last element of the subarray (nums[i+k-1]), which is the maximum because the numbers are increasing.
+
+If the subarray is invalid, the result remains -1 as initially set. This way, we examine every possible subarray of size k and determine its "power" according to the given rules.
