@@ -1,0 +1,69 @@
+Find the Integer Added to Array II
+
+
+
+
+
+We have two arrays. The first array, after removing exactly two elements from it and then adding the same integer x to every remaining element, should become exactly equal to the second array. Both arrays contain integers, and being equal means they have the same numbers in the same order. Since we need to find x, we can think of it as the shift or offset that aligns the two arrays.
+
+The key is that we don't know which two elements were removed from the first array. So, we must try every possible pair of elements to remove. For each pair we remove, the remaining elements in the first array must match the second array after we add the same x to every one of them. This means the difference between each corresponding pair of numbers in the second array and the first array's remaining elements must be the same for all pairs. That common difference is our candidate for x.
+
+We want the smallest possible integer x that works for any pair of removals. The process is to first sort both arrays. Sorting helps because once sorted, if a valid x exists, the matching between the remaining elements of the first array and the second array will follow the same order. So, for each possible pair of indices to remove from the sorted first array, we walk through both arrays in parallel, skipping the two removed indices in the first array. We calculate the difference between the current second array element and the current first array element. If, for a given removal pair, all these differences are the same, then that common difference is a valid x. We check all possible removal pairs, collect all valid x values, and keep the smallest one.
+
+
+
+
+
+The code starts by sorting both input arrays. This organizes the numbers, making it easier to compare them in order. It then sets up a variable to track the smallest valid x found, initially set to a very large number.
+
+The main logic uses two loops to try every possible pair of indices to remove from the first array. For each pair, it simulates the process of comparing the remaining elements with the second array. It uses a map to count how many times each difference value occurs as it pairs up elements. It goes through both arrays, but skips the two indices chosen for removal in the first array. For each valid pair, it calculates the difference and records it.
+
+After going through all elements, if we successfully paired every element of the second array, it means this removal pair is valid. Then, it checks the map of differences. If any difference value appears exactly as many times as the length of the second array, that means all differences were the same. That common difference is a candidate x. The code updates the smallest x found so far.
+
+Finally, after checking all removal pairs, it returns the smallest x that was found. If no valid x is found, the initial large value would remain, but the problem guarantees a solution exists.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Minimum Average of Smallest and Largest Elements
+
+
+
+
+
+
+We are given an array with an even number of integers. We repeatedly take out the smallest and the largest number currently in the array, calculate their average, and record that average. We do this until the array is empty. We end up with a list of averages, and we need to find the smallest average among them.
+
+The goal is to get the minimum possible smallest average from this process. To make the smallest average as low as possible, we should try to pair numbers in a way that creates a very small average early on. Since we always remove the current smallest and current largest, the pairing is forced by the process. However, the order in which we remove them across multiple rounds can be rearranged by the initial sorting of the array.
+
+It turns out, if we sort the entire array from smallest to largest, the optimal strategy to minimize the smallest average is to pair the smallest remaining with the largest remaining at each step. This is because any other pairing would involve a larger smallest element or a smaller largest element, potentially increasing the average of that pair. By consistently pairing the extreme values, we create the widest range of averages, and the first pair we take (the absolute smallest with the absolute largest) will give one average, but we need the minimum of all averages produced.
+
+After sorting, if we pair the first element with the last, the second with the second last, and so on, we get n/2 averages. The smallest of these averages will be the answer. This works because in the actual step-by-step removal process, after we remove the smallest and largest, the next smallest and largest in the new array correspond to the next inner pair in the sorted list. So, calculating averages for all these pairs directly from the sorted array gives us all the averages that would be generated, and we just take the minimum.
+
+
+
+
+
+The code first sorts the input array in ascending order. This brings the smallest numbers to the front and the largest to the back. It then calculates the length of the array.
+
+It initializes a variable to hold the minimum average, setting it to a very large value, so any calculated average will be smaller initially.
+
+It then loops exactly half the length of the array times. In each iteration, it pairs the element at the current index i from the start with the element at the corresponding position from the end, which is n-1-i. It calculates the average of these two numbers by adding them and dividing by 2.0, ensuring the result is a floating-point number.
+
+It updates the minimum average variable by comparing it with the newly calculated average, keeping the smaller of the two.
+
+After the loop, it returns the minimum average found. This value is the smallest average obtained from pairing the smallest and largest elements in the optimal way.
