@@ -1,0 +1,63 @@
+1161: Maximum Level Sum of a Binary Tree
+
+
+
+Imagine you have a family tree where each person represents a node. This family tree is organized in levels: the oldest ancestor is at level 1, their children are at level 2, grandchildren at level 3, and so on. Each person has a certain value (could be money, points, etc.).
+
+The problem asks: which generation (level) has the highest total value when you add up all the values of people in that generation? And if multiple generations have the same highest total, you should pick the youngest generation (the smallest level number).
+
+The key insight is that we need to examine the tree level by level, not person by person. Think of it like processing a family reunion where we first count all the oldest generation's values, then all their children's values together, then all the grandchildren's values together. We need to compare these group totals and find which generation has the biggest sum.
+
+
+
+
+The code uses a queue to process people level by level. A queue works like a line at a grocery store: first in, first out. We start with the root person (oldest ancestor) in the queue.
+
+For each generation (level), we look at all the people currently in the queue - these are all the people at the current level. We add up all their values to get the level's total sum. While we're adding their values, we also put their children in the queue for processing in the next generation.
+
+We keep track of two important things: the highest sum we've seen so far, and which generation had that sum. Each time we finish calculating a generation's total, we check if it's better than our previous best. If it is, we update our record.
+
+We continue this process until we've processed all generations. Finally, we return the generation number that had the highest total sum.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1339: Maximum Product of Splitted Binary Tree
+
+
+
+
+Imagine you have a tree that represents an organization with employees. Each employee (node) has a certain value (could be productivity score). You want to split this organization into two separate companies by cutting just one connection between a manager and their subordinate.
+
+When you make this cut, the tree splits into two parts: one part that stays with the original manager, and one part that becomes the new company. Each part has its own total value (sum of all employee values in that part).
+
+Your goal is to make this cut in such a way that when you multiply the total values of the two resulting companies, you get the largest possible product. The larger the product, the better the split.
+
+The mathematical insight here is that to maximize the product of two numbers when their total sum is fixed, you want the two numbers to be as close to equal as possible. However, we can only cut along existing connections, so we need to check all possible cuts and see which one gives us the best product.
+
+
+
+
+
+First, we calculate the total value of the entire organization by adding up every employee's value. This gives us our "total sum" which remains constant.
+
+Then, we need to know what would be the sum of values for every possible subtree we could get if we cut above it. Think of this as: for each employee, what's the total value of their entire department (them plus all their subordinates)?
+
+We use a depth-first search (DFS) to explore the tree. For each employee, we calculate their department's total value by adding their own value plus the total values of their left and right sub-departments. We store all these department totals in a list.
+
+Once we have all possible department totals, we can calculate what would happen if we cut above each department. When we cut above a department, the two resulting companies would have: one company with the department's total value, and the other company with the remaining value (total minus department value).
+
+For each possible cut, we calculate the product: (department value) × (remaining value). We look for the maximum product among all possible cuts.
+
+Finally, we return this maximum product, taking care to handle large numbers by using modulo arithmetic at the end (but only after finding the maximum, not before).
