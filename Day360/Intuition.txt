@@ -1,0 +1,35 @@
+2039. The Time When the Network Becomes Idle
+
+This problem involves a network where servers communicate with a master server and wait for replies. Every data server sends a message to the master at time 0. If it hasn't received a reply after some time, it resends the message periodically based on its patience value. The goal is to find when the network becomes completely idle, meaning no messages are left traveling or pending.
+
+The key here is that messages travel along shortest paths since movement is optimal. So first, we need the shortest distance from each server to the master (server 0). We use breadth-first search to find these distances because all edges have equal weight.
+
+Once we know the shortest distance, the round-trip time for a message to go to master and come back is twice that distance. Let’s call it roundTrip. A server sends at time 0. If it does not receive a reply before its patience runs out, it will resend.
+
+Think about it like this: After sending at time 0, the server will wait for patience[i] seconds and then resend if no reply is back. The reply will only come after roundTrip seconds. So the server might send multiple times before the first reply comes back.
+
+The last time it sends a message is just before the first reply arrives. The first reply arrives at time roundTrip. So the server will keep sending every patience[i] seconds until the time just before roundTrip. This last send happens at ((roundTrip - 1) / patience[i]) * patience[i]. This is basically the largest multiple of patience less than roundTrip.
+
+After the last send, that final message takes roundTrip seconds to go and come back. So the finishing time for that server’s last message is lastSend + roundTrip. The network is idle only after the last message from the slowest server has arrived back. So we take the maximum over all servers.
+
+We return that max time plus 1, because if the last message arrives at time t, the network is idle from the start of second t+1.
+
+In the code, we first build the graph as an adjacency list, run BFS from node 0 to get shortest distances, then compute for each node its last finish time and track the maximum.
+
+
+
+
+
+
+
+2374. Node With Highest Edge Score
+
+This is about a graph where every node has exactly one outgoing edge. We need to compute for each node the sum of labels of nodes that point to it. That sum is called the edge score. We then return the node with the highest score; if tied, return the smallest index.
+
+The important observation is that the graph is given in an array edges where edges[i] tells which node i points to. So to know who points to a node j, we look for all indices i such that edges[i] = j. The score of node j is the sum of all those i.
+
+Instead of searching for each j (which would be slow), we can accumulate scores in one pass: iterate through each node i, find its target edges[i], and add i to the score of that target. This way we directly build the score array.
+
+At the end, we scan the score array to find the index with the largest score, breaking ties by smaller index.
+
+The code uses a vector of long long to avoid overflow, because scores can be large. It first initializes scores to zero, then loops through all nodes i, adding i to scores[edges[i]]. Finally, it finds the index with maximum score starting from 0 and updating whenever a larger score is found.
