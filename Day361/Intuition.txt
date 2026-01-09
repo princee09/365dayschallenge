@@ -1,0 +1,32 @@
+Question 59: Spiral Matrix II
+
+
+The goal is to fill a square grid with numbers from 1 to n squared in a spiral order, starting from the top-left corner and moving right, then down, then left, then up, and repeating until all cells are filled.
+
+Think of the grid as having four boundaries: a top row, a bottom row, a left column, and a right column. We start by filling the top row from left to right, then move the top boundary down. Next, we fill the right column from the new top to the bottom, then move the right boundary leftward. Then, if there is still room, we fill the bottom row from right to left and move the bottom boundary up. Finally, if there is space, we fill the left column from bottom to top and move the left boundary rightward. We repeat this process until all boundaries meet, meaning the entire grid is filled.
+
+In the code, we keep variables top, bottom, left, and right to track the current boundaries of the unfilled area. The variable num starts at 1 and increases as we place numbers in the cells. We loop while the top boundary is above or equal to the bottom and the left boundary is left of or equal to the right. Each iteration of the loop completes one full cycle: right, down, left, up. After each side is filled, the corresponding boundary is moved inward. This ensures we cover every cell exactly once in spiral order.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Question 865: Smallest Subtree with all the Deepest Nodes
+
+
+
+We need to find the smallest subtree that contains all the deepest nodes in a binary tree. The deepest nodes are those farthest from the root.
+
+The key idea is to use a depth-first search that returns two pieces of information for each node: the depth of the deepest node in its subtree and the candidate subtree root that contains all deepest nodes within that subtree.
+
+At each node, we recursively check the left and right children. If one side has a greater depth than the other, then the deepest nodes are only on that side, so we return that side’s candidate subtree and increase the depth by one. If both sides have the same depth, then the deepest nodes are distributed across both sides, meaning the current node itself is the smallest subtree containing all deepest nodes in its entire subtree.
+
+The code uses a helper function that returns a pair: first value is the maximum depth from that node, and second value is the subtree root containing the deepest nodes. Starting from the root, the recursion bubbles up these pairs, and by comparing depths from left and right, we determine at each step whether to propagate a child’s candidate or the current node as the candidate. Finally, the root’s candidate is the answer.
