@@ -1,0 +1,16 @@
+
+
+Imagine you have a string of letters where some letters are lowercase and some are uppercase. The problem says that when you have two letters that are the same letter but one is lowercase and the other is uppercase sitting right next to each other, they are considered "bad" neighbors. For example, 'a' and 'A' next to each other are bad, and 'B' and 'b' next to each other are bad. You need to keep removing these bad pairs until no such pairs exist in the string.
+
+Think of it like having magnets that attract each other but only when they are the same letter with opposite cases. When they come together, they cancel each other out and disappear. You start from the beginning of the string and move forward. Whenever you find such a pair, you remove both letters. But here’s the twist: after removing a pair, the letters that were before and after that pair now become neighbors. This might create a new bad pair that needs to be removed. So it’s a chain reaction.
+
+A very efficient way to handle this is to use a stack. A stack is like a pile of plates where you can only add or remove from the top. You go through each character in the string one by one. For each character, you check the top plate (the last character you kept). If the current character and the top character are the same letter but opposite cases (like 'a' and 'A'), then they form a bad pair. So you remove the top plate (pop from the stack) and also do not add the current character—effectively deleting both. If they are not a bad pair, you simply add the current character to the top of the stack (push it). This way, the stack always maintains a string that is "good" so far because any bad pair that could have been formed has been immediately removed.
+
+After processing all characters, the stack contains the final good string, but in reverse order because the last character processed is on top. So you need to take all characters from the stack and arrange them in the correct order to form the final result string.
+
+
+
+
+The code uses a stack of characters. It goes through each character in the input string one by one using a for loop. For each character, it checks if the stack is not empty and if the absolute difference between the ASCII values of the top of the stack and the current character is exactly 32. This works because in ASCII, the difference between a lowercase letter and its uppercase version is 32. For example, 'a' (97) and 'A' (65) differ by 32. So this condition identifies a bad pair. If a bad pair is found, the top character is removed from the stack using pop, and the current character is ignored (not pushed). If it's not a bad pair, the current character is pushed onto the stack.
+
+Once all characters are processed, the stack contains the good string but in reverse order (last character on top). To get the correct order, the code creates an empty result string. Then, while the stack is not empty, it takes the top character, adds it to the front of the result string (using result = st.top() + result), and then removes it from the stack using pop. This builds the result string in the correct forward order. Finally, the result string is returned as the answer. This method efficiently handles the chain reactions of removals in a single pass through the string.
