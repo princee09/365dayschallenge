@@ -1,0 +1,67 @@
+2108. Find First Palindromic String in the Array
+
+
+
+
+
+
+The problem asks us to find the very first palindrome string in a list of strings. A palindrome reads the same forwards and backwards. The key requirement is that we must find the first one that appears in the order given, not just any palindrome.
+
+Imagine you're looking through a list of words on a page from top to bottom. You check each word to see if it's the same when read backwards. You start with the first word, check if it's a palindrome. If it is, you stop immediately and return that word. If it's not, you move to the next word and repeat the process.
+
+For checking if a word is palindrome, the smartest way is to use two pointers. Think of it like having one person start at the beginning of the word and another at the end. They compare their letters. If the letters match, both move one step toward the center. If at any point the letters don't match, you know immediately it's not a palindrome. You don't need to check all the way through once you find a mismatch. This saves time.
+
+You keep doing this with each word until you find a palindrome or run out of words. If you never find one, you return an empty string.
+
+
+
+
+The code goes through each word in the list one by one. For each word, it sets up two pointers: one at the start and one at the end. It compares the characters at these positions. If they are different, it marks the word as not a palindrome and moves to the next word. If they keep matching as both pointers move toward the center, the word is a palindrome. Once it finds the first such word, it immediately returns it. The code uses a simple while loop to compare characters from both ends, making it very efficient because it stops checking as soon as it finds any mismatch.
+
+The solution is clean because it doesn't create any reversed copies of strings, which would use extra memory. It works directly on the original strings and uses only a few simple variables to track positions. This makes it both time efficient and memory efficient.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2462. Total Cost to Hire K Workers
+
+
+
+
+
+
+
+You have a list of worker costs. You need to hire exactly K workers. You have a special rule: in each hiring session, you look at only the first few workers and the last few workers (the number of workers you look at from each end is given by the "candidates" value). You always pick the worker with the lowest cost from these two groups. If there's a tie in cost, you pick the one with the smaller index (the one appearing earlier in the original list).
+
+Think of it like this: You have workers standing in a line. You can only see the workers at the very front of the line and the very back of the line. Each time you need to hire someone, you compare the visible workers from both ends and pick the cheapest one. After you hire someone, that worker leaves, and a new worker from further in the line becomes visible at that end.
+
+The challenge is that as you hire workers, the line gets shorter from both ends. You need to efficiently keep track of the smallest costs from both ends at all times. This is where using two priority queues (which are like organized lists that always keep the smallest element at the top) becomes very useful.
+
+You maintain one queue for workers from the left end and one queue for workers from the right end. Initially, you fill both queues with the specified number of candidates from each end. Then for each hiring round, you compare the top (cheapest) worker from both queues. You hire the cheaper one. If costs are equal, you hire the one with the smaller index. After hiring, you add the next available worker from that same side to the queue, if there are still workers left in the middle.
+
+This process continues until you hire K workers. The total cost is the sum of all hired workers' costs.
+
+
+
+
+
+The code sets up two priority queues: one for the left side workers and one for the right side workers. Each queue stores pairs of cost and index, sorted by cost (and index for ties). The code first fills these queues with the initial candidates from each end. It keeps track of left and right pointers to know which workers haven't been considered yet.
+
+Then it runs a loop K times (for K hires). In each iteration, it compares the top elements of both queues. It picks the one with lower cost. If costs are equal, it picks the one with lower index. It adds that cost to the total, removes that worker from the queue, and then adds the next available worker from that same side to the queue, if any workers remain in the middle.
+
+The code handles cases where one queue might become empty before the other by checking which queues still have workers. It also ensures that workers are only added from the middle section that hasn't been considered yet by checking if the left pointer hasn't crossed the right pointer.
+
+This approach is efficient because priority queues allow quick access to the minimum element. The algorithm only needs to process each worker once, either when adding to a queue or when hiring, making it suitable for large lists of workers.
