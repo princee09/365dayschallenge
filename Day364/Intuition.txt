@@ -1,0 +1,48 @@
+1266. Minimum Time Visiting All Points
+
+
+
+
+
+The problem asks to find the minimum time to visit all points in order. The key rule is you can move horizontally, vertically, or diagonally in one second. When moving diagonally, you cover one unit horizontally and one unit vertically in the same second. This is the fastest way to move between two points.
+
+If you think about moving from one point to another, the fastest path is to move diagonally as much as possible until you align with the target point horizontally or vertically. Then you move straight to reach it. The number of diagonal moves is limited by the smaller of the horizontal and vertical distances because each diagonal step reduces both by one. After using all possible diagonal moves, you will have to cover the remaining straight distance. The total time is therefore the maximum of the horizontal distance and vertical distance between the two points.
+
+The formula used is max(|x2 - x1|, |y2 - y1|). This works because you move diagonally until you run out of either horizontal or vertical distance, and then you move straight for the leftover distance.
+
+The code simply loops through consecutive points, calculates the absolute differences in x and y coordinates, takes the larger of the two for each segment, and sums them all up to get the total minimum time.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3297. Count Substrings That Can Be Rearranged to Contain a String I
+
+
+
+
+
+The problem asks to count substrings of word1 that, after rearranging their letters, can start with word2 as a prefix. This means the substring must contain at least the required count of each letter that word2 needs.
+
+The first observation is that if a substring is long enough and has enough of each required letter, then any larger substring starting at the same position will also be valid. This allows an efficient approach using a sliding window.
+
+We maintain a sliding window over word1. We expand the window by moving the right pointer forward, adding characters to our current count. Once the window has at least the required count of each letter from word2, then this window is valid. More importantly, all substrings that start at the current left position and end at any position from the current right to the end of the string are also valid. So we can add to the result the number of such substrings, which is the length of word1 minus the current right index.
+
+Then we try to shrink the window from the left. We remove the leftmost character and check if the window still has all required letters. If yes, we again add the count of valid substrings starting from this new left. We keep shrinking as long as the condition holds. This way, for each right position, we count all valid substrings that end at or after this right position.
+
+The isValid function simply checks if every letter count in our current window is at least as large as the required count from word2.
+
+The algorithm is efficient because each character is added and removed from the window at most once, giving linear time complexity.
+
+This method ensures we count every substring that has sufficient letters to form word2 as a prefix after rearrangement, without having to check every possible substring individually.
