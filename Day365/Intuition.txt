@@ -1,0 +1,65 @@
+Maximum Sum of Two Non-Overlapping Subarrays
+
+
+
+
+We need to find two subarrays of given lengths that do not overlap and together give the maximum sum. The two subarrays can appear in either order: the first-length subarray before the second-length one, or the second-length before the first-length one. To solve this, we imagine fixing a split point in the array. All elements before this point are candidates for the first subarray, and all after are for the second subarray.
+
+However, instead of checking every split point naively, we use precomputation. For each possible ending index of the first subarray, we calculate the best possible sum of a subarray of length L ending at or before that index. Similarly, for each possible starting index of the second subarray, we calculate the best possible sum of a subarray of length M starting at or after that index. This way, for any split point between them, we can quickly get the best L-length subarray on the left and the best M-length subarray on the right, add them, and track the maximum.
+
+We do this twice: once assuming L is before M, and once assuming M is before L, and take the better of the two results.
+
+
+
+
+The helper function computes the maximum sum when subarray length L is strictly before subarray length M. We create two arrays: left and right. The left[i] stores the maximum sum of any subarray of length L that ends at or before index i. This is built using a sliding window to compute subarray sums and taking the maximum of previous best and current window sum. The right[i] stores the maximum sum of any subarray of length M that starts at or after index i. This is built similarly but scanning from right to left.
+
+After computing these, we iterate over possible split points i where the first subarray ends at i and the second starts at i+1. For each split, the best possible total is left[i] + right[i+1]. We track the maximum over all splits.
+
+The main function calls helper twice swapping firstLen and secondLen to cover both possible orders and returns the maximum of the two.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Count Subarrays Where Max Element Appears at Least K Times
+
+
+
+
+
+
+
+
+We want to count all contiguous subarrays where the maximum element of the whole array appears at least k times. First, we find the global maximum value. Only subarrays containing this maximum value are relevant. The key idea is to use a sliding window with two pointers, l and r, to explore subarrays.
+
+We expand the right pointer r to include more elements. When we have at least k occurrences of the maximum in the current window, we know that extending this window further to the right (keeping the left fixed) will also have at least k occurrences. So, all subarrays starting at the current l and ending at r or beyond satisfy the condition. We add the count of such subarrays: n - r.
+
+Then, we move the left pointer l forward to shrink the window until we have fewer than k occurrences, then continue expanding r again. This way, we efficiently count all valid subarrays without double counting, because for each left index we count all valid ending positions starting from the first moment the condition is met.
+
+
+
+
+We first find the maximum value in the array. We then use two pointers l and r to define a window. As we move r to the right, we increment a counter whenever we see the maximum value. When the counter reaches k, it means the current window has exactly k occurrences of the maximum. Now, any subarray that starts at the current l and ends at r or anywhere beyond r (up to the end of the array) will also contain at least k occurrences, because adding more elements to the right cannot reduce the count of the maximum. So we add n - r to the result.
+
+Then, we move l forward. If the element at l is the maximum, we decrement the counter because it's leaving the window. We keep doing this in a while loop: whenever we still have at least k occurrences, we add the subarrays count and shrink from the left. This ensures we count all subarrays exactly once, as each subarray is counted when its left boundary is at the smallest l where the condition first becomes satisfied for its right boundary.
+
